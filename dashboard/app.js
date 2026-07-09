@@ -621,8 +621,24 @@ function init() {
     animate();
 }
 
+async function loadGraphs() {
+    try {
+        const res1 = await fetch("../test_projects/v1_graph.json");
+        const data1 = await res1.json();
+        const res2 = await fetch("../test_projects/v2_graph.json");
+        const data2 = await res2.json();
+        baseGraph = data1;
+        currentGraph = data2;
+        console.log("[Dashboard] Successfully loaded live graph files via fetch.");
+    } catch (e) {
+        console.log("[Dashboard] Fetch failed or blocked by CORS, using embedded fallback graph data:", e);
+    }
+    init();
+}
+
 runAnalysisBtn.addEventListener("click", () => {
     runAnalysis();
 });
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", loadGraphs);
+
