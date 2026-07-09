@@ -78,6 +78,9 @@ python3 run_dashboard.py
 
 This starts a local development server and automatically opens the dashboard interface at `http://localhost:8080/dashboard/index.html`. In the dashboard, you can visually explore the dependency graphs (with cycles highlighted in red), add new intents, trigger evolution analyses, and view tabular diff metrics.
 
+![IMPACT Architect Dashboard UI](docs/dashboard_screenshot.png)
+
+
 ### Running Unit Tests
 
 To run the automated test suite, execute:

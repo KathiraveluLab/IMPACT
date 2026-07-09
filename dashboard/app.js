@@ -351,7 +351,7 @@ function draw() {
                 ctx.lineWidth = 2;
                 ctx.shadowBlur = 0;
             } else {
-                ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+                ctx.strokeStyle = "rgba(15, 23, 42, 0.2)";
                 ctx.lineWidth = 1.5;
                 ctx.shadowBlur = 0;
             }
@@ -370,7 +370,7 @@ function draw() {
             ctx.lineTo(arrowX - arrowLength * Math.cos(angle - Math.PI / 6), arrowY - arrowLength * Math.sin(angle - Math.PI / 6));
             ctx.lineTo(arrowX - arrowLength * Math.cos(angle + Math.PI / 6), arrowY - arrowLength * Math.sin(angle + Math.PI / 6));
             ctx.closePath();
-            ctx.fillStyle = e.isCycle ? "#f43f5e" : (e.isAdded ? "#10b981" : "rgba(255, 255, 255, 0.3)");
+            ctx.fillStyle = e.isCycle ? "#f43f5e" : (e.isAdded ? "#10b981" : "rgba(15, 23, 42, 0.45)");
             ctx.fill();
         }
     });
@@ -384,20 +384,20 @@ function draw() {
         
         // Coloring
         if (selectedNode === n) {
-            ctx.fillStyle = "#ffffff";
-            ctx.strokeStyle = varColor("--accent-purple");
+            ctx.fillStyle = varColor("--accent-purple");
+            ctx.strokeStyle = "rgba(15, 23, 42, 0.3)";
             ctx.lineWidth = 3;
             ctx.shadowColor = varColor("--accent-purple");
-            ctx.shadowBlur = 15;
+            ctx.shadowBlur = 10;
         } else if (hoveredNode === n) {
-            ctx.fillStyle = "#ffffff";
-            ctx.strokeStyle = varColor("--accent-blue");
+            ctx.fillStyle = varColor("--accent-blue");
+            ctx.strokeStyle = "rgba(15, 23, 42, 0.3)";
             ctx.lineWidth = 2;
             ctx.shadowColor = varColor("--accent-blue");
-            ctx.shadowBlur = 10;
+            ctx.shadowBlur = 8;
         } else if (isAdded) {
             ctx.fillStyle = "#10b981";
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+            ctx.strokeStyle = "rgba(15, 23, 42, 0.15)";
             ctx.lineWidth = 1;
             ctx.shadowBlur = 0;
         } else {
@@ -422,7 +422,7 @@ function draw() {
 }
 
 function varColor(name) {
-    return name === "--accent-blue" ? "#38bdf8" : "#a855f7";
+    return name === "--accent-blue" ? "#0284c7" : "#7c3aed";
 }
 
 // Animation loop
