@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMPACT - Architect Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation & Control Panel -->
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="logo-icon"></span>
+                <h1>IMPACT</h1>
+                <span class="badge">V1.0</span>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Version Analysis</h3>
+                <div class="version-picker">
+                    <div class="picker-label">Base Version</div>
+                    <select id="base-version-select">
+                        <option value="v1">v1.0.0 (TelemetryService)</option>
+                    </select>
+                    <div class="picker-label mt-2">Target Version</div>
+                    <select id="target-version-select">
+                        <option value="v2">v2.0.0 (TelemetryService)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="sidebar-section flex-grow">
+                <h3>Architectural Intents</h3>
+                <div class="intent-input-group">
+                    <input type="text" id="new-intent-input" placeholder="Define new intent...">
+                    <button id="add-intent-btn">Add</button>
+                </div>
+                <ul class="intent-list" id="intent-list-container">
+                    <!-- Loaded dynamically -->
+                </ul>
+            </div>
+
+            <button id="run-analysis-btn" class="btn-primary">
+                <span class="btn-glow"></span>
+                Run Swarm Analysis
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <h2>System Evolution Tracker</h2>
+                <div class="status-indicator">
+                    <span class="status-dot online"></span>
+                    <span>Swarm Agents Standby</span>
+                </div>
+            </header>
+
+            <!-- Metrics Overview row -->
+            <section class="metrics-row">
+                <div class="metric-card">
+                    <div class="metric-icon loc-icon"></div>
+                    <div class="metric-data">
+                        <span class="metric-value" id="metric-loc">-</span>
+                        <span class="metric-label">Lines of Code</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon classes-icon"></div>
+                    <div class="metric-data">
+                        <span class="metric-value" id="metric-classes">-</span>
+                        <span class="metric-label">Total Classes</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon coupling-icon"></div>
+                    <div class="metric-data">
+                        <span class="metric-value" id="metric-coupling">-</span>
+                        <span class="metric-label">Avg Coupling</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon cycles-icon"></div>
+                    <div class="metric-data">
+                        <span class="metric-value" id="metric-cycles">-</span>
+                        <span class="metric-label">Cycles Detected</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Workspace Grid -->
+            <div class="workspace-grid">
+                <!-- Graph Visualization Panel -->
+                <section class="panel graph-panel">
+                    <div class="panel-header">
+                        <h3>Interactive Architecture Graph</h3>
+                        <div class="graph-legend">
+                            <span class="legend-item"><span class="legend-dot normal"></span>Normal</span>
+                            <span class="legend-item"><span class="legend-dot added"></span>Added</span>
+                            <span class="legend-item"><span class="legend-dot cycle"></span>Cycle</span>
+                        </div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="graph-canvas"></canvas>
+                        <div class="canvas-overlay" id="node-info-tooltip">
+                            Hover over a node to see FQCN metrics.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Compliance & Swarm Reports -->
+                <section class="panel report-panel">
+                    <div class="panel-header">
+                        <h3>Swarm Analysis Report</h3>
+                        <span class="compliance-badge compliant" id="compliance-overall-badge">Checking...</span>
+                    </div>
+                    <div class="report-container">
+                        <div class="agent-chat" id="agent-chat-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Evolutionary Diff Table -->
+            <section class="panel diff-panel">
+                <div class="panel-header">
+                    <h3>Architectural Diff Summary</h3>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Class (FQCN)</th>
+                                <th>Change Status</th>
+                                <th>LOC</th>
+                                <th>Complexity</th>
+                                <th>Coupling (C)</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="diff-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

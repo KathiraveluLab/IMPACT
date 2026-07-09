@@ -62,12 +62,21 @@ python3 adapters/java/extractor.py TelemetryService 2.0.0 test_projects/telemetr
 
 To run the full multi-agent evolution analysis on the sample `TelemetryService` transition, execute:
 
-
 ```bash
 python3 run_demo.py
 ```
 
 This will run the Coordinator agent, orchestrate the swarm, evaluate intents against the graph diffs, and generate the compliance report.
+
+### Running the Architect Dashboard (UI)
+
+To launch the interactive visual dashboard in your browser, execute:
+
+```bash
+python3 run_dashboard.py
+```
+
+This starts a local development server and automatically opens the dashboard interface at `http://localhost:8080/dashboard/index.html`. In the dashboard, you can visually explore the dependency graphs (with cycles highlighted in red), add new intents, trigger evolution analyses, and view tabular diff metrics.
 
 ### Running Unit Tests
 
@@ -76,6 +85,7 @@ To run the automated test suite, execute:
 ```bash
 python3 -m unittest test_impact.py
 ```
+
 
 ## How It Works
 
