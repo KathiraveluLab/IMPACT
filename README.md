@@ -19,9 +19,6 @@ The repository is organized as follows:
     *   `telemetry_service_v2/`: Version 2.0.0 Java source code of TelemetryService.
     *   `v1_graph.json`: Extracted dependency graph for Version 1.0.0.
     *   `v2_graph.json`: Extracted dependency graph for Version 2.0.0.
-*   **`_paper/`**: Academic draft and design notes:
-    *   `design/`: Preliminary system design and architecture plans.
-    *   `src/`: LaTeX manuscript source files, bibliography, and compiled PDF.
 *   **`run_demo.py`**: Execution script to run the multi-agent evolution tracker.
 *   **`test_impact.py`**: Automated unit test suite to verify graph loading, diff calculations, and coordinator orchestration.
 
