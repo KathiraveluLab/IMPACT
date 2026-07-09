@@ -2,30 +2,51 @@
   "projectName": "TelemetryService",
   "version": "1.0.0",
   "language": "Java",
-  "extractedAt": "2026-07-09T11:00:00Z",
+  "extractedAt": "2026-07-09T09:58:31.893214Z",
   "systemMetrics": {
-    "totalLinesOfCode": 450,
+    "totalLinesOfCode": 23,
     "totalClasses": 3,
-    "totalPackages": 1
+    "averageCoupling": 1.3333333333333333
   },
   "nodes": [
     {
       "id": "com.telemetry.Service",
       "name": "Service",
       "type": "class",
-      "metrics": { "loc": 150, "complexity": 5 }
-    },
-    {
-      "id": "com.telemetry.DataCollector",
-      "name": "DataCollector",
-      "type": "class",
-      "metrics": { "loc": 200, "complexity": 8 }
+      "filePath": "com/telemetry/Service.java",
+      "metrics": {
+        "loc": 7,
+        "complexity": 1,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
     },
     {
       "id": "com.telemetry.Database",
       "name": "Database",
       "type": "class",
-      "metrics": { "loc": 100, "complexity": 3 }
+      "filePath": "com/telemetry/Database.java",
+      "metrics": {
+        "loc": 6,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 1,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.telemetry.DataCollector",
+      "name": "DataCollector",
+      "type": "class",
+      "filePath": "com/telemetry/DataCollector.java",
+      "metrics": {
+        "loc": 10,
+        "complexity": 1,
+        "fanOut": 1,
+        "fanIn": 1,
+        "coupling": 2
+      }
     }
   ],
   "edges": [

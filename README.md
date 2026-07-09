@@ -12,9 +12,13 @@ The repository is organized as follows:
     *   `schema/`: Standardized JSON schema for software dependency graphs.
     *   `agents/`: Specialized agent implementations including the Coordinator, Graph, Diff, Metrics, and LLM agents.
     *   `graph_utils.py`: Utility functions for loading graphs and computing structural diffs.
-*   **`test_projects/`**: Mock datasets simulating software evolution:
-    *   `v1_graph.json`: Clean, acyclic baseline version (TelemetryService 1.0.0).
-    *   `v2_graph.json`: Evolved version containing an injected cyclic dependency violation (TelemetryService 2.0.0).
+*   **`adapters/`**: Pluggable source code extraction layers:
+    *   `java/`: Python-based parser that walks Java project directories, extracts FQCNs, resolves dependency call-graphs, and exports JSON graphs.
+*   **`test_projects/`**: Datasets and source folders simulating software evolution:
+    *   `telemetry_service_v1/`: Version 1.0.0 Java source code of TelemetryService.
+    *   `telemetry_service_v2/`: Version 2.0.0 Java source code of TelemetryService.
+    *   `v1_graph.json`: Extracted dependency graph for Version 1.0.0.
+    *   `v2_graph.json`: Extracted dependency graph for Version 2.0.0.
 *   **`_paper/`**: Academic draft and design notes:
     *   `design/`: Preliminary system design and architecture plans.
     *   `src/`: LaTeX manuscript source files, bibliography, and compiled PDF.
@@ -39,9 +43,25 @@ pip install networkx
 
 ## Running the Project
 
+### Running Graph Extraction (Java Adapter)
+
+To extract a dependency graph from a Java source code directory, execute the Java extractor tool:
+
+```bash
+python3 adapters/java/extractor.py <projectName> <version> <srcDirectory> <outputJsonPath>
+```
+
+For example, to extract graphs for the mock `TelemetryService` project versions:
+
+```bash
+python3 adapters/java/extractor.py TelemetryService 1.0.0 test_projects/telemetry_service_v1/src test_projects/v1_graph.json
+python3 adapters/java/extractor.py TelemetryService 2.0.0 test_projects/telemetry_service_v2/src test_projects/v2_graph.json
+```
+
 ### Running the Demo
 
 To run the full multi-agent evolution analysis on the sample `TelemetryService` transition, execute:
+
 
 ```bash
 python3 run_demo.py
