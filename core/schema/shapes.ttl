@@ -1,0 +1,35 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix impact: <https://w3id.org/impact/ontology#> .
+
+impact:ClassEntityShape rdf:type sh:NodeShape ;
+    sh:targetClass impact:ClassEntity ;
+    sh:property [
+        sh:path impact:loc ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:message "Every ClassEntity must have a Lines of Code (loc) metric specified as an integer." ;
+    ] ;
+    sh:property [
+        sh:path impact:complexity ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:message "Every ClassEntity must have a cyclomatic complexity metric specified as an integer." ;
+    ] .
+
+impact:DependencyShape rdf:type sh:NodeShape ;
+    sh:targetClass impact:Dependency ;
+    sh:property [
+        sh:path impact:source ;
+        sh:class impact:SoftwareEntity ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path impact:target ;
+        sh:class impact:SoftwareEntity ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .

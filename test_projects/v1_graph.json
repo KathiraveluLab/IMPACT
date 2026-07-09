@@ -1,8 +1,22 @@
 {
+  "@context": {
+    "@vocab": "https://w3id.org/impact/ontology#",
+    "projectName": "projectName",
+    "version": "versionString",
+    "language": "language",
+    "extractedAt": "extractedAt",
+    "systemMetrics": "systemMetrics",
+    "nodes": "hasEntity",
+    "edges": "hasDependency",
+    "id": "@id",
+    "type": "@type",
+    "source": "source",
+    "target": "target"
+  },
   "projectName": "TelemetryService",
   "version": "1.0.0",
   "language": "Java",
-  "extractedAt": "2026-07-09T09:58:31.893214Z",
+  "extractedAt": "2026-07-09T10:02:49.967959Z",
   "systemMetrics": {
     "totalLinesOfCode": 23,
     "totalClasses": 3,

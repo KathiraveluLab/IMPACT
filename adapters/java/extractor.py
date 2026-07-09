@@ -105,6 +105,20 @@ class JavaExtractor:
         avg_coupling = sum(n["metrics"]["coupling"] for n in self.nodes.values()) / max(1, total_classes)
 
         output_data = {
+            "@context": {
+                "@vocab": "https://w3id.org/impact/ontology#",
+                "projectName": "projectName",
+                "version": "versionString",
+                "language": "language",
+                "extractedAt": "extractedAt",
+                "systemMetrics": "systemMetrics",
+                "nodes": "hasEntity",
+                "edges": "hasDependency",
+                "id": "@id",
+                "type": "@type",
+                "source": "source",
+                "target": "target"
+            },
             "projectName": self.project_name,
             "version": self.version,
             "language": "Java",
@@ -117,6 +131,7 @@ class JavaExtractor:
             "nodes": list(self.nodes.values()),
             "edges": self.edges
         }
+
 
         # Write to JSON
         os.makedirs(os.path.dirname(output_file), exist_ok=True)

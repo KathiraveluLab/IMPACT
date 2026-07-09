@@ -1,0 +1,56 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix impact: <https://w3id.org/impact/ontology#> .
+
+impact:Ontology rdf:type owl:Ontology ;
+    rdfs:label "IMPACT Software Architecture Evolution Ontology" ;
+    rdfs:comment "An ontology for representing software architectures, component dependencies, and evolutionary changes." .
+
+# Classes
+impact:SoftwareSystem rdf:type owl:Class ;
+    rdfs:label "Software System" .
+
+impact:SoftwareVersion rdf:type owl:Class ;
+    rdfs:label "Software Version" .
+
+impact:SoftwareEntity rdf:type owl:Class ;
+    rdfs:label "Software Entity (e.g., class, interface, module)" .
+
+impact:ClassEntity rdf:type owl:Class ;
+    rdfs:subClassOf impact:SoftwareEntity ;
+    rdfs:label "Class Entity" .
+
+impact:Dependency rdf:type owl:Class ;
+    rdfs:label "Dependency relationship" .
+
+# Object Properties
+impact:hasVersion rdf:type owl:ObjectProperty ;
+    rdfs:domain impact:SoftwareSystem ;
+    rdfs:range impact:SoftwareVersion .
+
+impact:hasEntity rdf:type owl:ObjectProperty ;
+    rdfs:domain impact:SoftwareVersion ;
+    rdfs:range impact:SoftwareEntity .
+
+impact:dependsOn rdf:type owl:ObjectProperty ;
+    rdfs:domain impact:SoftwareEntity ;
+    rdfs:range impact:SoftwareEntity .
+
+# Data Properties
+impact:projectName rdf:type owl:DatatypeProperty ;
+    rdfs:domain impact:SoftwareSystem ;
+    rdfs:range xsd:string .
+
+impact:versionString rdf:type owl:DatatypeProperty ;
+    rdfs:domain impact:SoftwareVersion ;
+    rdfs:range xsd:string .
+
+impact:loc rdf:type owl:DatatypeProperty ;
+    rdfs:domain impact:SoftwareEntity ;
+    rdfs:range xsd:integer .
+
+impact:complexity rdf:type owl:DatatypeProperty ;
+    rdfs:domain impact:SoftwareEntity ;
+    rdfs:range xsd:integer .
