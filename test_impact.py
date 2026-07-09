@@ -34,5 +34,14 @@ class TestImpactSwarm(unittest.TestCase):
         self.assertIn("VIOLATION", report)
         self.assertIn("new cyclic dependencies detected", report.lower())
 
+    def test_shacl_validator(self):
+        from core.shacl_validator import SHACLValidator
+        validator = SHACLValidator()
+        report1 = validator.validate_graph(self.file_v1)
+        report2 = validator.validate_graph(self.file_v2)
+        self.assertTrue(report1["conforms"])
+        self.assertTrue(report2["conforms"])
+
 if __name__ == "__main__":
     unittest.main()
+

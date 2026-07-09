@@ -86,6 +86,39 @@ To run the automated test suite, execute:
 python3 -m unittest test_impact.py
 ```
 
+### Running the Model Context Protocol (MCP) Server
+
+To run the stdio-compliant Model Context Protocol server:
+
+```bash
+python3 -m core.mcp_server
+```
+
+This starts the server on stdio. Any MCP-compatible client (such as Claude Desktop) can connect to it and invoke the `run_evolution_analysis` and `extract_java_graph` tools.
+
+### Running PMD Static Analysis Merger
+
+To integrate PMD static analysis reports into the extracted dependency graph, run:
+
+```bash
+python3 adapters/java/static_analyzer.py <graphJsonPath> <pmdJsonPath>
+```
+
+For example, to merge our mock PMD report into the Version 2 graph:
+
+```bash
+python3 adapters/java/static_analyzer.py test_projects/v2_graph.json test_projects/pmd_report_v2.json
+```
+
+### Running the SHACL Structural Validator
+
+To validate your JSON-LD software graphs against our SHACL structural shapes, execute:
+
+```bash
+python3 core/shacl_validator.py <graphJsonPath>
+```
+
+
 
 ## How It Works
 

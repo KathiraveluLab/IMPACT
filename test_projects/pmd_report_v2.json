@@ -1,0 +1,18 @@
+{
+  "formatVersion": 1,
+  "pmdVersion": "7.0.0",
+  "files": [
+    {
+      "filename": "test_projects/telemetry_service_v2/src/com/telemetry/Database.java",
+      "violations": [
+        {
+          "beginLine": 5,
+          "rule": "AvoidCircularDependencies",
+          "ruleset": "Design",
+          "priority": 1,
+          "message": "A circular dependency exists between Database and Service."
+        }
+      ]
+    }
+  ]
+}

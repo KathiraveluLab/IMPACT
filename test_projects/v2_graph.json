@@ -20,7 +20,8 @@
   "systemMetrics": {
     "totalLinesOfCode": 36,
     "totalClasses": 4,
-    "averageCoupling": 1.5
+    "averageCoupling": 1.5,
+    "totalStaticAnalysisViolations": 1
   },
   "nodes": [
     {
@@ -33,8 +34,10 @@
         "complexity": 1,
         "fanOut": 0,
         "fanIn": 0,
-        "coupling": 0
-      }
+        "coupling": 0,
+        "staticAnalysisViolationsCount": 0
+      },
+      "staticAnalysisViolations": []
     },
     {
       "id": "com.telemetry.Service",
@@ -46,8 +49,10 @@
         "complexity": 1,
         "fanOut": 1,
         "fanIn": 1,
-        "coupling": 2
-      }
+        "coupling": 2,
+        "staticAnalysisViolationsCount": 0
+      },
+      "staticAnalysisViolations": []
     },
     {
       "id": "com.telemetry.Database",
@@ -59,8 +64,18 @@
         "complexity": 2,
         "fanOut": 1,
         "fanIn": 1,
-        "coupling": 2
-      }
+        "coupling": 2,
+        "staticAnalysisViolationsCount": 1
+      },
+      "staticAnalysisViolations": [
+        {
+          "rule": "AvoidCircularDependencies",
+          "ruleset": "Design",
+          "priority": 1,
+          "beginLine": 5,
+          "message": "A circular dependency exists between Database and Service."
+        }
+      ]
     },
     {
       "id": "com.telemetry.DataCollector",
@@ -72,8 +87,10 @@
         "complexity": 1,
         "fanOut": 1,
         "fanIn": 1,
-        "coupling": 2
-      }
+        "coupling": 2,
+        "staticAnalysisViolationsCount": 0
+      },
+      "staticAnalysisViolations": []
     }
   ],
   "edges": [
