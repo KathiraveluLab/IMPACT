@@ -1,0 +1,43 @@
+{
+  "projectName": "TelemetryService",
+  "version": "1.0.0",
+  "language": "Java",
+  "extractedAt": "2026-07-09T11:00:00Z",
+  "systemMetrics": {
+    "totalLinesOfCode": 450,
+    "totalClasses": 3,
+    "totalPackages": 1
+  },
+  "nodes": [
+    {
+      "id": "com.telemetry.Service",
+      "name": "Service",
+      "type": "class",
+      "metrics": { "loc": 150, "complexity": 5 }
+    },
+    {
+      "id": "com.telemetry.DataCollector",
+      "name": "DataCollector",
+      "type": "class",
+      "metrics": { "loc": 200, "complexity": 8 }
+    },
+    {
+      "id": "com.telemetry.Database",
+      "name": "Database",
+      "type": "class",
+      "metrics": { "loc": 100, "complexity": 3 }
+    }
+  ],
+  "edges": [
+    {
+      "source": "com.telemetry.Service",
+      "target": "com.telemetry.DataCollector",
+      "type": "calls"
+    },
+    {
+      "source": "com.telemetry.DataCollector",
+      "target": "com.telemetry.Database",
+      "type": "calls"
+    }
+  ]
+}

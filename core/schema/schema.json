@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IMPACTSoftwareGraphSchema",
+  "description": "Standardized schema for representing software dependency graphs and architectural metrics across programming languages.",
+  "type": "object",
+  "properties": {
+    "projectName": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "extractedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "systemMetrics": {
+      "type": "object",
+      "properties": {
+        "totalLinesOfCode": { "type": "integer" },
+        "totalClasses": { "type": "integer" },
+        "totalPackages": { "type": "integer" },
+        "averageCoupling": { "type": "number" },
+        "instability": { "type": "number" }
+      },
+      "additionalProperties": true
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the entity, e.g., fully-qualified class or file name."
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["class", "interface", "module", "package", "file", "function"]
+          },
+          "filePath": {
+            "type": "string"
+          },
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "loc": { "type": "integer" },
+              "complexity": { "type": "integer" },
+              "cohesion": { "type": "number", "description": "e.g., LCOM (Lack of Cohesion in Methods)" },
+              "coupling": { "type": "integer" },
+              "fanIn": { "type": "integer" },
+              "fanOut": { "type": "integer" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "required": ["id", "name", "type"]
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "ID of the source entity."
+          },
+          "target": {
+            "type": "string",
+            "description": "ID of the target entity."
+          },
+          "type": {
+            "type": "string",
+            "enum": ["calls", "inherits", "imports", "implements", "aggregates", "depends_on"]
+          }
+        },
+        "required": ["source", "target", "type"]
+      }
+    }
+  },
+  "required": ["projectName", "version", "language", "nodes", "edges"]
+}
