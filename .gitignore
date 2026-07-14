@@ -42,4 +42,4 @@ __pycache__/
 *$py.class
 
 # Ignore extracted GitHub source folders in benchmarks
-test_projects/github_benchmarks/*/*/
+test_projects/github_benchmarks/*/*/*/

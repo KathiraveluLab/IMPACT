@@ -82,8 +82,8 @@ def download_and_extract_tag(owner, repo, tag, output_dir):
         print(f"Failed to extract zip file: {e}")
         return False
 
-def run_github_evaluation(owner, repo, tag1, tag2):
-    benchmark_root = "test_projects/github_benchmarks"
+def run_github_evaluation(owner, repo, tag1, tag2, language="java"):
+    benchmark_root = os.path.join("test_projects/github_benchmarks", language.lower())
     repo_dir = os.path.join(benchmark_root, f"{owner}_{repo}")
     
     dir_v1 = os.path.join(repo_dir, tag1)
@@ -119,13 +119,17 @@ def run_github_evaluation(owner, repo, tag1, tag2):
     graph_v2 = os.path.join(repo_dir, f"{tag2}_graph.json")
     
     # 2. Extract dependency graphs
-    print(f"\n--- Extracting Dependency Graph for Version 1 ({tag1}) ---")
-    extractor_v1 = JavaExtractor(repo, tag1)
-    extractor_v1.extract(src_v1, graph_v1)
-    
-    print(f"\n--- Extracting Dependency Graph for Version 2 ({tag2}) ---")
-    extractor_v2 = JavaExtractor(repo, tag2)
-    extractor_v2.extract(src_v2, graph_v2)
+    if language.lower() == "java":
+        print(f"\n--- Extracting Dependency Graph for Version 1 ({tag1}) ---")
+        extractor_v1 = JavaExtractor(repo, tag1)
+        extractor_v1.extract(src_v1, graph_v1)
+        
+        print(f"\n--- Extracting Dependency Graph for Version 2 ({tag2}) ---")
+        extractor_v2 = JavaExtractor(repo, tag2)
+        extractor_v2.extract(src_v2, graph_v2)
+    else:
+        print(f"Extraction for language '{language}' is not yet supported. Please integrate the appropriate adapter.")
+        return
     
     # 3. Validate structures via SHACL
     print(f"\n--- Running SHACL Shape Validation on Extracted Graphs ---")
@@ -183,18 +187,32 @@ def main():
             print(f"  Description: {r['description']}\n")
             
     elif cmd == "evaluate":
-        if len(sys.argv) < 5:
-            print("Usage: python3 core/github_collector.py evaluate <owner> <repo> <tag1> <tag2>")
+        if len(sys.argv) < 6:
+            print("Usage: python3 core/github_collector.py evaluate <owner> <repo> <tag1> <tag2> [language]")
             sys.exit(1)
         owner = sys.argv[2]
         repo = sys.argv[3]
         tag1 = sys.argv[4]
         tag2 = sys.argv[5]
-        run_github_evaluation(owner, repo, tag1, tag2)
+        lang = sys.argv[6] if len(sys.argv) > 6 else "java"
+        run_github_evaluation(owner, repo, tag1, tag2, language=lang)
         
     elif cmd == "benchmark":
-        print("Running preset benchmark (square/javapoet: javapoet-1.12.0 -> javapoet-1.13.0)...")
-        run_github_evaluation("square", "javapoet", "javapoet-1.12.0", "javapoet-1.13.0")
+        print("Running preset batch benchmarks...")
+        projects = [
+            ("square", "javapoet", "javapoet-1.12.0", "javapoet-1.13.0"),
+            ("jhy", "jsoup", "jsoup-1.14.1", "jsoup-1.14.2"),
+            ("google", "gson", "gson-parent-2.8.5", "gson-parent-2.8.6"),
+            ("reactive-streams", "reactive-streams-jvm", "v1.0.2", "v1.0.3")
+        ]
+        for owner, repo, tag1, tag2 in projects:
+            print(f"\n==================================================")
+            print(f"Benchmarking project: {owner}/{repo} ({tag1} -> {tag2})")
+            print(f"==================================================")
+            try:
+                run_github_evaluation(owner, repo, tag1, tag2)
+            except Exception as e:
+                print(f"Failed to benchmark {owner}/{repo}: {e}")
         
     else:
         print(f"Unknown command: {cmd}")

@@ -14,13 +14,13 @@
     "target": "target"
   },
   "projectName": "jsoup",
-  "version": "jsoup-1.14.1",
+  "version": "jsoup-1.14.2",
   "language": "Java",
-  "extractedAt": "2026-07-14T12:23:07.395721Z",
+  "extractedAt": "2026-07-14T12:29:56.887921Z",
   "systemMetrics": {
-    "totalLinesOfCode": 20698,
-    "totalClasses": 99,
-    "averageCoupling": 10.16161616161616
+    "totalLinesOfCode": 20990,
+    "totalClasses": 100,
+    "averageCoupling": 10.3
   },
   "nodes": [
     {
@@ -81,11 +81,11 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/Jsoup.java",
       "metrics": {
-        "loc": 273,
-        "complexity": 23,
+        "loc": 287,
+        "complexity": 26,
         "fanOut": 9,
-        "fanIn": 50,
-        "coupling": 59
+        "fanIn": 53,
+        "coupling": 62
       }
     },
     {
@@ -110,8 +110,8 @@
         "loc": 201,
         "complexity": 25,
         "fanOut": 7,
-        "fanIn": 28,
-        "coupling": 35
+        "fanIn": 30,
+        "coupling": 37
       }
     },
     {
@@ -120,8 +120,8 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/parser/HtmlTreeBuilder.java",
       "metrics": {
-        "loc": 641,
-        "complexity": 120,
+        "loc": 656,
+        "complexity": 128,
         "fanOut": 13,
         "fanIn": 6,
         "coupling": 19
@@ -172,8 +172,8 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/parser/TokenQueue.java",
       "metrics": {
-        "loc": 356,
-        "complexity": 89,
+        "loc": 377,
+        "complexity": 92,
         "fanOut": 0,
         "fanIn": 3,
         "coupling": 3
@@ -211,8 +211,8 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/nodes/Attributes.java",
       "metrics": {
-        "loc": 449,
-        "complexity": 79,
+        "loc": 445,
+        "complexity": 77,
         "fanOut": 5,
         "fanIn": 17,
         "coupling": 22
@@ -224,11 +224,11 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/nodes/Entities.java",
       "metrics": {
-        "loc": 301,
-        "complexity": 46,
+        "loc": 310,
+        "complexity": 48,
         "fanOut": 3,
-        "fanIn": 13,
-        "coupling": 16
+        "fanIn": 14,
+        "coupling": 17
       }
     },
     {
@@ -305,8 +305,8 @@
         "loc": 566,
         "complexity": 69,
         "fanOut": 11,
-        "fanIn": 54,
-        "coupling": 65
+        "fanIn": 58,
+        "coupling": 69
       }
     },
     {
@@ -315,8 +315,8 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/nodes/Attribute.java",
       "metrics": {
-        "loc": 186,
-        "complexity": 23,
+        "loc": 188,
+        "complexity": 24,
         "fanOut": 3,
         "fanIn": 15,
         "coupling": 18
@@ -328,11 +328,11 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/nodes/XmlDeclaration.java",
       "metrics": {
-        "loc": 72,
-        "complexity": 6,
-        "fanOut": 2,
+        "loc": 79,
+        "complexity": 7,
+        "fanOut": 3,
         "fanIn": 6,
-        "coupling": 8
+        "coupling": 9
       }
     },
     {
@@ -344,8 +344,8 @@
         "loc": 1500,
         "complexity": 209,
         "fanOut": 16,
-        "fanIn": 43,
-        "coupling": 59
+        "fanIn": 44,
+        "coupling": 60
       }
     },
     {
@@ -367,8 +367,8 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/helper/HttpConnection.java",
       "metrics": {
-        "loc": 1123,
-        "complexity": 142,
+        "loc": 1127,
+        "complexity": 143,
         "fanOut": 8,
         "fanIn": 5,
         "coupling": 13
@@ -471,7 +471,7 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/select/NodeTraversor.java",
       "metrics": {
-        "loc": 115,
+        "loc": 117,
         "complexity": 28,
         "fanOut": 4,
         "fanIn": 9,
@@ -484,8 +484,8 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/select/Selector.java",
       "metrics": {
-        "loc": 155,
-        "complexity": 15,
+        "loc": 157,
+        "complexity": 16,
         "fanOut": 5,
         "fanIn": 5,
         "coupling": 10
@@ -523,8 +523,8 @@
       "type": "class",
       "filePath": "src/main/java/org/jsoup/select/QueryParser.java",
       "metrics": {
-        "loc": 333,
-        "complexity": 70,
+        "loc": 340,
+        "complexity": 71,
         "fanOut": 4,
         "fanIn": 5,
         "coupling": 9
@@ -588,7 +588,7 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/parser/XmlTreeBuilderTest.java",
       "metrics": {
-        "loc": 233,
+        "loc": 242,
         "complexity": 1,
         "fanOut": 12,
         "fanIn": 0,
@@ -679,7 +679,7 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/parser/ParserIT.java",
       "metrics": {
-        "loc": 37,
+        "loc": 39,
         "complexity": 5,
         "fanOut": 2,
         "fanIn": 0,
@@ -692,11 +692,11 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/parser/ParserTest.java",
       "metrics": {
-        "loc": 19,
-        "complexity": 2,
-        "fanOut": 1,
+        "loc": 29,
+        "complexity": 3,
+        "fanOut": 3,
         "fanIn": 0,
-        "coupling": 1
+        "coupling": 3
       }
     },
     {
@@ -718,11 +718,11 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/parser/TokenQueueTest.java",
       "metrics": {
-        "loc": 81,
+        "loc": 90,
         "complexity": 2,
-        "fanOut": 2,
+        "fanOut": 3,
         "fanIn": 0,
-        "coupling": 2
+        "coupling": 3
       }
     },
     {
@@ -731,8 +731,8 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/parser/HtmlParserTest.java",
       "metrics": {
-        "loc": 1133,
-        "complexity": 18,
+        "loc": 1175,
+        "complexity": 19,
         "fanOut": 19,
         "fanIn": 0,
         "coupling": 19
@@ -835,7 +835,7 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/nodes/AttributeTest.java",
       "metrics": {
-        "loc": 54,
+        "loc": 62,
         "complexity": 1,
         "fanOut": 4,
         "fanIn": 0,
@@ -861,11 +861,11 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/nodes/EntitiesTest.java",
       "metrics": {
-        "loc": 122,
-        "complexity": 2,
-        "fanOut": 4,
+        "loc": 130,
+        "complexity": 3,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 4
+        "coupling": 5
       }
     },
     {
@@ -874,8 +874,8 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/nodes/NodeTest.java",
       "metrics": {
-        "loc": 259,
-        "complexity": 5,
+        "loc": 269,
+        "complexity": 6,
         "fanOut": 9,
         "fanIn": 0,
         "coupling": 9
@@ -887,11 +887,11 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/nodes/AttributesTest.java",
       "metrics": {
-        "loc": 194,
+        "loc": 224,
         "complexity": 7,
-        "fanOut": 3,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 3
+        "coupling": 4
       }
     },
     {
@@ -900,7 +900,7 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/nodes/ElementTest.java",
       "metrics": {
-        "loc": 1662,
+        "loc": 1675,
         "complexity": 27,
         "fanOut": 14,
         "fanIn": 0,
@@ -1069,11 +1069,24 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/integration/FuzzFixesTest.java",
       "metrics": {
-        "loc": 54,
+        "loc": 50,
         "complexity": 2,
         "fanOut": 4,
         "fanIn": 0,
         "coupling": 4
+      }
+    },
+    {
+      "id": "org.jsoup.integration.FuzzFixesIT",
+      "name": "FuzzFixesIT",
+      "type": "class",
+      "filePath": "src/test/java/org/jsoup/integration/FuzzFixesIT.java",
+      "metrics": {
+        "loc": 51,
+        "complexity": 7,
+        "fanOut": 4,
+        "fanIn": 1,
+        "coupling": 5
       }
     },
     {
@@ -1251,11 +1264,11 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/select/QueryParserTest.java",
       "metrics": {
-        "loc": 58,
+        "loc": 71,
         "complexity": 3,
-        "fanOut": 4,
+        "fanOut": 6,
         "fanIn": 0,
-        "coupling": 4
+        "coupling": 6
       }
     },
     {
@@ -1277,7 +1290,7 @@
       "type": "class",
       "filePath": "src/test/java/org/jsoup/select/SelectorTest.java",
       "metrics": {
-        "loc": 789,
+        "loc": 801,
         "complexity": 6,
         "fanOut": 6,
         "fanIn": 0,
@@ -1810,6 +1823,11 @@
     {
       "source": "org.jsoup.nodes.Attribute",
       "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.XmlDeclaration",
+      "target": "org.jsoup.nodes.Entities",
       "type": "calls"
     },
     {
@@ -2599,7 +2617,17 @@
     },
     {
       "source": "org.jsoup.parser.ParserTest",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.ParserTest",
       "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.ParserTest",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -2625,6 +2653,11 @@
     {
       "source": "org.jsoup.parser.TokenQueueTest",
       "target": "org.jsoup.parser.TokenQueue",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokenQueueTest",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -2974,6 +3007,11 @@
     },
     {
       "source": "org.jsoup.nodes.EntitiesTest",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.EntitiesTest",
       "target": "org.jsoup.nodes.Entities",
       "type": "calls"
     },
@@ -3045,6 +3083,11 @@
     {
       "source": "org.jsoup.nodes.AttributesTest",
       "target": "org.jsoup.nodes.Attribute",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.AttributesTest",
+      "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
@@ -3414,6 +3457,26 @@
     },
     {
       "source": "org.jsoup.integration.FuzzFixesTest",
+      "target": "org.jsoup.integration.FuzzFixesIT",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.FuzzFixesIT",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.FuzzFixesIT",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.FuzzFixesIT",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.FuzzFixesIT",
       "target": "org.jsoup.integration.ParseTest",
       "type": "calls"
     },
@@ -3669,12 +3732,22 @@
     },
     {
       "source": "org.jsoup.select.QueryParserTest",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.QueryParserTest",
       "target": "org.jsoup.parser.Parser",
       "type": "calls"
     },
     {
       "source": "org.jsoup.select.QueryParserTest",
       "target": "org.jsoup.parser.Tag",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.QueryParserTest",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {

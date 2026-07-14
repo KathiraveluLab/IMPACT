@@ -14,13 +14,13 @@
     "target": "target"
   },
   "projectName": "javapoet",
-  "version": "javapoet-1.13.0",
+  "version": "javapoet-1.12.0",
   "language": "Java",
-  "extractedAt": "2026-07-14T12:22:08.404301Z",
+  "extractedAt": "2026-07-14T12:29:51.247551Z",
   "systemMetrics": {
-    "totalLinesOfCode": 3774,
+    "totalLinesOfCode": 3758,
     "totalClasses": 10,
-    "averageCoupling": 1.0
+    "averageCoupling": 0.8
   },
   "nodes": [
     {
@@ -45,8 +45,8 @@
         "loc": 2390,
         "complexity": 67,
         "fanOut": 1,
-        "fanIn": 2,
-        "coupling": 3
+        "fanIn": 1,
+        "coupling": 2
       }
     },
     {
@@ -55,11 +55,11 @@
       "type": "class",
       "filePath": "src/test/java/com/squareup/javapoet/ParameterSpecTest.java",
       "metrics": {
-        "loc": 131,
-        "complexity": 6,
-        "fanOut": 1,
+        "loc": 115,
+        "complexity": 5,
+        "fanOut": 0,
         "fanIn": 0,
-        "coupling": 1
+        "coupling": 0
       }
     },
     {
@@ -158,11 +158,6 @@
     {
       "source": "com.squareup.javapoet.Foo",
       "target": "com.squareup.javapoet.TypeName",
-      "type": "calls"
-    },
-    {
-      "source": "com.squareup.javapoet.ParameterSpecTest",
-      "target": "com.squareup.javapoet.Foo",
       "type": "calls"
     },
     {
