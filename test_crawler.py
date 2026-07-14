@@ -3,18 +3,24 @@ import os
 import sqlite3
 import shutil
 import tempfile
+import json
+import time
 from unittest.mock import patch, MagicMock
 
 # Temporarily override DB path for testing before importing
+import core.crawler
 import core.ecosystem_crawler as ec
 
 TEST_DB_PATH = "test_projects/github_benchmarks/test_crawler_queue.db"
+core.crawler.DB_PATH = TEST_DB_PATH
+ec.DB_PATH = TEST_DB_PATH
 
 class TestGitHubEcosystemCrawler(unittest.TestCase):
 
     def setUp(self):
         # Override the database path in the module to avoid mutating the main crawler database
-        self.original_db_path = ec.DB_PATH
+        self.original_db_path = core.crawler.DB_PATH
+        core.crawler.DB_PATH = TEST_DB_PATH
         ec.DB_PATH = TEST_DB_PATH
         if os.path.exists(TEST_DB_PATH):
             os.remove(TEST_DB_PATH)
@@ -22,6 +28,7 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
         self.crawler = ec.GitHubEcosystemCrawler(github_token="fake_token")
 
     def tearDown(self):
+        core.crawler.DB_PATH = self.original_db_path
         ec.DB_PATH = self.original_db_path
         if os.path.exists(TEST_DB_PATH):
             os.remove(TEST_DB_PATH)
@@ -85,7 +92,7 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
         self.assertEqual(error_msg, "Timeout reading zip")
         conn.close()
 
-    @patch("core.ecosystem_crawler.GitHubEcosystemCrawler.make_github_request")
+    @patch("core.crawler.network.make_github_request")
     def test_repository_discovery(self, mock_request):
         """Test parsing and queueing search discovery results."""
         fake_api_response = {
@@ -94,7 +101,7 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
                 {"full_name": "junit-team/junit5", "stargazers_count": 9000}
             ]
         }
-        mock_request.return_value = (json_bytes := bytes(ec.json.dumps(fake_api_response), "utf-8"), None)
+        mock_request.return_value = (json_bytes := bytes(json.dumps(fake_api_response), "utf-8"), None)
         
         self.crawler.discover_java_repos(min_stars=5000, max_pages=1)
 
@@ -129,7 +136,7 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
         mock_headers = MagicMock()
         mock_headers.get.side_effect = lambda key: {
             "X-RateLimit-Remaining": "0",
-            "X-RateLimit-Reset": str(int(ec.time.time()) + 1)  # reset in 1 second
+            "X-RateLimit-Reset": str(int(time.time()) + 1)  # reset in 1 second
         }.get(key)
 
         fake_error = HTTPError("url", 403, "Forbidden", mock_headers, BytesIO(b"{}"))
