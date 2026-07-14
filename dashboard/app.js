@@ -304,16 +304,26 @@ function resetLayout() {
 
     nodes = currentGraph.nodes.map((n, i) => {
         const angle = (i / currentGraph.nodes.length) * Math.PI * 2;
-        const radius = Math.min(w, h) * 0.25;
-        // Keep previous coordinates if available
-        const prev = nodes.find(pn => pn.id === n.id);
-        return {
-            ...n,
-            x: prev ? prev.x : w / 2 + Math.cos(angle) * radius,
-            y: prev ? prev.y : h / 2 + Math.sin(angle) * radius,
-            vx: 0,
-            vy: 0
-        };
+        const radius = Math.min(w, h) * (layoutMode === "circular" ? 0.35 : 0.25);
+        if (layoutMode === "circular") {
+            return {
+                ...n,
+                x: w / 2 + Math.cos(angle) * radius,
+                y: h / 2 + Math.sin(angle) * radius,
+                vx: 0,
+                vy: 0
+            };
+        } else {
+            // Keep previous coordinates if available
+            const prev = nodes.find(pn => pn.id === n.id);
+            return {
+                ...n,
+                x: prev ? prev.x : w / 2 + Math.cos(angle) * radius,
+                y: prev ? prev.y : h / 2 + Math.sin(angle) * radius,
+                vx: 0,
+                vy: 0
+            };
+        }
     });
 
     const diff = computeDiff();
@@ -346,6 +356,7 @@ function resetLayout() {
 
 // Physics engine tick
 function tickPhysics() {
+    if (layoutMode === "circular") return;
     const w = canvas.width;
     const h = canvas.height;
     
@@ -627,8 +638,28 @@ function runAnalysis() {
 
     setTimeout(() => {
         const diff = computeDiff();
-        const hasCycleViolation = intents.some(i => i.includes("cycle")) && diff.newCycles.length > 0;
-        
+        let violations = [];
+
+        intents.forEach(intent => {
+            if (intent.type === "no-cycles") {
+                if (diff.newCycles.length > 0) {
+                    violations.push(`New cyclic dependencies detected (${diff.newCycles.length} cycles). Breaches 'Avoid cyclic dependencies'.`);
+                }
+            } else if (intent.type === "max-coupling") {
+                const limit = intent.limit;
+                const offendingNodes = currentGraph.nodes.filter(n => (n.metrics.coupling || 0) > limit);
+                if (offendingNodes.length > 0) {
+                    violations.push(`Max Coupling of ${limit} exceeded by: ${offendingNodes.map(n => `${n.name} (Coupling: ${n.metrics.coupling})`).join(", ")}.`);
+                }
+            } else if (intent.type === "max-inheritance") {
+                const limit = intent.limit;
+                const offendingNodes = currentGraph.nodes.filter(n => (n.metrics.inheritanceDepth || 0) > limit);
+                if (offendingNodes.length > 0) {
+                    violations.push(`Max Inheritance Depth of ${limit} exceeded by: ${offendingNodes.map(n => `${n.name} (Depth: ${n.metrics.inheritanceDepth})`).join(", ")}.`);
+                }
+            }
+        });
+
         let report = `Architectural Evolution Report (Version ${baseGraph.version} -> ${currentGraph.version})
 ===========================================================
 1. Structural Changes:
@@ -646,19 +677,21 @@ function runAnalysis() {
 
 4. Intent Conformance Evaluation:`;
 
-        if (hasCycleViolation) {
-            report += `\n   * VIOLATION: New cyclic dependencies detected (${diff.newCycles.length} new cycles). This breaches the intent to 'avoid cyclic dependencies'.`;
+        if (violations.length > 0) {
+            violations.forEach(v => {
+                report += `\n   * VIOLATION: ${v}`;
+            });
             complianceBadge.innerText = "Violation Detected";
             complianceBadge.className = "compliance-badge violation";
         } else {
-            report += `\n   * All intents successfully satisfied. No modularity or cycle violations detected.`;
+            report += `\n   * All intents successfully satisfied. No modularity, coupling, or cycle violations detected.`;
             complianceBadge.innerText = "Compliant";
             complianceBadge.className = "compliance-badge compliant";
         }
 
         report += `\n\n5. Recommendations:`;
-        if (diff.newCycles.length > 0) {
-            report += `\n   * Action required: Break the newly introduced dependency cycle(s) to preserve modular boundaries. Link Database back to Service violates layers design.`;
+        if (violations.length > 0) {
+            report += `\n   * Action required: Address the architectural violation(s) to maintain compliance.`;
         } else {
             report += `\n   * Codebase structure is clean. Modularity is preserved.`;
         }
