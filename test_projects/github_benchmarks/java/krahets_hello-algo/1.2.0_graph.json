@@ -1,0 +1,2003 @@
+{
+  "@context": {
+    "@vocab": "https://w3id.org/impact/ontology#",
+    "projectName": "projectName",
+    "version": "versionString",
+    "language": "language",
+    "extractedAt": "extractedAt",
+    "systemMetrics": "systemMetrics",
+    "nodes": "hasEntity",
+    "edges": "hasDependency",
+    "id": "@id",
+    "type": "@type",
+    "source": "source",
+    "target": "target"
+  },
+  "projectName": "hello-algo",
+  "version": "1.2.0",
+  "language": "Java",
+  "extractedAt": "2026-07-14T12:48:21.702172Z",
+  "systemMetrics": {
+    "totalLinesOfCode": 7626,
+    "totalClasses": 108,
+    "averageCoupling": 2.111111111111111
+  },
+  "nodes": [
+    {
+      "id": "chapter_hashing.built_in_hash",
+      "name": "built_in_hash",
+      "type": "class",
+      "filePath": "codes/java/chapter_hashing/built_in_hash.java",
+      "metrics": {
+        "loc": 30,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_hashing.Pair",
+      "name": "Pair",
+      "type": "class",
+      "filePath": "codes/java/chapter_hashing/array_hash_map.java",
+      "metrics": {
+        "loc": 117,
+        "complexity": 13,
+        "fanOut": 1,
+        "fanIn": 6,
+        "coupling": 7
+      }
+    },
+    {
+      "id": "chapter_hashing.ArrayHashMap",
+      "name": "ArrayHashMap",
+      "type": "class",
+      "filePath": "codes/java/chapter_hashing/array_hash_map.java",
+      "metrics": {
+        "loc": 117,
+        "complexity": 13,
+        "fanOut": 1,
+        "fanIn": 2,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_hashing.array_hash_map",
+      "name": "array_hash_map",
+      "type": "class",
+      "filePath": "codes/java/chapter_hashing/array_hash_map.java",
+      "metrics": {
+        "loc": 117,
+        "complexity": 13,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_hashing.simple_hash",
+      "name": "simple_hash",
+      "type": "class",
+      "filePath": "codes/java/chapter_hashing/simple_hash.java",
+      "metrics": {
+        "loc": 55,
+        "complexity": 5,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_hashing.HashMapOpenAddressing",
+      "name": "HashMapOpenAddressing",
+      "type": "class",
+      "filePath": "codes/java/chapter_hashing/hash_map_open_addressing.java",
+      "metrics": {
+        "loc": 118,
+        "complexity": 19,
+        "fanOut": 1,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_hashing.hash_map_open_addressing",
+      "name": "hash_map_open_addressing",
+      "type": "class",
+      "filePath": "codes/java/chapter_hashing/hash_map_open_addressing.java",
+      "metrics": {
+        "loc": 118,
+        "complexity": 19,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_hashing.HashMapChaining",
+      "name": "HashMapChaining",
+      "type": "class",
+      "filePath": "codes/java/chapter_hashing/hash_map_chaining.java",
+      "metrics": {
+        "loc": 121,
+        "complexity": 14,
+        "fanOut": 1,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_hashing.hash_map_chaining",
+      "name": "hash_map_chaining",
+      "type": "class",
+      "filePath": "codes/java/chapter_hashing/hash_map_chaining.java",
+      "metrics": {
+        "loc": 121,
+        "complexity": 14,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_hashing.hash_map",
+      "name": "hash_map",
+      "type": "class",
+      "filePath": "codes/java/chapter_hashing/hash_map.java",
+      "metrics": {
+        "loc": 42,
+        "complexity": 4,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.min_cost_climbing_stairs_dp",
+      "name": "min_cost_climbing_stairs_dp",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/min_cost_climbing_stairs_dp.java",
+      "metrics": {
+        "loc": 43,
+        "complexity": 7,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.climbing_stairs_dfs",
+      "name": "climbing_stairs_dfs",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/climbing_stairs_dfs.java",
+      "metrics": {
+        "loc": 24,
+        "complexity": 3,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.min_path_sum",
+      "name": "min_path_sum",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/min_path_sum.java",
+      "metrics": {
+        "loc": 92,
+        "complexity": 18,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.climbing_stairs_dfs_mem",
+      "name": "climbing_stairs_dfs_mem",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/climbing_stairs_dfs_mem.java",
+      "metrics": {
+        "loc": 30,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.knapsack",
+      "name": "knapsack",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/knapsack.java",
+      "metrics": {
+        "loc": 83,
+        "complexity": 15,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.climbing_stairs_dp",
+      "name": "climbing_stairs_dp",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/climbing_stairs_dp.java",
+      "metrics": {
+        "loc": 39,
+        "complexity": 7,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.coin_change",
+      "name": "coin_change",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/coin_change.java",
+      "metrics": {
+        "loc": 54,
+        "complexity": 8,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.climbing_stairs_backtrack",
+      "name": "climbing_stairs_backtrack",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/climbing_stairs_backtrack.java",
+      "metrics": {
+        "loc": 33,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.climbing_stairs_constraint_dp",
+      "name": "climbing_stairs_constraint_dp",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/climbing_stairs_constraint_dp.java",
+      "metrics": {
+        "loc": 29,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.edit_distance",
+      "name": "edit_distance",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/edit_distance.java",
+      "metrics": {
+        "loc": 101,
+        "complexity": 22,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.coin_change_ii",
+      "name": "coin_change_ii",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/coin_change_ii.java",
+      "metrics": {
+        "loc": 50,
+        "complexity": 8,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_dynamic_programming.unbounded_knapsack",
+      "name": "unbounded_knapsack",
+      "type": "class",
+      "filePath": "codes/java/chapter_dynamic_programming/unbounded_knapsack.java",
+      "metrics": {
+        "loc": 47,
+        "complexity": 7,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_graph.graph_bfs",
+      "name": "graph_bfs",
+      "type": "class",
+      "filePath": "codes/java/chapter_graph/graph_bfs.java",
+      "metrics": {
+        "loc": 43,
+        "complexity": 4,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_graph.GraphAdjMat",
+      "name": "GraphAdjMat",
+      "type": "class",
+      "filePath": "codes/java/chapter_graph/graph_adjacency_matrix.java",
+      "metrics": {
+        "loc": 98,
+        "complexity": 17,
+        "fanOut": 1,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_graph.graph_adjacency_matrix",
+      "name": "graph_adjacency_matrix",
+      "type": "class",
+      "filePath": "codes/java/chapter_graph/graph_adjacency_matrix.java",
+      "metrics": {
+        "loc": 98,
+        "complexity": 17,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_graph.graph_dfs",
+      "name": "graph_dfs",
+      "type": "class",
+      "filePath": "codes/java/chapter_graph/graph_dfs.java",
+      "metrics": {
+        "loc": 40,
+        "complexity": 3,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_graph.GraphAdjList",
+      "name": "GraphAdjList",
+      "type": "class",
+      "filePath": "codes/java/chapter_graph/graph_adjacency_list.java",
+      "metrics": {
+        "loc": 92,
+        "complexity": 13,
+        "fanOut": 2,
+        "fanIn": 3,
+        "coupling": 5
+      }
+    },
+    {
+      "id": "chapter_graph.graph_adjacency_list",
+      "name": "graph_adjacency_list",
+      "type": "class",
+      "filePath": "codes/java/chapter_graph/graph_adjacency_list.java",
+      "metrics": {
+        "loc": 92,
+        "complexity": 13,
+        "fanOut": 3,
+        "fanIn": 0,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_sorting.bucket_sort",
+      "name": "bucket_sort",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/bucket_sort.java",
+      "metrics": {
+        "loc": 35,
+        "complexity": 6,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_sorting.merge_sort",
+      "name": "merge_sort",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/merge_sort.java",
+      "metrics": {
+        "loc": 44,
+        "complexity": 8,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_sorting.radix_sort",
+      "name": "radix_sort",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/radix_sort.java",
+      "metrics": {
+        "loc": 50,
+        "complexity": 8,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_sorting.counting_sort",
+      "name": "counting_sort",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/counting_sort.java",
+      "metrics": {
+        "loc": 58,
+        "complexity": 10,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_sorting.selection_sort",
+      "name": "selection_sort",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/selection_sort.java",
+      "metrics": {
+        "loc": 28,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_sorting.heap_sort",
+      "name": "heap_sort",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/heap_sort.java",
+      "metrics": {
+        "loc": 44,
+        "complexity": 9,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_sorting.insertion_sort",
+      "name": "insertion_sort",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/insertion_sort.java",
+      "metrics": {
+        "loc": 25,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_sorting.QuickSort",
+      "name": "QuickSort",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/quick_sort.java",
+      "metrics": {
+        "loc": 129,
+        "complexity": 28,
+        "fanOut": 2,
+        "fanIn": 3,
+        "coupling": 5
+      }
+    },
+    {
+      "id": "chapter_sorting.QuickSortMedian",
+      "name": "QuickSortMedian",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/quick_sort.java",
+      "metrics": {
+        "loc": 129,
+        "complexity": 28,
+        "fanOut": 2,
+        "fanIn": 3,
+        "coupling": 5
+      }
+    },
+    {
+      "id": "chapter_sorting.QuickSortTailCall",
+      "name": "QuickSortTailCall",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/quick_sort.java",
+      "metrics": {
+        "loc": 129,
+        "complexity": 28,
+        "fanOut": 2,
+        "fanIn": 3,
+        "coupling": 5
+      }
+    },
+    {
+      "id": "chapter_sorting.quick_sort",
+      "name": "quick_sort",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/quick_sort.java",
+      "metrics": {
+        "loc": 129,
+        "complexity": 28,
+        "fanOut": 3,
+        "fanIn": 0,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_sorting.bubble_sort",
+      "name": "bubble_sort",
+      "type": "class",
+      "filePath": "codes/java/chapter_sorting/bubble_sort.java",
+      "metrics": {
+        "loc": 45,
+        "complexity": 8,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_computational_complexity.worst_best_time_complexity",
+      "name": "worst_best_time_complexity",
+      "type": "class",
+      "filePath": "codes/java/chapter_computational_complexity/worst_best_time_complexity.java",
+      "metrics": {
+        "loc": 40,
+        "complexity": 6,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_computational_complexity.space_complexity",
+      "name": "space_complexity",
+      "type": "class",
+      "filePath": "codes/java/chapter_computational_complexity/space_complexity.java",
+      "metrics": {
+        "loc": 86,
+        "complexity": 10,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_computational_complexity.time_complexity",
+      "name": "time_complexity",
+      "type": "class",
+      "filePath": "codes/java/chapter_computational_complexity/time_complexity.java",
+      "metrics": {
+        "loc": 138,
+        "complexity": 19,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_computational_complexity.iteration",
+      "name": "iteration",
+      "type": "class",
+      "filePath": "codes/java/chapter_computational_complexity/iteration.java",
+      "metrics": {
+        "loc": 60,
+        "complexity": 11,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_computational_complexity.recursion",
+      "name": "recursion",
+      "type": "class",
+      "filePath": "codes/java/chapter_computational_complexity/recursion.java",
+      "metrics": {
+        "loc": 54,
+        "complexity": 7,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "chapter_backtracking.preorder_traversal_ii_compact",
+      "name": "preorder_traversal_ii_compact",
+      "type": "class",
+      "filePath": "codes/java/chapter_backtracking/preorder_traversal_ii_compact.java",
+      "metrics": {
+        "loc": 41,
+        "complexity": 5,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_backtracking.permutations_i",
+      "name": "permutations_i",
+      "type": "class",
+      "filePath": "codes/java/chapter_backtracking/permutations_i.java",
+      "metrics": {
+        "loc": 38,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_backtracking.n_queens",
+      "name": "n_queens",
+      "type": "class",
+      "filePath": "codes/java/chapter_backtracking/n_queens.java",
+      "metrics": {
+        "loc": 61,
+        "complexity": 11,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_backtracking.preorder_traversal_i_compact",
+      "name": "preorder_traversal_i_compact",
+      "type": "class",
+      "filePath": "codes/java/chapter_backtracking/preorder_traversal_i_compact.java",
+      "metrics": {
+        "loc": 35,
+        "complexity": 4,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_backtracking.subset_sum_ii",
+      "name": "subset_sum_ii",
+      "type": "class",
+      "filePath": "codes/java/chapter_backtracking/subset_sum_ii.java",
+      "metrics": {
+        "loc": 43,
+        "complexity": 6,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_backtracking.permutations_ii",
+      "name": "permutations_ii",
+      "type": "class",
+      "filePath": "codes/java/chapter_backtracking/permutations_ii.java",
+      "metrics": {
+        "loc": 40,
+        "complexity": 5,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_backtracking.preorder_traversal_iii_template",
+      "name": "preorder_traversal_iii_template",
+      "type": "class",
+      "filePath": "codes/java/chapter_backtracking/preorder_traversal_iii_template.java",
+      "metrics": {
+        "loc": 58,
+        "complexity": 8,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_backtracking.subset_sum_i",
+      "name": "subset_sum_i",
+      "type": "class",
+      "filePath": "codes/java/chapter_backtracking/subset_sum_i.java",
+      "metrics": {
+        "loc": 40,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_backtracking.preorder_traversal_iii_compact",
+      "name": "preorder_traversal_iii_compact",
+      "type": "class",
+      "filePath": "codes/java/chapter_backtracking/preorder_traversal_iii_compact.java",
+      "metrics": {
+        "loc": 41,
+        "complexity": 6,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_backtracking.subset_sum_i_naive",
+      "name": "subset_sum_i_naive",
+      "type": "class",
+      "filePath": "codes/java/chapter_backtracking/subset_sum_i_naive.java",
+      "metrics": {
+        "loc": 40,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_tree.binary_tree_dfs",
+      "name": "binary_tree_dfs",
+      "type": "class",
+      "filePath": "codes/java/chapter_tree/binary_tree_dfs.java",
+      "metrics": {
+        "loc": 53,
+        "complexity": 4,
+        "fanOut": 3,
+        "fanIn": 0,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_tree.binary_tree",
+      "name": "binary_tree",
+      "type": "class",
+      "filePath": "codes/java/chapter_tree/binary_tree.java",
+      "metrics": {
+        "loc": 32,
+        "complexity": 1,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_tree.ArrayBinaryTree",
+      "name": "ArrayBinaryTree",
+      "type": "class",
+      "filePath": "codes/java/chapter_tree/array_binary_tree.java",
+      "metrics": {
+        "loc": 106,
+        "complexity": 9,
+        "fanOut": 2,
+        "fanIn": 1,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_tree.array_binary_tree",
+      "name": "array_binary_tree",
+      "type": "class",
+      "filePath": "codes/java/chapter_tree/array_binary_tree.java",
+      "metrics": {
+        "loc": 106,
+        "complexity": 9,
+        "fanOut": 3,
+        "fanIn": 0,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_tree.BinarySearchTree",
+      "name": "BinarySearchTree",
+      "type": "class",
+      "filePath": "codes/java/chapter_tree/binary_search_tree.java",
+      "metrics": {
+        "loc": 119,
+        "complexity": 20,
+        "fanOut": 2,
+        "fanIn": 1,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_tree.binary_search_tree",
+      "name": "binary_search_tree",
+      "type": "class",
+      "filePath": "codes/java/chapter_tree/binary_search_tree.java",
+      "metrics": {
+        "loc": 119,
+        "complexity": 20,
+        "fanOut": 3,
+        "fanIn": 0,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_tree.AVLTree",
+      "name": "AVLTree",
+      "type": "class",
+      "filePath": "codes/java/chapter_tree/avl_tree.java",
+      "metrics": {
+        "loc": 169,
+        "complexity": 19,
+        "fanOut": 2,
+        "fanIn": 1,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_tree.avl_tree",
+      "name": "avl_tree",
+      "type": "class",
+      "filePath": "codes/java/chapter_tree/avl_tree.java",
+      "metrics": {
+        "loc": 169,
+        "complexity": 19,
+        "fanOut": 3,
+        "fanIn": 0,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_tree.binary_tree_bfs",
+      "name": "binary_tree_bfs",
+      "type": "class",
+      "filePath": "codes/java/chapter_tree/binary_tree_bfs.java",
+      "metrics": {
+        "loc": 34,
+        "complexity": 4,
+        "fanOut": 4,
+        "fanIn": 0,
+        "coupling": 4
+      }
+    },
+    {
+      "id": "utils.TreeNode",
+      "name": "TreeNode",
+      "type": "class",
+      "filePath": "codes/java/utils/TreeNode.java",
+      "metrics": {
+        "loc": 49,
+        "complexity": 6,
+        "fanOut": 0,
+        "fanIn": 17,
+        "coupling": 17
+      }
+    },
+    {
+      "id": "utils.Vertex",
+      "name": "Vertex",
+      "type": "class",
+      "filePath": "codes/java/utils/Vertex.java",
+      "metrics": {
+        "loc": 30,
+        "complexity": 3,
+        "fanOut": 0,
+        "fanIn": 4,
+        "coupling": 4
+      }
+    },
+    {
+      "id": "utils.ListNode",
+      "name": "ListNode",
+      "type": "class",
+      "filePath": "codes/java/utils/ListNode.java",
+      "metrics": {
+        "loc": 24,
+        "complexity": 2,
+        "fanOut": 0,
+        "fanIn": 2,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "utils.Trunk",
+      "name": "Trunk",
+      "type": "class",
+      "filePath": "codes/java/utils/PrintUtil.java",
+      "metrics": {
+        "loc": 97,
+        "complexity": 10,
+        "fanOut": 3,
+        "fanIn": 1,
+        "coupling": 4
+      }
+    },
+    {
+      "id": "utils.PrintUtil",
+      "name": "PrintUtil",
+      "type": "class",
+      "filePath": "codes/java/utils/PrintUtil.java",
+      "metrics": {
+        "loc": 97,
+        "complexity": 10,
+        "fanOut": 4,
+        "fanIn": 23,
+        "coupling": 27
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.LinkedListQueue",
+      "name": "LinkedListQueue",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/linkedlist_queue.java",
+      "metrics": {
+        "loc": 84,
+        "complexity": 4,
+        "fanOut": 2,
+        "fanIn": 1,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.linkedlist_queue",
+      "name": "linkedlist_queue",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/linkedlist_queue.java",
+      "metrics": {
+        "loc": 84,
+        "complexity": 4,
+        "fanOut": 3,
+        "fanIn": 0,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.deque",
+      "name": "deque",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/deque.java",
+      "metrics": {
+        "loc": 38,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 5,
+        "coupling": 5
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.queue",
+      "name": "queue",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/queue.java",
+      "metrics": {
+        "loc": 32,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 7,
+        "coupling": 7
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.stack",
+      "name": "stack",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/stack.java",
+      "metrics": {
+        "loc": 32,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 5,
+        "coupling": 5
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.LinkedListStack",
+      "name": "LinkedListStack",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/linkedlist_stack.java",
+      "metrics": {
+        "loc": 79,
+        "complexity": 3,
+        "fanOut": 2,
+        "fanIn": 1,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.linkedlist_stack",
+      "name": "linkedlist_stack",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/linkedlist_stack.java",
+      "metrics": {
+        "loc": 79,
+        "complexity": 3,
+        "fanOut": 3,
+        "fanIn": 0,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.ArrayDeque",
+      "name": "ArrayDeque",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/array_deque.java",
+      "metrics": {
+        "loc": 119,
+        "complexity": 6,
+        "fanOut": 1,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.array_deque",
+      "name": "array_deque",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/array_deque.java",
+      "metrics": {
+        "loc": 119,
+        "complexity": 6,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.ArrayQueue",
+      "name": "ArrayQueue",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/array_queue.java",
+      "metrics": {
+        "loc": 92,
+        "complexity": 5,
+        "fanOut": 1,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.array_queue",
+      "name": "array_queue",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/array_queue.java",
+      "metrics": {
+        "loc": 92,
+        "complexity": 5,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.ArrayStack",
+      "name": "ArrayStack",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/array_stack.java",
+      "metrics": {
+        "loc": 67,
+        "complexity": 3,
+        "fanOut": 1,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.array_stack",
+      "name": "array_stack",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/array_stack.java",
+      "metrics": {
+        "loc": 67,
+        "complexity": 3,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.ListNode",
+      "name": "ListNode",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/linkedlist_deque.java",
+      "metrics": {
+        "loc": 143,
+        "complexity": 10,
+        "fanOut": 2,
+        "fanIn": 6,
+        "coupling": 8
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.LinkedListDeque",
+      "name": "LinkedListDeque",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/linkedlist_deque.java",
+      "metrics": {
+        "loc": 143,
+        "complexity": 10,
+        "fanOut": 2,
+        "fanIn": 2,
+        "coupling": 4
+      }
+    },
+    {
+      "id": "chapter_stack_and_queue.linkedlist_deque",
+      "name": "linkedlist_deque",
+      "type": "class",
+      "filePath": "codes/java/chapter_stack_and_queue/linkedlist_deque.java",
+      "metrics": {
+        "loc": 143,
+        "complexity": 10,
+        "fanOut": 3,
+        "fanIn": 0,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_heap.heap",
+      "name": "heap",
+      "type": "class",
+      "filePath": "codes/java/chapter_heap/heap.java",
+      "metrics": {
+        "loc": 51,
+        "complexity": 1,
+        "fanOut": 1,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_heap.top_k",
+      "name": "top_k",
+      "type": "class",
+      "filePath": "codes/java/chapter_heap/top_k.java",
+      "metrics": {
+        "loc": 31,
+        "complexity": 4,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_heap.MaxHeap",
+      "name": "MaxHeap",
+      "type": "class",
+      "filePath": "codes/java/chapter_heap/my_heap.java",
+      "metrics": {
+        "loc": 119,
+        "complexity": 12,
+        "fanOut": 2,
+        "fanIn": 1,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_heap.my_heap",
+      "name": "my_heap",
+      "type": "class",
+      "filePath": "codes/java/chapter_heap/my_heap.java",
+      "metrics": {
+        "loc": 119,
+        "complexity": 12,
+        "fanOut": 3,
+        "fanIn": 0,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "chapter_searching.binary_search_insertion",
+      "name": "binary_search_insertion",
+      "type": "class",
+      "filePath": "codes/java/chapter_searching/binary_search_insertion.java",
+      "metrics": {
+        "loc": 52,
+        "complexity": 9,
+        "fanOut": 0,
+        "fanIn": 1,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "chapter_searching.binary_search_edge",
+      "name": "binary_search_edge",
+      "type": "class",
+      "filePath": "codes/java/chapter_searching/binary_search_edge.java",
+      "metrics": {
+        "loc": 35,
+        "complexity": 6,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "chapter_searching.hashing_search",
+      "name": "hashing_search",
+      "type": "class",
+      "filePath": "codes/java/chapter_searching/hashing_search.java",
+      "metrics": {
+        "loc": 38,
+        "complexity": 3,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_searching.two_sum",
+      "name": "two_sum",
+      "type": "class",
+      "filePath": "codes/java/chapter_searching/two_sum.java",
+      "metrics": {
+        "loc": 40,
+        "complexity": 6,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_searching.linear_search",
+      "name": "linear_search",
+      "type": "class",
+      "filePath": "codes/java/chapter_searching/linear_search.java",
+      "metrics": {
+        "loc": 37,
+        "complexity": 5,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_searching.binary_search",
+      "name": "binary_search",
+      "type": "class",
+      "filePath": "codes/java/chapter_searching/binary_search.java",
+      "metrics": {
+        "loc": 46,
+        "complexity": 7,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_divide_and_conquer.build_tree",
+      "name": "build_tree",
+      "type": "class",
+      "filePath": "codes/java/chapter_divide_and_conquer/build_tree.java",
+      "metrics": {
+        "loc": 38,
+        "complexity": 3,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "chapter_divide_and_conquer.binary_search_recur",
+      "name": "binary_search_recur",
+      "type": "class",
+      "filePath": "codes/java/chapter_divide_and_conquer/binary_search_recur.java",
+      "metrics": {
+        "loc": 33,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_divide_and_conquer.hanota",
+      "name": "hanota",
+      "type": "class",
+      "filePath": "codes/java/chapter_divide_and_conquer/hanota.java",
+      "metrics": {
+        "loc": 43,
+        "complexity": 2,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_greedy.coin_change_greedy",
+      "name": "coin_change_greedy",
+      "type": "class",
+      "filePath": "codes/java/chapter_greedy/coin_change_greedy.java",
+      "metrics": {
+        "loc": 41,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_greedy.Item",
+      "name": "Item",
+      "type": "class",
+      "filePath": "codes/java/chapter_greedy/fractional_knapsack.java",
+      "metrics": {
+        "loc": 45,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 1,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "chapter_greedy.fractional_knapsack",
+      "name": "fractional_knapsack",
+      "type": "class",
+      "filePath": "codes/java/chapter_greedy/fractional_knapsack.java",
+      "metrics": {
+        "loc": 45,
+        "complexity": 4,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "chapter_greedy.max_capacity",
+      "name": "max_capacity",
+      "type": "class",
+      "filePath": "codes/java/chapter_greedy/max_capacity.java",
+      "metrics": {
+        "loc": 28,
+        "complexity": 3,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_greedy.max_product_cutting",
+      "name": "max_product_cutting",
+      "type": "class",
+      "filePath": "codes/java/chapter_greedy/max_product_cutting.java",
+      "metrics": {
+        "loc": 29,
+        "complexity": 4,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_array_and_linkedlist.array",
+      "name": "array",
+      "type": "class",
+      "filePath": "codes/java/chapter_array_and_linkedlist/array.java",
+      "metrics": {
+        "loc": 80,
+        "complexity": 8,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "chapter_array_and_linkedlist.MyList",
+      "name": "MyList",
+      "type": "class",
+      "filePath": "codes/java/chapter_array_and_linkedlist/my_list.java",
+      "metrics": {
+        "loc": 115,
+        "complexity": 15,
+        "fanOut": 0,
+        "fanIn": 1,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "chapter_array_and_linkedlist.my_list",
+      "name": "my_list",
+      "type": "class",
+      "filePath": "codes/java/chapter_array_and_linkedlist/my_list.java",
+      "metrics": {
+        "loc": 115,
+        "complexity": 15,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "chapter_array_and_linkedlist.list",
+      "name": "list",
+      "type": "class",
+      "filePath": "codes/java/chapter_array_and_linkedlist/list.java",
+      "metrics": {
+        "loc": 53,
+        "complexity": 3,
+        "fanOut": 0,
+        "fanIn": 6,
+        "coupling": 6
+      }
+    },
+    {
+      "id": "chapter_array_and_linkedlist.linked_list",
+      "name": "linked_list",
+      "type": "class",
+      "filePath": "codes/java/chapter_array_and_linkedlist/linked_list.java",
+      "metrics": {
+        "loc": 72,
+        "complexity": 6,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "chapter_hashing.Pair",
+      "target": "chapter_hashing.ArrayHashMap",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_hashing.ArrayHashMap",
+      "target": "chapter_hashing.Pair",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_hashing.array_hash_map",
+      "target": "chapter_hashing.Pair",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_hashing.array_hash_map",
+      "target": "chapter_hashing.ArrayHashMap",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_hashing.HashMapOpenAddressing",
+      "target": "chapter_hashing.Pair",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_hashing.hash_map_open_addressing",
+      "target": "chapter_hashing.Pair",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_hashing.hash_map_open_addressing",
+      "target": "chapter_hashing.HashMapOpenAddressing",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_hashing.HashMapChaining",
+      "target": "chapter_hashing.Pair",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_hashing.hash_map_chaining",
+      "target": "chapter_hashing.Pair",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_hashing.hash_map_chaining",
+      "target": "chapter_hashing.HashMapChaining",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_hashing.hash_map",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.graph_bfs",
+      "target": "chapter_graph.GraphAdjList",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.graph_bfs",
+      "target": "utils.Vertex",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.GraphAdjMat",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.graph_adjacency_matrix",
+      "target": "chapter_graph.GraphAdjMat",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.graph_adjacency_matrix",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.graph_dfs",
+      "target": "chapter_graph.GraphAdjList",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.graph_dfs",
+      "target": "utils.Vertex",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.GraphAdjList",
+      "target": "chapter_array_and_linkedlist.list",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.GraphAdjList",
+      "target": "utils.Vertex",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.graph_adjacency_list",
+      "target": "chapter_graph.GraphAdjList",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.graph_adjacency_list",
+      "target": "chapter_array_and_linkedlist.list",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_graph.graph_adjacency_list",
+      "target": "utils.Vertex",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_sorting.QuickSort",
+      "target": "chapter_sorting.QuickSortMedian",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_sorting.QuickSort",
+      "target": "chapter_sorting.QuickSortTailCall",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_sorting.QuickSortMedian",
+      "target": "chapter_sorting.QuickSortTailCall",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_sorting.QuickSortMedian",
+      "target": "chapter_sorting.QuickSort",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_sorting.QuickSortTailCall",
+      "target": "chapter_sorting.QuickSortMedian",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_sorting.QuickSortTailCall",
+      "target": "chapter_sorting.QuickSort",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_sorting.quick_sort",
+      "target": "chapter_sorting.QuickSortTailCall",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_sorting.quick_sort",
+      "target": "chapter_sorting.QuickSortMedian",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_sorting.quick_sort",
+      "target": "chapter_sorting.QuickSort",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_computational_complexity.space_complexity",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_computational_complexity.space_complexity",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_computational_complexity.recursion",
+      "target": "chapter_stack_and_queue.stack",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_backtracking.preorder_traversal_ii_compact",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_backtracking.preorder_traversal_ii_compact",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_backtracking.preorder_traversal_i_compact",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_backtracking.preorder_traversal_i_compact",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_backtracking.preorder_traversal_iii_template",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_backtracking.preorder_traversal_iii_template",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_backtracking.preorder_traversal_iii_compact",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_backtracking.preorder_traversal_iii_compact",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_tree_dfs",
+      "target": "chapter_array_and_linkedlist.list",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_tree_dfs",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_tree_dfs",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_tree",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_tree",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.ArrayBinaryTree",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.ArrayBinaryTree",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.array_binary_tree",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.array_binary_tree",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.array_binary_tree",
+      "target": "chapter_tree.ArrayBinaryTree",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.BinarySearchTree",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.BinarySearchTree",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_search_tree",
+      "target": "chapter_tree.BinarySearchTree",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_search_tree",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_search_tree",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.AVLTree",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.AVLTree",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.avl_tree",
+      "target": "chapter_tree.AVLTree",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.avl_tree",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.avl_tree",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_tree_bfs",
+      "target": "chapter_stack_and_queue.queue",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_tree_bfs",
+      "target": "chapter_array_and_linkedlist.list",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_tree_bfs",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_tree.binary_tree_bfs",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "utils.Trunk",
+      "target": "chapter_array_and_linkedlist.list",
+      "type": "calls"
+    },
+    {
+      "source": "utils.Trunk",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "utils.Trunk",
+      "target": "utils.ListNode",
+      "type": "calls"
+    },
+    {
+      "source": "utils.PrintUtil",
+      "target": "chapter_array_and_linkedlist.list",
+      "type": "calls"
+    },
+    {
+      "source": "utils.PrintUtil",
+      "target": "utils.Trunk",
+      "type": "calls"
+    },
+    {
+      "source": "utils.PrintUtil",
+      "target": "utils.ListNode",
+      "type": "calls"
+    },
+    {
+      "source": "utils.PrintUtil",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.LinkedListQueue",
+      "target": "chapter_stack_and_queue.queue",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.LinkedListQueue",
+      "target": "chapter_stack_and_queue.ListNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.linkedlist_queue",
+      "target": "chapter_stack_and_queue.queue",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.linkedlist_queue",
+      "target": "chapter_stack_and_queue.LinkedListQueue",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.linkedlist_queue",
+      "target": "chapter_stack_and_queue.ListNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.LinkedListStack",
+      "target": "chapter_stack_and_queue.ListNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.LinkedListStack",
+      "target": "chapter_stack_and_queue.stack",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.linkedlist_stack",
+      "target": "chapter_stack_and_queue.ListNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.linkedlist_stack",
+      "target": "chapter_stack_and_queue.LinkedListStack",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.linkedlist_stack",
+      "target": "chapter_stack_and_queue.stack",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.ArrayDeque",
+      "target": "chapter_stack_and_queue.deque",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.array_deque",
+      "target": "chapter_stack_and_queue.deque",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.array_deque",
+      "target": "chapter_stack_and_queue.ArrayDeque",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.ArrayQueue",
+      "target": "chapter_stack_and_queue.queue",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.array_queue",
+      "target": "chapter_stack_and_queue.queue",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.array_queue",
+      "target": "chapter_stack_and_queue.ArrayQueue",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.ArrayStack",
+      "target": "chapter_stack_and_queue.stack",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.array_stack",
+      "target": "chapter_stack_and_queue.ArrayStack",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.array_stack",
+      "target": "chapter_stack_and_queue.stack",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.ListNode",
+      "target": "chapter_stack_and_queue.deque",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.ListNode",
+      "target": "chapter_stack_and_queue.LinkedListDeque",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.LinkedListDeque",
+      "target": "chapter_stack_and_queue.deque",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.LinkedListDeque",
+      "target": "chapter_stack_and_queue.ListNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.linkedlist_deque",
+      "target": "chapter_stack_and_queue.deque",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.linkedlist_deque",
+      "target": "chapter_stack_and_queue.LinkedListDeque",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_stack_and_queue.linkedlist_deque",
+      "target": "chapter_stack_and_queue.ListNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_heap.heap",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_heap.top_k",
+      "target": "chapter_heap.heap",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_heap.top_k",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_heap.MaxHeap",
+      "target": "chapter_stack_and_queue.queue",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_heap.MaxHeap",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_heap.my_heap",
+      "target": "chapter_stack_and_queue.queue",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_heap.my_heap",
+      "target": "chapter_heap.MaxHeap",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_heap.my_heap",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_searching.binary_search_edge",
+      "target": "chapter_searching.binary_search_insertion",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_divide_and_conquer.build_tree",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_divide_and_conquer.build_tree",
+      "target": "utils.TreeNode",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_greedy.fractional_knapsack",
+      "target": "chapter_greedy.Item",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_array_and_linkedlist.my_list",
+      "target": "chapter_array_and_linkedlist.MyList",
+      "type": "calls"
+    },
+    {
+      "source": "chapter_array_and_linkedlist.linked_list",
+      "target": "utils.PrintUtil",
+      "type": "calls"
+    }
+  ]
+}
