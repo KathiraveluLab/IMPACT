@@ -15,18 +15,29 @@ def discover_java_repos(github_token, db_path, min_stars=500, max_pages=3):
             content, _ = network.make_github_request(url, github_token)
             data = json.loads(content.decode("utf-8"))
             
-            conn = sqlite3.connect(db_path)
-            cursor = conn.cursor()
-            
-            for item in data.get("items", []):
-                full_name = item["full_name"]
-                stars = item["stargazers_count"]
-                owner, repo = full_name.split("/")
-                cursor.execute(
-                    "INSERT OR IGNORE INTO queue (owner, repo, stars) VALUES (?, ?, ?)",
-                    (owner, repo, stars)
-                )
-            
+            if db_path.startswith("postgresql://") or db_path.startswith("postgres://"):
+                import psycopg2
+                conn = psycopg2.connect(db_path)
+                cursor = conn.cursor()
+                for item in data.get("items", []):
+                    full_name = item["full_name"]
+                    stars = item["stargazers_count"]
+                    owner, repo = full_name.split("/")
+                    cursor.execute(
+                        "INSERT INTO queue (owner, repo, stars) VALUES (%s, %s, %s) ON CONFLICT (owner, repo) DO NOTHING",
+                        (owner, repo, stars)
+                    )
+            else:
+                conn = sqlite3.connect(db_path)
+                cursor = conn.cursor()
+                for item in data.get("items", []):
+                    full_name = item["full_name"]
+                    stars = item["stargazers_count"]
+                    owner, repo = full_name.split("/")
+                    cursor.execute(
+                        "INSERT OR IGNORE INTO queue (owner, repo, stars) VALUES (?, ?, ?)",
+                        (owner, repo, stars)
+                    )
             conn.commit()
             conn.close()
             print(f"Discovered and queued repositories from search results page {page}.")

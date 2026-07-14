@@ -31,20 +31,24 @@ class GitHubEcosystemCrawler:
         mark_status(repo_id, status, error_msg, self.db_path)
 
     def crawl(self, limit=10):
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, owner, repo FROM queue WHERE status = 'pending' ORDER BY stars DESC LIMIT ?", (limit,))
-        pending = cursor.fetchall()
-        conn.close()
-
-        if not pending:
-            print("No pending repositories in queue database. Run discovery first.")
-            return
-
-        print(f"Starting crawl execution for {len(pending)} repositories...")
-        for repo_id, owner, repo in pending:
+        from core.crawler.database import claim_next_pending
+        
+        print(f"Starting distributed crawl execution (up to {limit} repositories)...")
+        crawled_count = 0
+        for _ in range(limit):
+            claimed = claim_next_pending(self.db_path)
+            if not claimed:
+                break
+            
+            repo_id, owner, repo = claimed
+            crawled_count += 1
             try:
                 self.process_repo(repo_id, owner, repo)
             except Exception as e:
                 print(f"Fatal error processing {owner}/{repo}: {e}")
                 self.mark_status(repo_id, "failed", error_msg=str(e))
+                
+        if crawled_count == 0:
+            print("No pending repositories in queue database. Run discovery first.")
+        else:
+            print(f"Crawl run complete. Processed {crawled_count} repositories.")
