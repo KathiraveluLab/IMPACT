@@ -72,7 +72,7 @@ The `.github/workflows/publish.yml` workflow triggers automatically, builds the
 wheel and source distribution, and publishes them to PyPI. No further action
 needed.
 
-> **Tag format:** tags must match `v[0-9]+.[0-9]+.[0-9]+` (e.g. `v1.0.1`).
+> **Tag format:** tags must start with `v` (e.g. `v1.0.0`, `v1.0.1`).
 > Any other tag format is ignored by the workflow.
 
 ---
