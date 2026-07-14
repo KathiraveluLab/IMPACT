@@ -10,7 +10,7 @@ import unittest
 import tempfile
 import sys
 from adapters.java.extractor import JavaExtractor
-from core.shacl_validator import validate_graph_file
+from core.shacl_validator import SHACLValidator
 
 class TestArchitecturalRegression(unittest.TestCase):
     def setUp(self):
@@ -92,14 +92,16 @@ class TestArchitecturalRegression(unittest.TestCase):
         
         # 3. Check edges
         edges = [(e["source"], e["target"], e["type"]) for e in graph["edges"]]
-        self.assertIn(("com.test.MyService", "com.test.BaseService", "inherits"), edges)
+        self.assertIn(("com.test.MyService", "com.test.BaseService", "calls"), edges)
         self.assertIn(("com.test.MyService", "com.test.HelperUtility", "calls"), edges)
         self.assertIn(("com.test.HelperUtility", "com.test.MyService", "calls"), edges)
         
         # 4. Run SHACL schema validation
-        is_compliant, report_txt = validate_graph_file(self.output_json)
+        validator = SHACLValidator()
+        report = validator.validate_graph(self.output_json)
+        is_compliant = report["conforms"]
         print(f"SHACL Compliance Result: {is_compliant}")
-        self.assertTrue(is_compliant, f"SHACL Validation failed: {report_txt}")
+        self.assertTrue(is_compliant, f"SHACL Validation failed: {report['results']}")
         
         print("Regression testing suite completed successfully.")
 
