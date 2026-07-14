@@ -17,6 +17,12 @@ impact:ClassEntityShape rdf:type sh:NodeShape ;
         sh:datatype xsd:integer ;
         sh:minCount 1 ;
         sh:message "Every ClassEntity must have a cyclomatic complexity metric specified as an integer." ;
+    ] ;
+    sh:property [
+        sh:path impact:inheritanceDepth ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:message "Every ClassEntity must have an inheritance depth metric specified as an integer." ;
     ] .
 
 impact:DependencyShape rdf:type sh:NodeShape ;

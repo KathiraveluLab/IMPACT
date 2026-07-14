@@ -123,6 +123,24 @@ class LLMAgent:
             if "minimize changes" in intent.lower() and (added_nodes > 10 or added_edges > 20):
                 violations.append(f"VIOLATION: High volume of changes detected (added {added_nodes} nodes, {added_edges} edges). This breaches the intent to '{intent}'.")
         
+        # Intent Conflict Resolution (Task 15a/15b)
+        conflict_log = []
+        has_cycle_intent = any("cycle" in i.lower() or "cyclic" in i.lower() for i in intents)
+        has_minimize_changes = any("minimize changes" in i.lower() or "stability" in i.lower() for i in intents)
+        
+        if has_cycle_intent and has_minimize_changes and new_cycles > 0:
+            conflict_log.append(
+                "Conflict detected: The intent to 'Avoid cyclic dependencies' requires refactoring actions (adding/removing classes), "
+                "which contradicts the intent to 'Minimize changes and complexity increase'."
+            )
+            conflict_log.append(
+                "Resolution: Prioritized cycle prevention (Priority 1) over change minimization (Priority 3). "
+                "The system recommends proceeding with refactoring to eliminate circular dependencies."
+            )
+            # Remove change violation warning to avoid confusing the user, since cycle resolution overrides it
+            violations = [v for v in violations if "minimize changes" not in v.lower()]
+            violations.append("RESOLVED: Overrode 'Minimize changes' to allow structural refactoring for cycle removal.")
+
         summary = (
             f"Architectural Evolution Report (Version {diff_report['version_old']} -> {diff_report['version_new']})\n"
             f"===========================================================\n"
@@ -135,16 +153,29 @@ class LLMAgent:
             f"   * New Cycles Detected: {new_cycles}\n"
             f"   * Broken Cycles: {diff_report['broken_cycles_count']}\n\n"
             f"3. Coupling & Complexity Hubs:\n"
-            f"   * Top Coupled Nodes in New Version: {top_hubs}\n\n"
-            f"4. Intent Conformance Evaluation:\n"
+            f"   * Top Coupled Nodes in New Version: {top_hubs}\n"
         )
         
+        # Include coupling anomalies if found by MetricsAgent
+        anomalies = metrics_report.get("coupling_anomalies", [])
+        if anomalies:
+            summary += "   * Outlier Coupling Anomalies Detected:\n"
+            for anom in anomalies:
+                summary += f"     - {anom['id']} (coupling: {anom['coupling']}, Z-score: {anom['z_score']})\n"
+        else:
+            summary += "   * Coupling Anomalies: None (all nodes within standard variance)\n"
+            
+        summary += "\n4. Intent Conformance Evaluation:\n"
         if violations:
             summary += "\n".join([f"   * {v}" for v in violations])
         else:
             summary += "   * All intents successfully satisfied. No modularity or cycle violations detected."
             
-        summary += "\n\n5. Recommendations:\n"
+        if conflict_log:
+            summary += "\n\n5. Intent Conflict Resolution Log:\n"
+            summary += "\n".join([f"   * {c}" for c in conflict_log])
+            
+        summary += "\n\n6. Recommendations:\n"
         if new_cycles > 0:
             summary += "   * Action required: Break the newly introduced dependency cycle(s) to preserve modular boundaries.\n"
         else:

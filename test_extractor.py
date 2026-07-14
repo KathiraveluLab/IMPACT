@@ -201,5 +201,70 @@ public class ApiService {
             f"Expected ApiService->Response.Body edge. Got: {edges}"
         )
 
+    def test_java17_and_inheritance_depth(self):
+        """Verify that record, sealed classes, and inheritance depth are processed correctly."""
+        os.makedirs(os.path.join(self.test_dir, "com", "modern"), exist_ok=True)
+        
+        # We enforce regex fallback mode for Java 17 syntax since javalang parser doesn't support them
+        import adapters.java.extractor
+        original_has_javalang = adapters.java.extractor.HAS_JAVALANG
+        adapters.java.extractor.HAS_JAVALANG = False
+
+        try:
+            shape_code = """package com.modern;
+public sealed class Shape permits Circle, Square {}
+"""
+            circle_code = """package com.modern;
+public final class Circle extends Shape {}
+"""
+            square_code = """package com.modern;
+public final class Square extends Shape {}
+"""
+            logger_code = """package com.modern;
+public class AuditLogger {}
+"""
+            processor_code = """package com.modern;
+public record PaymentProcessor(Circle circle, AuditLogger logger) {}
+"""
+            with open(os.path.join(self.test_dir, "com", "modern", "Shape.java"), "w") as f:
+                f.write(shape_code)
+            with open(os.path.join(self.test_dir, "com", "modern", "Circle.java"), "w") as f:
+                f.write(circle_code)
+            with open(os.path.join(self.test_dir, "com", "modern", "Square.java"), "w") as f:
+                f.write(square_code)
+            with open(os.path.join(self.test_dir, "com", "modern", "AuditLogger.java"), "w") as f:
+                f.write(logger_code)
+            with open(os.path.join(self.test_dir, "com", "modern", "PaymentProcessor.java"), "w") as f:
+                f.write(processor_code)
+
+            extractor = JavaExtractor("ModernProject", "1.0")
+            extractor.extract(self.test_dir, self.output_file)
+
+            self.assertTrue(os.path.exists(self.output_file))
+            with open(self.output_file, "r") as f:
+                data = json.load(f)
+
+            nodes = {n["id"]: n for n in data["nodes"]}
+            self.assertIn("com.modern.Shape", nodes)
+            self.assertIn("com.modern.Circle", nodes)
+            self.assertIn("com.modern.Square", nodes)
+            self.assertIn("com.modern.AuditLogger", nodes)
+            self.assertIn("com.modern.PaymentProcessor", nodes)
+
+            # Test Inheritance Depth
+            self.assertEqual(nodes["com.modern.Shape"]["metrics"]["inheritanceDepth"], 0)
+            self.assertEqual(nodes["com.modern.Circle"]["metrics"]["inheritanceDepth"], 1)
+            self.assertEqual(nodes["com.modern.Square"]["metrics"]["inheritanceDepth"], 1)
+
+            # Test dependencies from permits / records
+            edges = data["edges"]
+            # PaymentProcessor record depends on parameters: Circle and AuditLogger
+            self.assertTrue(any(e["source"] == "com.modern.PaymentProcessor" and e["target"] == "com.modern.Circle" for e in edges))
+            self.assertTrue(any(e["source"] == "com.modern.PaymentProcessor" and e["target"] == "com.modern.AuditLogger" for e in edges))
+            # Shape permits Circle and Square, should have dependency references
+            self.assertTrue(any(e["source"] == "com.modern.Shape" and e["target"] == "com.modern.Circle" for e in edges))
+        finally:
+            adapters.java.extractor.HAS_JAVALANG = original_has_javalang
+
 if __name__ == "__main__":
     unittest.main()

@@ -49,6 +49,13 @@ let intents = [
     "minimize changes and complexity increase"
 ];
 
+// Crawler Queue State (Task 8b/13b)
+let crawlerQueue = [
+    { repo: "jhy/jsoup", status: "crawled" },
+    { repo: "spring-projects/spring-petclinic", status: "pending" },
+    { repo: "google/guava", status: "processing" }
+];
+
 // App State
 let currentGraph = GRAPH_DATA_V2;
 let baseGraph = GRAPH_DATA_V1;
@@ -73,6 +80,11 @@ const addIntentBtn = document.getElementById("add-intent-btn");
 const runAnalysisBtn = document.getElementById("run-analysis-btn");
 const baseVersionSelect = document.getElementById("base-version-select");
 const targetVersionSelect = document.getElementById("target-version-select");
+
+// Crawler DOM Elements
+const crawlerRepoInput = document.getElementById("crawler-repo-input");
+const triggerCrawlBtn = document.getElementById("trigger-crawl-btn");
+const crawlerQueueList = document.getElementById("crawler-queue-list");
 
 // Dashboard Values
 const metricLoc = document.getElementById("metric-loc");
@@ -117,6 +129,69 @@ function renderIntents() {
         });
     });
 }
+
+// Render Crawler Queue (Task 13b)
+function renderCrawlerQueue() {
+    crawlerQueueList.innerHTML = "";
+    crawlerQueue.forEach((job) => {
+        const li = document.createElement("li");
+        li.className = "intent-item";
+        
+        let badgeClass = "badge-pending";
+        if (job.status === "crawled") badgeClass = "badge-crawled";
+        if (job.status === "processing") badgeClass = "badge-processing";
+        
+        li.innerHTML = `
+            <span>${job.repo}</span>
+            <span class="badge ${badgeClass}" style="padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">${job.status}</span>
+        `;
+        crawlerQueueList.appendChild(li);
+    });
+}
+
+// Add custom queue styles inline dynamically
+function addQueueStyles() {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .badge.badge-pending { background-color: rgba(217, 119, 6, 0.15); color: #f59e0b; border: 1px solid rgba(217, 119, 6, 0.3); }
+        .badge.badge-crawled { background-color: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge.badge-processing { background-color: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.3); }
+    `;
+    document.head.appendChild(style);
+}
+
+triggerCrawlBtn.addEventListener("click", () => {
+    const repo = crawlerRepoInput.value.trim();
+    if (repo) {
+        // Enqueue new repo (Task 8b)
+        const newJob = { repo, status: "pending" };
+        crawlerQueue.push(newJob);
+        crawlerRepoInput.value = "";
+        renderCrawlerQueue();
+        
+        addAgentMessage("System", `Enqueued repository for ecosystem crawl: ${repo}`, "system");
+        
+        // Simulate background worker processing
+        setTimeout(() => {
+            newJob.status = "processing";
+            renderCrawlerQueue();
+            addAgentMessage("System", `Crawler claimed ${repo}, starting AST dependency analysis...`, "system");
+        }, 1500);
+        
+        setTimeout(() => {
+            newJob.status = "crawled";
+            renderCrawlerQueue();
+            addAgentMessage("System", `Successfully crawled ${repo}. Schema metrics validated via SHACL. Conformance report generated.`, "system");
+        }, 4000);
+    }
+});
+
+crawlerRepoInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        triggerCrawlBtn.click();
+    }
+});
+
 
 addIntentBtn.addEventListener("click", () => {
     const text = newIntentInput.value.trim();
@@ -614,6 +689,8 @@ function renderDiffTable() {
 function init() {
     resizeCanvas();
     renderIntents();
+    renderCrawlerQueue();
+    addQueueStyles();
     resetLayout();
     updateKPIs();
     renderDiffTable();

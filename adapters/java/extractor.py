@@ -78,6 +78,14 @@ class JavaExtractor:
                         
                         imports = [imp.path for imp in tree.imports]
                         
+                        parent_name = None
+                        if hasattr(t, "extends") and t.extends:
+                            if isinstance(t.extends, list):
+                                if t.extends:
+                                    parent_name = t.extends[0].name
+                            elif hasattr(t.extends, "name"):
+                                parent_name = t.extends.name
+
                         class_details[fqcn] = {
                             "name": class_name,
                             "package": package_name,
@@ -87,7 +95,8 @@ class JavaExtractor:
                             "content": content,
                             "imports": imports,
                             "ast_references": list(references),
-                            "use_ast": True
+                            "use_ast": True,
+                            "extends": parent_name
                         }
                         project_classes.add(fqcn)
                         class_name_to_fqcn.setdefault(class_name, set()).add(fqcn)
@@ -129,27 +138,135 @@ class JavaExtractor:
                     pass
 
             if not parsed_ast:
-                # Regex Fallback
+                # Regex Fallback with Java 17+ record / sealed class support
                 package_match = re.search(r"package\s+([\w\.]+);", content)
                 package_name = package_match.group(1) if package_match else ""
 
-                class_match = re.search(r"\b(?:class|interface|enum|record)\s+(\w+)", content)
-                if not class_match:
-                    continue
-                class_name = class_match.group(1)
-                fqcn = f"{package_name}.{class_name}" if package_name else class_name
+                # 1. Look for Java 17+ record declarations
+                record_matches = re.finditer(r"\brecord\s+(\w+)\s*\((.*?)\)", content)
+                for rm in record_matches:
+                    class_name = rm.group(1)
+                    params = rm.group(2)
+                    fqcn = f"{package_name}.{class_name}" if package_name else class_name
+                    
+                    # Extract dependencies from record parameters (e.g. Type param1)
+                    references = set()
+                    for param in params.split(","):
+                        param = param.strip()
+                        if param:
+                            parts = param.split()
+                            if len(parts) >= 2:
+                                type_name = parts[-2]
+                                type_name = re.sub(r"<.*?>", "", type_name) # clean generics
+                                references.add(type_name)
 
-                class_details[fqcn] = {
-                    "name": class_name,
-                    "package": package_name,
-                    "filePath": os.path.relpath(filepath, src_dir),
-                    "loc": loc,
-                    "complexity": complexity,
-                    "content": content,
-                    "use_ast": False
-                }
-                project_classes.add(fqcn)
-                class_name_to_fqcn.setdefault(class_name, set()).add(fqcn)
+                    class_details[fqcn] = {
+                        "name": class_name,
+                        "package": package_name,
+                        "filePath": os.path.relpath(filepath, src_dir),
+                        "loc": loc,
+                        "complexity": complexity,
+                        "content": content,
+                        "imports": [],
+                        "ast_references": list(references),
+                        "use_ast": False,
+                        "extends": None
+                    }
+                    project_classes.add(fqcn)
+                    class_name_to_fqcn.setdefault(class_name, set()).add(fqcn)
+
+                # 2. Look for sealed/non-sealed class or interface declarations
+                sealed_matches = re.finditer(r"\b(?:sealed\s+|non-sealed\s+)?(?:class|interface|enum)\s+(\w+)(?:\s+extends\s+([\w\.]+))?(?:\s+implements\s+([\w\.,\s]+))?(?:\s+permits\s+([\w\.,\s]+))?", content)
+                for sm in sealed_matches:
+                    class_name = sm.group(1)
+                    if class_name == "record":
+                        continue
+                    extends_val = sm.group(2)
+                    permits_val = sm.group(4)
+                    
+                    fqcn = f"{package_name}.{class_name}" if package_name else class_name
+                    if fqcn in class_details:
+                        continue # already registered (e.g., as a record)
+
+                    references = set()
+                    if permits_val:
+                        for p in permits_val.split(","):
+                            references.add(p.strip())
+
+                    class_details[fqcn] = {
+                        "name": class_name,
+                        "package": package_name,
+                        "filePath": os.path.relpath(filepath, src_dir),
+                        "loc": loc,
+                        "complexity": complexity,
+                        "content": content,
+                        "imports": [],
+                        "ast_references": list(references),
+                        "use_ast": False,
+                        "extends": extends_val
+                    }
+                    project_classes.add(fqcn)
+                    class_name_to_fqcn.setdefault(class_name, set()).add(fqcn)
+
+        # Compute inheritance depth for all classes
+        inheritance_depths = {}
+        def get_depth(fqcn_key, visited=None):
+            if visited is None:
+                visited = set()
+            if fqcn_key in visited:
+                return 0
+            visited.add(fqcn_key)
+            if fqcn_key in inheritance_depths:
+                return inheritance_depths[fqcn_key]
+            
+            details = class_details.get(fqcn_key)
+            if not details:
+                return 0
+            
+            parent_name = details.get("extends")
+            if not parent_name:
+                inheritance_depths[fqcn_key] = 0
+                return 0
+            
+            parent_fqcn = None
+            # Check explicit imports
+            for imp in details.get("imports", []):
+                if imp.endswith(f".{parent_name}"):
+                    if imp in project_classes:
+                        parent_fqcn = imp
+                        break
+            
+            # Check same package
+            if not parent_fqcn:
+                candidate = f"{details['package']}.{parent_name}" if details['package'] else parent_name
+                if candidate in project_classes:
+                    parent_fqcn = candidate
+            
+            # Check wildcard imports
+            if not parent_fqcn:
+                for imp in details.get("imports", []):
+                    if imp.endswith(".*"):
+                        candidate = f"{imp[:-2]}.{parent_name}"
+                        if candidate in project_classes:
+                            parent_fqcn = candidate
+                            break
+            
+            # Global fallback
+            if not parent_fqcn and parent_name in class_name_to_fqcn:
+                candidates = class_name_to_fqcn[parent_name]
+                if len(candidates) == 1:
+                    parent_fqcn = list(candidates)[0]
+            
+            if parent_fqcn:
+                d = 1 + get_depth(parent_fqcn, visited)
+                inheritance_depths[fqcn_key] = d
+                return d
+            else:
+                inheritance_depths[fqcn_key] = 1 # parent outside project
+                return 1
+
+        for f_key in class_details:
+            get_depth(f_key)
 
         # Second pass: resolve dependencies
         for fqcn, details in class_details.items():
@@ -261,7 +378,8 @@ class JavaExtractor:
                 "metrics": {
                     "loc": details["loc"],
                     "complexity": details["complexity"],
-                    "fanOut": len(dependencies)
+                    "fanOut": len(dependencies),
+                    "inheritanceDepth": inheritance_depths.get(fqcn, 0)
                 }
             }
 

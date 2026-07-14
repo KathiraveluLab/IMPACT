@@ -36,6 +36,11 @@ class SHACLValidator:
                 conforms = False
                 results.append(f"Violation [{n_id}]: ClassEntity is missing a cyclomatic complexity metric.")
 
+            # Check sh:path impact:inheritanceDepth
+            if "inheritanceDepth" not in metrics:
+                conforms = False
+                results.append(f"Violation [{n_id}]: ClassEntity is missing an inheritance depth metric.")
+
         # Validate edges against DependencyShape
         for edge in data.get("edges", []):
             source = edge.get("source")

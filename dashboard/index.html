@@ -32,6 +32,19 @@
                     </select>
                 </div>
             </div>
+            
+            <div class="sidebar-section">
+                <h3>Ecosystem Crawler Queue</h3>
+                <div class="intent-input-group">
+                    <input type="text" id="crawler-repo-input" placeholder="owner/repo (e.g. jhy/jsoup)">
+                    <button id="trigger-crawl-btn">Crawl</button>
+                </div>
+                <div class="queue-status-widget">
+                    <ul class="intent-list" id="crawler-queue-list" style="max-height: 180px;">
+                        <!-- Dynamically populated -->
+                    </ul>
+                </div>
+            </div>
 
             <div class="sidebar-section flex-grow">
                 <h3>Architectural Intents</h3>

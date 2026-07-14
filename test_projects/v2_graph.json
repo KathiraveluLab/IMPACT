@@ -35,7 +35,8 @@
         "fanOut": 0,
         "fanIn": 0,
         "coupling": 0,
-        "staticAnalysisViolationsCount": 0
+        "staticAnalysisViolationsCount": 0,
+        "inheritanceDepth": 0
       },
       "staticAnalysisViolations": []
     },
@@ -50,7 +51,8 @@
         "fanOut": 1,
         "fanIn": 1,
         "coupling": 2,
-        "staticAnalysisViolationsCount": 0
+        "staticAnalysisViolationsCount": 0,
+        "inheritanceDepth": 0
       },
       "staticAnalysisViolations": []
     },
@@ -65,7 +67,8 @@
         "fanOut": 1,
         "fanIn": 1,
         "coupling": 2,
-        "staticAnalysisViolationsCount": 1
+        "staticAnalysisViolationsCount": 1,
+        "inheritanceDepth": 0
       },
       "staticAnalysisViolations": [
         {
@@ -88,7 +91,8 @@
         "fanOut": 1,
         "fanIn": 1,
         "coupling": 2,
-        "staticAnalysisViolationsCount": 0
+        "staticAnalysisViolationsCount": 0,
+        "inheritanceDepth": 0
       },
       "staticAnalysisViolations": []
     }
