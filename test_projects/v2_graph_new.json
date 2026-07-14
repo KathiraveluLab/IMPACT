@@ -1,0 +1,100 @@
+{
+  "@context": {
+    "@vocab": "https://w3id.org/impact/ontology#",
+    "projectName": "projectName",
+    "version": "versionString",
+    "language": "language",
+    "extractedAt": "extractedAt",
+    "systemMetrics": "systemMetrics",
+    "nodes": "hasEntity",
+    "edges": "hasDependency",
+    "id": "@id",
+    "type": "@type",
+    "source": "source",
+    "target": "target"
+  },
+  "projectName": "TelemetryService",
+  "version": "2.0.0",
+  "language": "Java",
+  "extractedAt": "2026-07-14T14:10:50.226488Z",
+  "systemMetrics": {
+    "totalLinesOfCode": 36,
+    "totalClasses": 4,
+    "averageCoupling": 1.5
+  },
+  "nodes": [
+    {
+      "id": "com.telemetry.NewUtility",
+      "name": "NewUtility",
+      "type": "class",
+      "filePath": "com/telemetry/NewUtility.java",
+      "metrics": {
+        "loc": 6,
+        "complexity": 1,
+        "fanOut": 0,
+        "inheritanceDepth": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "com.telemetry.Service",
+      "name": "Service",
+      "type": "class",
+      "filePath": "com/telemetry/Service.java",
+      "metrics": {
+        "loc": 10,
+        "complexity": 1,
+        "fanOut": 1,
+        "inheritanceDepth": 0,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "com.telemetry.Database",
+      "name": "Database",
+      "type": "class",
+      "filePath": "com/telemetry/Database.java",
+      "metrics": {
+        "loc": 10,
+        "complexity": 2,
+        "fanOut": 1,
+        "inheritanceDepth": 0,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "com.telemetry.DataCollector",
+      "name": "DataCollector",
+      "type": "class",
+      "filePath": "com/telemetry/DataCollector.java",
+      "metrics": {
+        "loc": 10,
+        "complexity": 1,
+        "fanOut": 1,
+        "inheritanceDepth": 0,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "com.telemetry.Service",
+      "target": "com.telemetry.DataCollector",
+      "type": "calls"
+    },
+    {
+      "source": "com.telemetry.Database",
+      "target": "com.telemetry.Service",
+      "type": "calls"
+    },
+    {
+      "source": "com.telemetry.DataCollector",
+      "target": "com.telemetry.Database",
+      "type": "calls"
+    }
+  ]
+}

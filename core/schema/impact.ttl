@@ -22,6 +22,22 @@ impact:ClassEntity rdf:type owl:Class ;
     rdfs:subClassOf impact:SoftwareEntity ;
     rdfs:label "Class Entity" .
 
+impact:InterfaceEntity rdf:type owl:Class ;
+    rdfs:subClassOf impact:SoftwareEntity ;
+    rdfs:label "Interface Entity" .
+
+impact:StructEntity rdf:type owl:Class ;
+    rdfs:subClassOf impact:SoftwareEntity ;
+    rdfs:label "Struct Entity" .
+
+impact:ModuleEntity rdf:type owl:Class ;
+    rdfs:subClassOf impact:SoftwareEntity ;
+    rdfs:label "Module Entity" .
+
+impact:FunctionEntity rdf:type owl:Class ;
+    rdfs:subClassOf impact:SoftwareEntity ;
+    rdfs:label "Function Entity" .
+
 impact:Dependency rdf:type owl:Class ;
     rdfs:label "Dependency relationship" .
 
@@ -54,3 +70,11 @@ impact:loc rdf:type owl:DatatypeProperty ;
 impact:complexity rdf:type owl:DatatypeProperty ;
     rdfs:domain impact:SoftwareEntity ;
     rdfs:range xsd:integer .
+
+impact:programmingLanguage rdf:type owl:DatatypeProperty ;
+    rdfs:domain impact:SoftwareVersion ;
+    rdfs:range xsd:string .
+
+impact:languageStandard rdf:type owl:DatatypeProperty ;
+    rdfs:domain impact:SoftwareVersion ;
+    rdfs:range xsd:string .
