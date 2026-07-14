@@ -102,5 +102,104 @@ final class ClassC {}
         finally:
             adapters.java.extractor.HAS_JAVALANG = original_has_javalang
 
+    def test_nested_class_registration(self):
+        """Nested class declarations inside a class body must be registered in project_classes."""
+        os.makedirs(os.path.join(self.test_dir, "com", "example"), exist_ok=True)
+        outer = """package com.example;
+public class Container {
+    public static class Item {
+        private int value;
+    }
+    public static class Tag {}
+}
+"""
+        with open(os.path.join(self.test_dir, "com", "example", "Container.java"), "w") as f:
+            f.write(outer)
+
+        extractor = JavaExtractor("NestedReg", "1.0")
+        extractor.extract(self.test_dir, self.output_file)
+
+        with open(self.output_file) as f:
+            data = json.load(f)
+
+        node_ids = {n["id"] for n in data["nodes"]}
+        # Outer class is always registered
+        self.assertIn("com.example.Container", node_ids)
+        # Inner classes should now also appear via nested-type discovery
+        self.assertIn("com.example.Container.Item", node_ids)
+        self.assertIn("com.example.Container.Tag", node_ids)
+
+    def test_nested_class_same_package_resolution(self):
+        """A class referencing Outer.Inner in the same package resolves the edge correctly."""
+        os.makedirs(os.path.join(self.test_dir, "com", "example"), exist_ok=True)
+        container = """package com.example;
+public class Container {
+    public static class Item {
+        public int id;
+    }
+}
+"""
+        consumer = """package com.example;
+public class Consumer {
+    private Container.Item item;
+}
+"""
+        with open(os.path.join(self.test_dir, "com", "example", "Container.java"), "w") as f:
+            f.write(container)
+        with open(os.path.join(self.test_dir, "com", "example", "Consumer.java"), "w") as f:
+            f.write(consumer)
+
+        extractor = JavaExtractor("NestedSamePkg", "1.0")
+        extractor.extract(self.test_dir, self.output_file)
+
+        with open(self.output_file) as f:
+            data = json.load(f)
+
+        edges = data["edges"]
+        # Consumer -> Container.Item edge must be resolved
+        self.assertTrue(
+            any(e["source"] == "com.example.Consumer" and e["target"] == "com.example.Container.Item"
+                for e in edges),
+            f"Expected Consumer->Container.Item edge. Got: {edges}"
+        )
+
+    def test_nested_class_explicit_import_resolution(self):
+        """A class importing Outer.Inner explicitly resolves the dependency edge."""
+        os.makedirs(os.path.join(self.test_dir, "com", "model"), exist_ok=True)
+        os.makedirs(os.path.join(self.test_dir, "com", "service"), exist_ok=True)
+        model = """package com.model;
+public class Response {
+    public static class Body {
+        public String data;
+    }
+}
+"""
+        service = """package com.service;
+import com.model.Response;
+public class ApiService {
+    private Response.Body body;
+}
+"""
+        with open(os.path.join(self.test_dir, "com", "model", "Response.java"), "w") as f:
+            f.write(model)
+        with open(os.path.join(self.test_dir, "com", "service", "ApiService.java"), "w") as f:
+            f.write(service)
+
+        extractor = JavaExtractor("NestedImport", "1.0")
+        extractor.extract(self.test_dir, self.output_file)
+
+        with open(self.output_file) as f:
+            data = json.load(f)
+
+        node_ids = {n["id"] for n in data["nodes"]}
+        self.assertIn("com.model.Response.Body", node_ids)
+
+        edges = data["edges"]
+        self.assertTrue(
+            any(e["source"] == "com.service.ApiService" and e["target"] == "com.model.Response.Body"
+                for e in edges),
+            f"Expected ApiService->Response.Body edge. Got: {edges}"
+        )
+
 if __name__ == "__main__":
     unittest.main()

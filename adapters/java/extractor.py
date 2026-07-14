@@ -59,11 +59,17 @@ class JavaExtractor:
                         for path, node in tree:
                             if isinstance(node, javalang.tree.ReferenceType):
                                 references.add(node.name)
+                                # Fix 1: also collect qualified nested references (Outer.Inner)
+                                if node.sub_type:
+                                    references.add(f"{node.name}.{node.sub_type.name}")
                             elif isinstance(node, javalang.tree.MethodInvocation):
                                 if node.qualifier:
                                     parts = node.qualifier.split('.')
                                     if parts:
                                         references.add(parts[0])
+                                    # Collect qualified name for Outer.method() style calls
+                                    if len(parts) == 2:
+                                        references.add(node.qualifier)
                             elif isinstance(node, javalang.tree.MemberReference):
                                 if node.qualifier:
                                     parts = node.qualifier.split('.')
@@ -85,7 +91,37 @@ class JavaExtractor:
                         }
                         project_classes.add(fqcn)
                         class_name_to_fqcn.setdefault(class_name, set()).add(fqcn)
-                    
+
+                        # Fix 2: register nested class declarations found inside class bodies
+                        if hasattr(t, 'body') and t.body:
+                            for member in t.body:
+                                if isinstance(member, (
+                                    javalang.tree.ClassDeclaration,
+                                    javalang.tree.InterfaceDeclaration,
+                                    javalang.tree.EnumDeclaration,
+                                )):
+                                    nested_name = member.name
+                                    nested_fqcn = f"{fqcn}.{nested_name}"
+                                    # Register as a graph node (inherits file/metrics from outer class)
+                                    class_details[nested_fqcn] = {
+                                        "name": nested_name,
+                                        "package": package_name,
+                                        "filePath": os.path.relpath(filepath, src_dir),
+                                        "loc": 0,          # nested LOC not separately measured
+                                        "complexity": 1,
+                                        "content": "",
+                                        "imports": imports,
+                                        "ast_references": [],
+                                        "use_ast": True
+                                    }
+                                    project_classes.add(nested_fqcn)
+                                    class_name_to_fqcn.setdefault(nested_name, set()).add(nested_fqcn)
+                                    # Register "OuterSimple.InnerSimple" for qualified lookup
+                                    class_name_to_fqcn.setdefault(
+                                        f"{class_name}.{nested_name}", set()
+                                    ).add(nested_fqcn)
+
+
                     parsed_ast = True
                 except Exception as e:
                     # AST parsing failed, log and fall back to regex
@@ -161,6 +197,44 @@ class JavaExtractor:
                         candidates = class_name_to_fqcn[ref]
                         if len(candidates) == 1:
                             dependencies.add(list(candidates)[0])
+                        continue
+
+                    # Fix 3 / E. Resolve qualified nested references like "Outer.Inner"
+                    if '.' in ref:
+                        # E1. Direct lookup: "OuterSimple.InnerSimple" registered in first pass
+                        if ref in class_name_to_fqcn:
+                            candidates = class_name_to_fqcn[ref]
+                            if len(candidates) == 1:
+                                dependencies.add(list(candidates)[0])
+                                continue
+                        # E2. Resolve outer name -> FQCN, then append inner name
+                        outer_ref, inner_name = ref.split('.', 1)
+                        outer_fqcn = None
+                        # Try explicit imports for the outer class
+                        for imp in details["imports"]:
+                            if imp.endswith(f".{outer_ref}"):
+                                outer_fqcn = imp
+                                break
+                        # Try same-package outer class
+                        if not outer_fqcn:
+                            candidate = (
+                                f"{details['package']}.{outer_ref}"
+                                if details['package'] else outer_ref
+                            )
+                            if candidate in project_classes:
+                                outer_fqcn = candidate
+                        # Try wildcard imports for the outer class
+                        if not outer_fqcn:
+                            for imp in details["imports"]:
+                                if imp.endswith(".*"):
+                                    candidate = f"{imp[:-2]}.{outer_ref}"
+                                    if candidate in project_classes:
+                                        outer_fqcn = candidate
+                                        break
+                        if outer_fqcn:
+                            nested_fqcn = f"{outer_fqcn}.{inner_name}"
+                            if nested_fqcn in project_classes:
+                                dependencies.add(nested_fqcn)
             else:
                 # 2. Regex fallback: search simple class name matches in the text content
                 content = details["content"]
