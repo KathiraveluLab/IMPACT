@@ -67,17 +67,12 @@ pip install impact-core[all]
 
 ### Releasing a new version to PyPI
 
-Releases are fully automated. To publish:
+```bash
+git tag v1.x.y && git push origin v1.x.y   # GitHub Actions does the rest
+```
 
-1. Bump `version` in `pyproject.toml`
-2. Commit and push
-3. Push a version tag:
-   ```bash
-   git tag v1.x.y && git push origin v1.x.y
-   ```
-4. GitHub Actions builds the wheel and publishes it to PyPI automatically via OIDC Trusted Publisher (no API token stored in secrets).
-
-> **One-time PyPI setup:** add a Trusted Publisher at https://pypi.org/manage/account/publishing/ pointing to this repository and the `publish.yml` workflow.
+See [DEPLOY.md](DEPLOY.md) for the full release workflow, one-time PyPI Trusted
+Publisher setup, Docker, and Kubernetes deployment instructions.
 
 ### Console scripts
 
