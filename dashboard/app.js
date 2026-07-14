@@ -45,8 +45,8 @@ const GRAPH_DATA_V2 = {
 
 // Initial Intents
 let intents = [
-    "avoid cyclic dependencies",
-    "minimize changes and complexity increase"
+    { type: "no-cycles", text: "Avoid cyclic dependencies" },
+    { type: "max-coupling", text: "Max Coupling Threshold (Limit: 5)", limit: 5 }
 ];
 
 // Crawler Queue State (Task 8b/13b)
@@ -69,15 +69,19 @@ let transform = { x: 0, y: 0, scale: 1 };
 let isDraggingCanvas = false;
 let dragStart = { x: 0, y: 0 };
 let draggedNode = null;
+let layoutMode = "force"; // "force" or "circular"
 
 // DOM Elements
 const canvas = document.getElementById("graph-canvas");
 const ctx = canvas.getContext("2d");
 const tooltip = document.getElementById("node-info-tooltip");
 const intentListContainer = document.getElementById("intent-list-container");
-const newIntentInput = document.getElementById("new-intent-input");
+const intentTypeSelect = document.getElementById("intent-type-select");
+const intentParamContainer = document.getElementById("intent-param-container");
+const intentParamVal = document.getElementById("intent-param-val");
 const addIntentBtn = document.getElementById("add-intent-btn");
 const runAnalysisBtn = document.getElementById("run-analysis-btn");
+const toggleLayoutBtn = document.getElementById("toggle-layout-btn");
 const baseVersionSelect = document.getElementById("base-version-select");
 const targetVersionSelect = document.getElementById("target-version-select");
 
@@ -114,7 +118,7 @@ function renderIntents() {
         const li = document.createElement("li");
         li.className = "intent-item";
         li.innerHTML = `
-            <span>${intent}</span>
+            <span>${intent.text}</span>
             <span class="intent-remove" data-idx="${idx}">&times;</span>
         `;
         intentListContainer.appendChild(li);
@@ -193,19 +197,36 @@ crawlerRepoInput.addEventListener("keydown", (e) => {
 });
 
 
-addIntentBtn.addEventListener("click", () => {
-    const text = newIntentInput.value.trim();
-    if (text) {
-        intents.push(text);
-        newIntentInput.value = "";
-        renderIntents();
+intentTypeSelect.addEventListener("change", () => {
+    const type = intentTypeSelect.value;
+    if (type === "no-cycles") {
+        intentParamContainer.style.display = "none";
+    } else {
+        intentParamContainer.style.display = "flex";
     }
 });
 
-newIntentInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        addIntentBtn.click();
+addIntentBtn.addEventListener("click", () => {
+    const type = intentTypeSelect.value;
+    let text = "";
+    let limit = null;
+    if (type === "no-cycles") {
+        text = "Avoid cyclic dependencies";
+    } else if (type === "max-coupling") {
+        limit = parseInt(intentParamVal.value) || 5;
+        text = `Max Coupling Threshold (Limit: ${limit})`;
+    } else if (type === "max-inheritance") {
+        limit = parseInt(intentParamVal.value) || 3;
+        text = `Max Inheritance Depth (Limit: ${limit})`;
     }
+    intents.push({ type, text, limit });
+    renderIntents();
+});
+
+toggleLayoutBtn.addEventListener("click", () => {
+    layoutMode = layoutMode === "force" ? "circular" : "force";
+    toggleLayoutBtn.innerText = layoutMode === "force" ? "Force Layout" : "Cycle Layout";
+    resetLayout();
 });
 
 // Cycles detection

@@ -48,11 +48,19 @@
 
             <div class="sidebar-section flex-grow">
                 <h3>Architectural Intents</h3>
-                <div class="intent-input-group">
-                    <input type="text" id="new-intent-input" placeholder="Define new intent...">
-                    <button id="add-intent-btn">Add</button>
+                <div class="intent-form" style="display: flex; flex-direction: column; gap: 8px;">
+                    <select id="intent-type-select" style="width: 100%; padding: 8px; border-radius: 4px; background: #1e293b; color: #fff; border: 1px solid #475569; font-family: inherit;">
+                        <option value="no-cycles">No Cyclic Dependencies</option>
+                        <option value="max-coupling">Max Coupling Threshold</option>
+                        <option value="max-inheritance">Max Inheritance Depth</option>
+                    </select>
+                    <div id="intent-param-container" style="display: none; align-items: center; gap: 8px; font-size: 12px; color: #94a3b8;">
+                        <span>Limit:</span>
+                        <input type="number" id="intent-param-val" value="5" min="1" style="width: 100%; padding: 6px; border-radius: 4px; background: #1e293b; color: #fff; border: 1px solid #475569;">
+                    </div>
+                    <button id="add-intent-btn" class="btn-primary" style="padding: 8px 12px; font-size: 12px; align-self: stretch;">Add Intent</button>
                 </div>
-                <ul class="intent-list" id="intent-list-container">
+                <ul class="intent-list" id="intent-list-container" style="margin-top: 12px;">
                     <!-- Loaded dynamically -->
                 </ul>
             </div>
@@ -112,10 +120,13 @@
                 <section class="panel graph-panel">
                     <div class="panel-header">
                         <h3>Interactive Architecture Graph</h3>
-                        <div class="graph-legend">
-                            <span class="legend-item"><span class="legend-dot normal"></span>Normal</span>
-                            <span class="legend-item"><span class="legend-dot added"></span>Added</span>
-                            <span class="legend-item"><span class="legend-dot cycle"></span>Cycle</span>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <button id="toggle-layout-btn" style="padding: 4px 8px; border-radius: 4px; background: #1e293b; color: #fff; border: 1px solid #475569; font-size: 11px; cursor: pointer; font-family: inherit;">Force Layout</button>
+                            <div class="graph-legend">
+                                <span class="legend-item"><span class="legend-dot normal"></span>Normal</span>
+                                <span class="legend-item"><span class="legend-dot added"></span>Added</span>
+                                <span class="legend-item"><span class="legend-dot cycle"></span>Cycle</span>
+                            </div>
                         </div>
                     </div>
                     <div class="canvas-container">
