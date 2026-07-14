@@ -1,6 +1,7 @@
 import unittest
 import os
 import networkx as nx
+from unittest.mock import patch
 from core.graph_utils import load_impact_graph, compare_graphs
 from core.agents.coordinator import CoordinatorAgent
 
@@ -41,6 +42,33 @@ class TestImpactSwarm(unittest.TestCase):
         report2 = validator.validate_graph(self.file_v2)
         self.assertTrue(report1["conforms"])
         self.assertTrue(report2["conforms"])
+
+    @patch("sqlite3.connect")
+    @patch("core.ecosystem_crawler.GitHubEcosystemCrawler")
+    @patch("os.path.exists")
+    @patch("builtins.open")
+    def test_ecosystem_coordinator(self, mock_open, mock_exists, mock_crawler_class, mock_connect):
+        from unittest.mock import MagicMock, patch
+        mock_conn = MagicMock()
+        mock_cursor = MagicMock()
+        mock_connect.return_value = mock_conn
+        mock_conn.cursor.return_value = mock_cursor
+        
+        mock_cursor.fetchone.side_effect = [
+            (1, "crawled", "1.0.0", "2.0.0"),
+            ("crawled", "1.0.0", "2.0.0", None)
+        ]
+        
+        mock_exists.return_value = True
+        mock_file = MagicMock()
+        mock_file.read.return_value = "Swarm Analysis Report: Intent Satisfied"
+        mock_open.return_value.__enter__.return_value = mock_file
+
+        coordinator = CoordinatorAgent()
+        report = coordinator.run_ecosystem_analysis("owner/repo", ["avoid cyclic dependencies"])
+        
+        self.assertEqual(report, "Swarm Analysis Report: Intent Satisfied")
+        mock_crawler_class.assert_called_once()
 
 if __name__ == "__main__":
     unittest.main()
