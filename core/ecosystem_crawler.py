@@ -48,6 +48,22 @@ def main():
         print("\n=== Crawler Queue Status ===")
         for status, count in rows:
             print(f"- {status}: {count}")
+        
+        cursor.execute("""
+            SELECT h.transitioned_at, q.owner, q.repo, h.from_status, h.to_status, h.error_msg
+            FROM transition_history h
+            JOIN queue q ON h.repo_id = q.id
+            ORDER BY h.transitioned_at DESC
+            LIMIT 10
+        """)
+        history_rows = cursor.fetchall()
+        if history_rows:
+            print("\n=== State Transition History (Recent) ===")
+            for transitioned_at, owner, repo, from_status, to_status, error_msg in history_rows:
+                err_suffix = f" (Error: {error_msg})" if error_msg else ""
+                print(f"[{transitioned_at}] {owner}/{repo}: {from_status} -> {to_status}{err_suffix}")
+        else:
+            print("\nNo transition history recorded yet.")
         conn.close()
 
 if __name__ == "__main__":

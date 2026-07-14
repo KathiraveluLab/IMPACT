@@ -157,5 +157,27 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
             slept_duration = mock_sleep.call_args[0][0]
             self.assertGreaterEqual(slept_duration, 2)
 
+    def test_transition_history(self):
+        """Verify that state transitions are recorded in the history table."""
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO queue (owner, repo, stars) VALUES ('owner_y', 'repo_y', 600)")
+        repo_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+
+        self.crawler.mark_status(repo_id, "crawled")
+        self.crawler.mark_status(repo_id, "failed", error_msg="Validation failed")
+
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT from_status, to_status, error_msg FROM transition_history WHERE repo_id=? ORDER BY id ASC", (repo_id,))
+        transitions = cursor.fetchall()
+        conn.close()
+
+        self.assertEqual(len(transitions), 2)
+        self.assertEqual(transitions[0], ("pending", "crawled", None))
+        self.assertEqual(transitions[1], ("crawled", "failed", "Validation failed"))
+
 if __name__ == "__main__":
     unittest.main()

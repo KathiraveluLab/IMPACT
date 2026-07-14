@@ -24,6 +24,17 @@ def setup_db(db_path=None):
             UNIQUE(owner, repo)
         )
     """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS transition_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            repo_id INTEGER NOT NULL,
+            from_status TEXT,
+            to_status TEXT NOT NULL,
+            transitioned_at TEXT NOT NULL,
+            error_msg TEXT,
+            FOREIGN KEY(repo_id) REFERENCES queue(id)
+        )
+    """)
     conn.commit()
     conn.close()
 
@@ -32,9 +43,22 @@ def mark_status(repo_id, status, error_msg=None, db_path=None):
     path = db_path or core.crawler.DB_PATH
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
+    
+    # Get current status
+    cursor.execute("SELECT status FROM queue WHERE id = ?", (repo_id,))
+    row = cursor.fetchone()
+    from_status = row[0] if row else None
+    
+    now_str = datetime.now(timezone.utc).isoformat()
     cursor.execute(
         "UPDATE queue SET status = ?, error_msg = ?, processed_at = ? WHERE id = ?",
-        (status, error_msg, datetime.now(timezone.utc).isoformat(), repo_id)
+        (status, error_msg, now_str, repo_id)
     )
+    
+    cursor.execute(
+        "INSERT INTO transition_history (repo_id, from_status, to_status, transitioned_at, error_msg) VALUES (?, ?, ?, ?, ?)",
+        (repo_id, from_status, status, now_str, error_msg)
+    )
+    
     conn.commit()
     conn.close()
