@@ -24,11 +24,29 @@ The repository is organized as follows:
 
 ## Installation & Setup
 
-IMPACT is packaged as `impact-core` and published on PyPI. Python 3.8 or higher is required.
+IMPACT targets Python 3.8 or higher. The package (`impact-core`) will be published to PyPI — for now, install from source.
 
-### Install from PyPI
+> **PyPI status:** automated publishing is configured via GitHub Actions (see `.github/workflows/publish.yml`) and will trigger on the first version tag push. Until then, use the source install below.
 
-Choose the extras that match your use case:
+### Install from source (recommended while in active development)
+
+```bash
+git clone https://github.com/IMPACT-Project/IMPACT.git
+cd IMPACT
+pip install -e ".[dev]"   # editable install with all deps + build/test tools
+```
+
+Or install only what you need:
+
+```bash
+pip install -e .                        # core only
+pip install -e ".[java]"               # + Java AST extractor
+pip install -e ".[crawler]"            # + full crawler stack (SQLite)
+pip install -e ".[crawler-distributed]" # + PostgreSQL distributed crawler
+pip install -e ".[all]"               # everything
+```
+
+### Install from PyPI (once published)
 
 ```bash
 # Core only — graph loading, diff, coordinator, SHACL validator
@@ -47,13 +65,19 @@ pip install impact-core[crawler-distributed]
 pip install impact-core[all]
 ```
 
-### Install from source (development)
+### Releasing a new version to PyPI
 
-```bash
-git clone https://github.com/IMPACT-Project/IMPACT.git
-cd IMPACT
-pip install -e ".[dev]"   # editable install with all deps + build/test tools
-```
+Releases are fully automated. To publish:
+
+1. Bump `version` in `pyproject.toml`
+2. Commit and push
+3. Push a version tag:
+   ```bash
+   git tag v1.x.y && git push origin v1.x.y
+   ```
+4. GitHub Actions builds the wheel and publishes it to PyPI automatically via OIDC Trusted Publisher (no API token stored in secrets).
+
+> **One-time PyPI setup:** add a Trusted Publisher at https://pypi.org/manage/account/publishing/ pointing to this repository and the `publish.yml` workflow.
 
 ### Console scripts
 
@@ -65,6 +89,7 @@ After installation the following commands are available on your `PATH`:
 | `impact-extract` | Java AST dependency graph extractor |
 | `impact-demo` | Run the built-in TelemetryService evolution demo |
 | `impact-dashboard` | Launch the interactive architect dashboard |
+
 
 ## Running the Project
 

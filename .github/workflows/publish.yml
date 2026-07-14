@@ -1,0 +1,72 @@
+# .github/workflows/publish.yml
+#
+# Automatically builds and publishes impact-core to PyPI whenever a version
+# tag (e.g. v1.0.1) is pushed to the repository.
+#
+# Uses PyPI Trusted Publishers (OIDC) — NO stored API token required.
+# One-time setup on PyPI:
+#   1. Go to https://pypi.org/manage/account/publishing/
+#   2. Add a new Trusted Publisher:
+#      - PyPI project name : impact-core
+#      - GitHub owner      : <your-org-or-username>
+#      - GitHub repository : IMPACT
+#      - Workflow filename : publish.yml
+#      - Environment name  : pypi
+#
+# To release a new version:
+#   1. Bump version in pyproject.toml
+#   2. Commit and push
+#   3. git tag v1.x.y && git push origin v1.x.y
+#   The workflow fires automatically and publishes to PyPI.
+
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"   # e.g. v1.0.1, v2.3.0
+
+permissions:
+  contents: read
+  id-token: write   # required for OIDC trusted publisher
+
+jobs:
+  build:
+    name: Build distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tools
+        run: pip install build
+
+      - name: Build sdist and wheel
+        run: python -m build
+
+      - name: Upload dist artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/impact-core/
+    steps:
+      - name: Download dist artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI (Trusted Publisher / OIDC)
+        uses: pypa/gh-action-pypi-publish@release/v1
