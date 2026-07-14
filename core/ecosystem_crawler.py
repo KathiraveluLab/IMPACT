@@ -1,3 +1,13 @@
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "javalang",
+#     "networkx",
+#     "pyshacl",
+#     "rdflib",
+# ]
+# ///
+
 import os
 import sys
 import json
@@ -293,27 +303,34 @@ class GitHubEcosystemCrawler:
                 self.mark_status(repo_id, "failed", error_msg=str(e))
 
 def main():
-    if len(sys.argv) < 2:
-        print("IMPACT Ecosystem Crawler")
-        print("Usage:")
-        print("  python3 core/ecosystem_crawler.py discover [min_stars] [pages]")
-        print("  python3 core/ecosystem_crawler.py run [limit]")
-        print("  python3 core/ecosystem_crawler.py status")
+    import argparse
+    parser = argparse.ArgumentParser(
+        description="IMPACT Ecosystem Crawler - Resilient repository crawler and AST evolution extractor."
+    )
+    subparsers = parser.add_subparsers(dest="command", help="Subcommand to execute")
+
+    discover_parser = subparsers.add_parser("discover", help="Discover Java repositories on GitHub")
+    discover_parser.add_argument("--min-stars", type=int, default=500, help="Minimum number of stars for repository discovery")
+    discover_parser.add_argument("--pages", type=int, default=3, help="Number of search API pages to retrieve")
+
+    run_parser = subparsers.add_parser("run", help="Run evolution analysis crawler execution loop")
+    run_parser.add_argument("--limit", type=int, default=5, help="Maximum number of repositories to crawl in this run")
+
+    subparsers.add_parser("status", help="Print crawler database queue stats")
+
+    args = parser.parse_args()
+
+    if not args.command:
+        parser.print_help()
         sys.exit(1)
 
-    cmd = sys.argv[1]
     crawler = GitHubEcosystemCrawler()
 
-    if cmd == "discover":
-        min_stars = int(sys.argv[2]) if len(sys.argv) > 2 else 500
-        pages = int(sys.argv[3]) if len(sys.argv) > 3 else 3
-        crawler.discover_java_repos(min_stars=min_stars, max_pages=pages)
-        
-    elif cmd == "run":
-        limit = int(sys.argv[2]) if len(sys.argv) > 2 else 5
-        crawler.crawl(limit=limit)
-
-    elif cmd == "status":
+    if args.command == "discover":
+        crawler.discover_java_repos(min_stars=args.min_stars, max_pages=args.pages)
+    elif args.command == "run":
+        crawler.crawl(limit=args.limit)
+    elif args.command == "status":
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
         cursor.execute("SELECT status, count(*) FROM queue GROUP BY status")
