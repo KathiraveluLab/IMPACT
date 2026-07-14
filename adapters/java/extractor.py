@@ -97,7 +97,7 @@ class JavaExtractor:
                 package_match = re.search(r"package\s+([\w\.]+);", content)
                 package_name = package_match.group(1) if package_match else ""
 
-                class_match = re.search(r"public\s+(?:class|interface)\s+(\w+)", content)
+                class_match = re.search(r"\b(?:class|interface|enum|record)\s+(\w+)", content)
                 if not class_match:
                     continue
                 class_name = class_match.group(1)

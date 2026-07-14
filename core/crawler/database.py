@@ -41,6 +41,7 @@ def setup_db(db_path=None):
         if os.path.dirname(path):
             os.makedirs(os.path.dirname(path), exist_ok=True)
         conn = sqlite3.connect(path)
+        conn.execute("PRAGMA journal_mode=WAL")
         cursor = conn.cursor()
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS queue (
@@ -155,7 +156,6 @@ def claim_next_pending(db_path=None):
             conn.close()
     else:
         conn = sqlite3.connect(path, timeout=30.0)
-        conn.execute("PRAGMA journal_mode=WAL")
         cursor = conn.cursor()
         try:
             conn.execute("BEGIN IMMEDIATE")
