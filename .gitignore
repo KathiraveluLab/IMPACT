@@ -40,3 +40,6 @@ _bmad
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Ignore extracted GitHub source folders in benchmarks
+test_projects/github_benchmarks/*/*/

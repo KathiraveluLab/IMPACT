@@ -1,0 +1,179 @@
+{
+  "@context": {
+    "@vocab": "https://w3id.org/impact/ontology#",
+    "projectName": "projectName",
+    "version": "versionString",
+    "language": "language",
+    "extractedAt": "extractedAt",
+    "systemMetrics": "systemMetrics",
+    "nodes": "hasEntity",
+    "edges": "hasDependency",
+    "id": "@id",
+    "type": "@type",
+    "source": "source",
+    "target": "target"
+  },
+  "projectName": "javapoet",
+  "version": "javapoet-1.12.0",
+  "language": "Java",
+  "extractedAt": "2026-07-14T12:22:08.341134Z",
+  "systemMetrics": {
+    "totalLinesOfCode": 3758,
+    "totalClasses": 10,
+    "averageCoupling": 0.8
+  },
+  "nodes": [
+    {
+      "id": "com.squareup.javapoet.TypeName",
+      "name": "TypeName",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/TypeName.java",
+      "metrics": {
+        "loc": 338,
+        "complexity": 77,
+        "fanOut": 0,
+        "fanIn": 3,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.Foo",
+      "name": "Foo",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/TypeSpecTest.java",
+      "metrics": {
+        "loc": 2390,
+        "complexity": 67,
+        "fanOut": 1,
+        "fanIn": 1,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.ParameterSpecTest",
+      "name": "ParameterSpecTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/ParameterSpecTest.java",
+      "metrics": {
+        "loc": 115,
+        "complexity": 5,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.AnnotatedTypeNameTest",
+      "name": "AnnotatedTypeNameTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/AnnotatedTypeNameTest.java",
+      "metrics": {
+        "loc": 179,
+        "complexity": 2,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.FileReadingTest",
+      "name": "FileReadingTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/FileReadingTest.java",
+      "metrics": {
+        "loc": 105,
+        "complexity": 3,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.TypeNameTest",
+      "name": "TypeNameTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/TypeNameTest.java",
+      "metrics": {
+        "loc": 151,
+        "complexity": 2,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.UtilTest",
+      "name": "UtilTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/UtilTest.java",
+      "metrics": {
+        "loc": 66,
+        "complexity": 2,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.CodeWriterTest",
+      "name": "CodeWriterTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/CodeWriterTest.java",
+      "metrics": {
+        "loc": 18,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.IsAnnotated",
+      "name": "IsAnnotated",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/AnnotationSpecTest.java",
+      "metrics": {
+        "loc": 339,
+        "complexity": 4,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.FieldSpecTest",
+      "name": "FieldSpecTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/FieldSpecTest.java",
+      "metrics": {
+        "loc": 57,
+        "complexity": 3,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "com.squareup.javapoet.Foo",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotatedTypeNameTest",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeNameTest",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.IsAnnotated",
+      "target": "com.squareup.javapoet.Foo",
+      "type": "calls"
+    }
+  ]
+}

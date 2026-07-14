@@ -39,9 +39,10 @@ def compare_graphs(g1: nx.DiGraph, g2: nx.DiGraph) -> dict:
     added_edges = [e for e in g2.edges if e not in g1.edges]
     removed_edges = [e for e in g1.edges if e not in g2.edges]
     
-    # Analyze dependency cycles
-    cycles_g1 = list(nx.simple_cycles(g1))
-    cycles_g2 = list(nx.simple_cycles(g2))
+    from itertools import islice
+    # Analyze dependency cycles (limit to 100 to prevent hanging on large codebases)
+    cycles_g1 = list(islice(nx.simple_cycles(g1), 100))
+    cycles_g2 = list(islice(nx.simple_cycles(g2), 100))
     
     new_cycles = [c for c in cycles_g2 if c not in cycles_g1]
     broken_cycles = [c for c in cycles_g1 if c not in cycles_g2]
