@@ -224,5 +224,105 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
         intersection = set1.intersection(set2)
         self.assertEqual(len(intersection), 0, f"Duplicate claims detected: {intersection}")
 
+    def test_worker_id_tracking(self):
+        """Verify that worker_id is tracked on claim and in transition history."""
+        from core.crawler.database import claim_next_pending, _worker_id
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO queue (owner, repo, stars) VALUES ('owner_worker', 'repo_worker', 700)")
+        repo_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+
+        claimed = claim_next_pending(TEST_DB_PATH)
+        self.assertIsNotNone(claimed)
+        self.assertEqual(claimed[0], repo_id)
+
+        # Verify worker_id in queue table
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT worker_id, claimed_at FROM queue WHERE id=?", (repo_id,))
+        worker_id, claimed_at = cursor.fetchone()
+        expected_worker_id = _worker_id()
+        self.assertEqual(worker_id, expected_worker_id)
+        self.assertIsNotNone(claimed_at)
+
+        # Verify worker_id in transition_history table
+        cursor.execute("SELECT worker_id FROM transition_history WHERE repo_id=? ORDER BY id DESC LIMIT 1", (repo_id,))
+        history_worker_id = cursor.fetchone()[0]
+        self.assertEqual(history_worker_id, expected_worker_id)
+        conn.close()
+
+    def test_heartbeat_update(self):
+        """Verify that update_heartbeat updates the claimed_at timestamp."""
+        from core.crawler.database import claim_next_pending, update_heartbeat
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO queue (owner, repo, stars) VALUES ('owner_hb', 'repo_hb', 800)")
+        repo_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+
+        claimed = claim_next_pending(TEST_DB_PATH)
+        self.assertIsNotNone(claimed)
+
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT claimed_at FROM queue WHERE id=?", (repo_id,))
+        first_claimed_at = cursor.fetchone()[0]
+        conn.close()
+
+        # Wait a small bit or just call update_heartbeat and check it updates
+        time.sleep(0.1)
+        update_heartbeat(repo_id, TEST_DB_PATH)
+
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT claimed_at FROM queue WHERE id=?", (repo_id,))
+        second_claimed_at = cursor.fetchone()[0]
+        conn.close()
+
+        self.assertNotEqual(first_claimed_at, second_claimed_at)
+
+    def test_reclaim_stale_processing(self):
+        """Verify that stale processing rows are reclaimed back to pending."""
+        from core.crawler.database import requeue_stale_processing, claim_next_pending
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        # Insert a row that was claimed a long time ago (stale)
+        from datetime import datetime, timezone, timedelta
+        stale_time = (datetime.now(timezone.utc) - timedelta(minutes=45)).isoformat()
+        cursor.execute(
+            "INSERT INTO queue (owner, repo, stars, status, claimed_at, worker_id) VALUES (?, ?, ?, ?, ?, ?)",
+            ('owner_stale', 'repo_stale', 900, 'processing', stale_time, 'old_worker')
+        )
+        repo_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+
+        # Run requeue_stale_processing
+        requeued = requeue_stale_processing(TEST_DB_PATH, stale_timeout_minutes=30)
+        self.assertEqual(requeued, 1)
+
+        # Verify database status is pending and worker_id/claimed_at are cleared
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT status, worker_id, claimed_at FROM queue WHERE id=?", (repo_id,))
+        status, worker_id, claimed_at = cursor.fetchone()
+        self.assertEqual(status, 'pending')
+        self.assertIsNone(worker_id)
+        self.assertIsNone(claimed_at)
+
+        # Verify transition history recorded the stale reclaim
+        cursor.execute("SELECT from_status, to_status, error_msg FROM transition_history WHERE repo_id=? ORDER BY id DESC LIMIT 1", (repo_id,))
+        history = cursor.fetchone()
+        self.assertEqual(history, ('processing', 'pending', 'stale reclaim'))
+        conn.close()
+
+        # Now test that claim_next_pending can also claim it
+        claimed = claim_next_pending(TEST_DB_PATH, stale_timeout_minutes=30)
+        self.assertIsNotNone(claimed)
+        self.assertEqual(claimed[0], repo_id)
+
 if __name__ == "__main__":
     unittest.main()

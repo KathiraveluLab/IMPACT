@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from core.crawler.database import setup_db, mark_status
+from core.crawler.database import setup_db, mark_status, requeue_stale_processing
 from core.crawler.discovery import discover_java_repos
 from core.crawler.downloader import cleanup_path
 from core.crawler.processor import process_repo
@@ -32,14 +32,19 @@ class GitHubEcosystemCrawler:
 
     def crawl(self, limit=10):
         from core.crawler.database import claim_next_pending
-        
+
+        # Recover any rows left stuck in 'processing' by previously crashed workers
+        recovered = requeue_stale_processing(self.db_path)
+        if recovered:
+            print(f"[Queue] Recovered {recovered} stale 'processing' row(s) back to 'pending'.")
+
         print(f"Starting distributed crawl execution (up to {limit} repositories)...")
         crawled_count = 0
         for _ in range(limit):
             claimed = claim_next_pending(self.db_path)
             if not claimed:
                 break
-            
+
             repo_id, owner, repo = claimed
             crawled_count += 1
             try:
@@ -47,8 +52,9 @@ class GitHubEcosystemCrawler:
             except Exception as e:
                 print(f"Fatal error processing {owner}/{repo}: {e}")
                 self.mark_status(repo_id, "failed", error_msg=str(e))
-                
+
         if crawled_count == 0:
             print("No pending repositories in queue database. Run discovery first.")
         else:
             print(f"Crawl run complete. Processed {crawled_count} repositories.")
+
