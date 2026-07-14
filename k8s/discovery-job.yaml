@@ -1,0 +1,51 @@
+# k8s/discovery-job.yaml
+# One-shot Kubernetes Job that populates the shared PostgreSQL queue
+# by running the discovery phase (GitHub search API scraping).
+# Run this ONCE before starting the crawler worker Deployment.
+# Re-run periodically to top up the queue with new repositories.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: crawler-discovery
+  namespace: impact-crawler
+  labels:
+    app: impact-crawler
+    role: discovery
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: impact-crawler
+        role: discovery
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: discovery
+          image: impact-crawler:latest
+          imagePullPolicy: IfNotPresent
+          args: ["discover", "--min-stars", "$(GITHUB_MIN_STARS)"]
+          env:
+            - name: IMPACT_DB_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: crawler-config
+                  key: DB_DSN
+            - name: GITHUB_MIN_STARS
+              valueFrom:
+                configMapKeyRef:
+                  name: crawler-config
+                  key: GITHUB_MIN_STARS
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-token-secret
+                  key: token
+                  optional: true
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"

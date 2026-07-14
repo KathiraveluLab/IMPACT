@@ -1,0 +1,8 @@
+# k8s/namespace.yaml
+# Isolates all IMPACT crawler resources in their own namespace.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: impact-crawler
+  labels:
+    app: impact

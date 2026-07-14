@@ -1,0 +1,18 @@
+# k8s/configmap.yaml
+# Shared configuration for all crawler worker pods.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: crawler-config
+  namespace: impact-crawler
+data:
+  # PostgreSQL DSN — injected into each worker as IMPACT_DB_PATH env var.
+  # The core/crawler/database.py backend selection reads this at startup.
+  DB_DSN: "postgresql://impact:changeme@postgres:5432/crawler_queue"
+
+  # GitHub API configuration
+  GITHUB_MIN_STARS: "1000"
+  CRAWLER_LIMIT: "50"
+
+  # Language target
+  CRAWLER_LANGUAGE: "java"

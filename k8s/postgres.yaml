@@ -1,0 +1,86 @@
+# k8s/postgres.yaml
+# PostgreSQL deployment used as the shared distributed crawler queue database.
+# Multiple crawler worker pods coordinate work through this single shared DB,
+# using SELECT FOR UPDATE SKIP LOCKED for atomic row-level job claiming.
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: impact-crawler
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: impact-crawler
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: crawler_queue
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: password
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-storage
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "$(POSTGRES_USER)", "-d", "crawler_queue"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: impact-crawler
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+  clusterIP: None  # headless service for direct pod addressing

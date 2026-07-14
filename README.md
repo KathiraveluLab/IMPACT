@@ -127,3 +127,141 @@ python3 core/shacl_validator.py <graphJsonPath>
 3.  **Graph Analysis**: The Graph agent loads the JSON-LD files, and the Metrics agent calculates network centralities to identify coupling hubs.
 4.  **Version Comparison**: The Diff agent compares adjacent versions to discover added, removed, or modified nodes and edges, as well as newly introduced cycles.
 5.  **Intent Conformance**: The LLM agent evaluates the diff metrics against the user-specified architectural intents, outputting a compliance report and refactoring recommendations.
+
+---
+
+## Distributed Ecosystem Crawler
+
+IMPACT ships a GitHub ecosystem crawler that discovers, downloads, and analyses large numbers of open-source Java projects at scale. It can run as a single local process (backed by SQLite) or as a distributed multi-node cluster (backed by PostgreSQL).
+
+### Running Locally (SQLite, single process)
+
+```bash
+# 1. Populate the queue with the most-starred Java repositories
+python3 -m core.ecosystem_crawler discover --min-stars 1000
+
+# 2. Process queued repositories
+python3 -m core.ecosystem_crawler crawl --limit 50
+
+# 3. Check queue status and recent transitions
+python3 -m core.ecosystem_crawler status
+```
+
+---
+
+### Running with Docker (single node)
+
+Build the crawler image:
+
+```bash
+docker build -t impact-crawler:latest .
+```
+
+Run discovery then crawl with a local SQLite database:
+
+```bash
+docker run --rm \
+  -v "$(pwd)/test_projects:/app/test_projects" \
+  impact-crawler:latest discover --min-stars 1000
+
+docker run --rm \
+  -v "$(pwd)/test_projects:/app/test_projects" \
+  impact-crawler:latest crawl --limit 50
+```
+
+To use a GitHub token (recommended to avoid rate limits):
+
+```bash
+docker run --rm \
+  -e GITHUB_TOKEN=ghp_yourtoken \
+  -v "$(pwd)/test_projects:/app/test_projects" \
+  impact-crawler:latest discover --min-stars 1000
+```
+
+---
+
+### Running on Kubernetes (multi-node distributed)
+
+The `k8s/` directory contains all Kubernetes manifests. Multiple crawler worker pods coordinate on a shared PostgreSQL queue using `SELECT FOR UPDATE SKIP LOCKED` — each pod atomically claims a repository and no two pods process the same one.
+
+#### Prerequisites
+
+- A running Kubernetes cluster (local: [minikube](https://minikube.sigs.k8s.io/) or [kind](https://kind.sigs.k8s.io/))
+- `kubectl` configured to point at it
+- The `impact-crawler:latest` image built and available in the cluster
+
+#### Step 1 — Create the namespace
+
+```bash
+kubectl apply -f k8s/namespace.yaml
+```
+
+#### Step 2 — Create the database secret (not committed to git)
+
+```bash
+# Option A: imperative (nothing touches disk — recommended)
+kubectl create secret generic postgres-secret \
+  --from-literal=username=impact \
+  --from-literal=password=yourpassword \
+  -n impact-crawler
+
+# Option B: file-based (stays local, already gitignored)
+cp k8s/secret.yaml.example k8s/secret.yaml
+# Edit k8s/secret.yaml — replace REPLACE_WITH_BASE64_* with real values:
+#   echo -n 'impact' | base64
+#   echo -n 'yourpassword' | base64
+kubectl apply -f k8s/secret.yaml
+```
+
+> **Security note:** `k8s/secret.yaml` is listed in `.gitignore` and must never be committed.
+> Only `k8s/secret.yaml.example` (with placeholder values) is tracked in git.
+
+#### Step 3 — Deploy PostgreSQL and configuration
+
+```bash
+kubectl apply -f k8s/configmap.yaml
+kubectl apply -f k8s/postgres.yaml
+
+# Wait for PostgreSQL to be ready
+kubectl wait --for=condition=ready pod -l app=postgres \
+  -n impact-crawler --timeout=60s
+```
+
+#### Step 4 — Run the discovery Job (populates the queue)
+
+```bash
+kubectl apply -f k8s/discovery-job.yaml
+kubectl wait --for=condition=complete job/crawler-discovery \
+  -n impact-crawler --timeout=300s
+```
+
+#### Step 5 — Start the distributed crawler workers
+
+```bash
+kubectl apply -f k8s/crawler-deployment.yaml
+```
+
+This starts **4 parallel worker pods** by default. Watch them drain the queue:
+
+```bash
+kubectl logs -l role=worker -n impact-crawler --follow
+```
+
+#### Scaling workers up or down
+
+```bash
+kubectl scale deployment crawler-worker --replicas=8 -n impact-crawler
+```
+
+#### Applying everything at once (after the secret exists)
+
+```bash
+kubectl apply -k k8s/
+```
+
+#### Removing the deployment
+
+```bash
+kubectl delete namespace impact-crawler
+```
+

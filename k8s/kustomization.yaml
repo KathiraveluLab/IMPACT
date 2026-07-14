@@ -1,0 +1,21 @@
+# k8s/kustomization.yaml
+# Apply everything with: kubectl apply -k k8s/
+#
+# BEFORE applying, create the credentials secret locally (not committed to git):
+#   kubectl create secret generic postgres-secret \
+#     --from-literal=username=<user> \
+#     --from-literal=password=<password> \
+#     -n impact-crawler
+# OR: cp k8s/secret.yaml.example k8s/secret.yaml, fill in values, then apply.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: impact-crawler
+
+resources:
+  - namespace.yaml
+  # secret.yaml is intentionally excluded — create it locally from secret.yaml.example
+  - configmap.yaml
+  - postgres.yaml
+  - discovery-job.yaml
+  - crawler-deployment.yaml

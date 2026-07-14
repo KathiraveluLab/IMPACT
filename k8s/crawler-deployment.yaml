@@ -1,0 +1,83 @@
+# k8s/crawler-deployment.yaml
+# Multi-replica crawler worker Deployment.
+# Each pod independently claims work from the shared PostgreSQL queue
+# using SELECT FOR UPDATE SKIP LOCKED — no central coordinator needed.
+# Scale replicas up/down to control crawl throughput.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crawler-worker
+  namespace: impact-crawler
+  labels:
+    app: impact-crawler
+    role: worker
+spec:
+  replicas: 4       # <-- scale this to add/remove parallel workers
+  selector:
+    matchLabels:
+      app: impact-crawler
+      role: worker
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: impact-crawler
+        role: worker
+    spec:
+      # Spread workers across nodes for true multi-node distribution
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              role: worker
+      containers:
+        - name: crawler
+          image: impact-crawler:latest
+          imagePullPolicy: IfNotPresent
+          args: ["crawl", "--limit", "$(CRAWLER_LIMIT)"]
+          env:
+            - name: IMPACT_DB_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: crawler-config
+                  key: DB_DSN
+            - name: CRAWLER_LIMIT
+              valueFrom:
+                configMapKeyRef:
+                  name: crawler-config
+                  key: CRAWLER_LIMIT
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-token-secret
+                  key: token
+                  optional: true
+            # Expose pod identity for log correlation
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          # Liveness: restart if the process hangs
+          livenessProbe:
+            exec:
+              command: ["python3", "-c", "import core.crawler; print('ok')"]
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            failureThreshold: 3
