@@ -44,6 +44,9 @@ __pycache__/
 # Ignore extracted GitHub source folders in benchmarks
 test_projects/github_benchmarks/*/*/*/
 
-# Kubernetes secrets — never commit real credentials
+# Python packaging build artifacts — never commit
+build/
+dist/
+*.egg-info/
 # Copy k8s/secret.yaml.example -> k8s/secret.yaml and fill in values locally
 k8s/secret.yaml

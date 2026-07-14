@@ -24,52 +24,86 @@ The repository is organized as follows:
 
 ## Installation & Setup
 
-IMPACT is implemented in Python and relies on `networkx` for graph calculations. 
+IMPACT is packaged as `impact-core` and published on PyPI. Python 3.8 or higher is required.
 
-### Prerequisites
+### Install from PyPI
 
-Ensure you have Python 3.8 or higher installed on your system.
-
-### Install Dependencies
-
-Install the required packages using pip:
+Choose the extras that match your use case:
 
 ```bash
-pip install networkx
+# Core only — graph loading, diff, coordinator, SHACL validator
+pip install impact-core
+
+# + Java AST extractor (recommended for local extraction)
+pip install impact-core[java]
+
+# + Full crawler stack (javalang, pyshacl, rdflib) — single-node SQLite
+pip install impact-core[crawler]
+
+# + Distributed crawler (PostgreSQL backend)
+pip install impact-core[crawler-distributed]
+
+# Everything
+pip install impact-core[all]
 ```
+
+### Install from source (development)
+
+```bash
+git clone https://github.com/IMPACT-Project/IMPACT.git
+cd IMPACT
+pip install -e ".[dev]"   # editable install with all deps + build/test tools
+```
+
+### Console scripts
+
+After installation the following commands are available on your `PATH`:
+
+| Command | Description |
+|---------|-------------|
+| `impact-crawl` | GitHub ecosystem crawler CLI |
+| `impact-extract` | Java AST dependency graph extractor |
+| `impact-demo` | Run the built-in TelemetryService evolution demo |
+| `impact-dashboard` | Launch the interactive architect dashboard |
 
 ## Running the Project
 
 ### Running Graph Extraction (Java Adapter)
 
-To extract a dependency graph from a Java source code directory, execute the Java extractor tool:
-
 ```bash
+# Via installed console script (after pip install impact-core[java])
+impact-extract <projectName> <version> <srcDirectory> <outputJsonPath>
+
+# Or directly
 python3 adapters/java/extractor.py <projectName> <version> <srcDirectory> <outputJsonPath>
 ```
 
-For example, to extract graphs for the mock `TelemetryService` project versions:
+For example, to extract graphs for the mock `TelemetryService` project:
 
 ```bash
-python3 adapters/java/extractor.py TelemetryService 1.0.0 test_projects/telemetry_service_v1/src test_projects/v1_graph.json
-python3 adapters/java/extractor.py TelemetryService 2.0.0 test_projects/telemetry_service_v2/src test_projects/v2_graph.json
+impact-extract TelemetryService 1.0.0 test_projects/telemetry_service_v1/src test_projects/v1_graph.json
+impact-extract TelemetryService 2.0.0 test_projects/telemetry_service_v2/src test_projects/v2_graph.json
 ```
 
 ### Running the Demo
 
-To run the full multi-agent evolution analysis on the sample `TelemetryService` transition, execute:
-
 ```bash
+# Via installed console script
+impact-demo
+
+# Or directly
 python3 run_demo.py
 ```
 
-This will run the Coordinator agent, orchestrate the swarm, evaluate intents against the graph diffs, and generate the compliance report.
+This runs the Coordinator agent, orchestrates the swarm, evaluates intents against the graph diffs, and generates the compliance report.
 
 ### Running the Architect Dashboard (UI)
 
-To launch the interactive visual dashboard in your browser, execute:
-
 ```bash
+# Via installed console script
+impact-dashboard
+
+# Or directly
 python3 run_dashboard.py
 ```
 
@@ -80,11 +114,10 @@ This starts a local development server and automatically opens the dashboard int
 
 ### Running Unit Tests
 
-To run the automated test suite, execute:
-
 ```bash
-python3 -m unittest test_impact.py
+python3 -m unittest discover -p "test_*.py"
 ```
+
 
 ### Running the Model Context Protocol (MCP) Server
 

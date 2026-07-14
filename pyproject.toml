@@ -1,17 +1,112 @@
 [build-system]
-requires = ["setuptools>=61.0.0"]
+requires = ["setuptools>=61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
+# ---------------------------------------------------------------------------
+# Core package metadata
+# ---------------------------------------------------------------------------
 [project]
 name = "impact-core"
 version = "1.0.0"
-description = "Intent-based Multi-agent Platform for Architectural Change Tracking Core"
+description = "Intent-based Multi-agent Platform for Architectural Change Tracking"
 readme = "README.md"
+license = { text = "Apache-2.0" }
 requires-python = ">=3.8"
+authors = [
+    { name = "IMPACT Project" }
+]
+keywords = [
+    "software-architecture", "dependency-graph", "multi-agent",
+    "ast-parser", "intent-based", "software-evolution"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+
+# ---------------------------------------------------------------------------
+# Core runtime dependencies (always installed)
+# ---------------------------------------------------------------------------
 dependencies = [
     "networkx>=2.5",
 ]
 
+# ---------------------------------------------------------------------------
+# Optional extras — install only what you need
+# ---------------------------------------------------------------------------
+[project.optional-dependencies]
+
+# Java AST extraction
+java = [
+    "javalang>=0.13.0",
+]
+
+# SHACL ontology validation
+shacl = [
+    "pyshacl>=0.20.0",
+    "rdflib>=6.0.0",
+]
+
+# GitHub ecosystem crawler (SQLite backend — zero extra deps)
+crawler = [
+    "javalang>=0.13.0",
+    "pyshacl>=0.20.0",
+    "rdflib>=6.0.0",
+]
+
+# Distributed crawler (PostgreSQL backend)
+crawler-distributed = [
+    "impact-core[crawler]",
+    "psycopg2-binary>=2.9.0",
+]
+
+# Full installation — everything
+all = [
+    "impact-core[java,shacl,crawler-distributed]",
+]
+
+# Development / testing
+dev = [
+    "impact-core[all]",
+    "build>=0.10",
+    "twine>=4.0",
+    "pytest>=7.0",
+]
+
+# ---------------------------------------------------------------------------
+# Console scripts — installed as CLI commands after `pip install`
+# ---------------------------------------------------------------------------
+[project.scripts]
+impact-crawl     = "core.ecosystem_crawler:main"
+impact-extract   = "adapters.java.extractor:main"
+impact-demo      = "run_demo:main"
+impact-dashboard = "run_dashboard:main"
+
+# ---------------------------------------------------------------------------
+# URLs shown on PyPI
+# ---------------------------------------------------------------------------
+[project.urls]
+"Homepage"    = "https://github.com/IMPACT-Project/IMPACT"
+"Bug Tracker" = "https://github.com/IMPACT-Project/IMPACT/issues"
+
+# ---------------------------------------------------------------------------
+# Package discovery — include all sub-packages under core/ and adapters/
+# ---------------------------------------------------------------------------
 [tool.setuptools.packages.find]
-where = ["."]
-include = ["core*"]
+where   = ["."]
+include = ["core*", "adapters*"]
+
+# Include non-Python files shipped inside the packages
+[tool.setuptools.package-data]
+"core"    = ["schema/*.json"]
+"adapters" = ["java/*.py"]

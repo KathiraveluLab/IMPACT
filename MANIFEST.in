@@ -1,0 +1,18 @@
+# MANIFEST.in
+# Controls which non-Python files are included in the source distribution (sdist).
+
+# Documentation and metadata
+include README.md
+include LICENSE
+include requirements.txt
+include pyproject.toml
+
+# JSON schema files
+recursive-include core/schema *.json
+
+# Kubernetes deployment manifests
+recursive-include k8s *.yaml *.example
+
+# Test datasets (small, deterministic fixtures — not the large benchmark cache)
+recursive-include test_projects *.json *.java
+prune test_projects/github_benchmarks

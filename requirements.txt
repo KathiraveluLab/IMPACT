@@ -1,1 +1,12 @@
+# Core runtime
 networkx>=2.5
+
+# Java AST extraction (optional but recommended)
+javalang>=0.13.0
+
+# SHACL ontology validation
+pyshacl>=0.20.0
+rdflib>=6.0.0
+
+# Distributed crawler (PostgreSQL) — optional, install manually if needed:
+# psycopg2-binary>=2.9.0
