@@ -4,14 +4,14 @@ Architectural Evolution Report (Version gson-parent-2.8.5 -> gson-parent-2.8.6)
    * Added Nodes: 0
    * Added Dependencies (Edges): 0
    * Removed Nodes: 0
-   * Removed Dependencies (Edges): 1
+   * Removed Dependencies (Edges): 3
 
 2. Dependency Cycles:
    * New Cycles Detected: 0
    * Broken Cycles: 0
 
 3. Coupling & Complexity Hubs:
-   * Top Coupled Nodes in New Version: com.google.gson.reflect.TypeToken, com.google.gson.common.TestTypes, com.google.gson.metrics.BagOfPrimitives
+   * Top Coupled Nodes in New Version: com.google.gson.Gson, com.google.gson.GsonBuilder, com.google.gson.reflect.TypeToken
 
 4. Intent Conformance Evaluation:
    * All intents successfully satisfied. No modularity or cycle violations detected.

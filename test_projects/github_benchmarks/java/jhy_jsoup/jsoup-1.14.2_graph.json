@@ -16,11 +16,11 @@
   "projectName": "jsoup",
   "version": "jsoup-1.14.2",
   "language": "Java",
-  "extractedAt": "2026-07-14T12:29:56.887921Z",
+  "extractedAt": "2026-07-14T12:40:27.360713Z",
   "systemMetrics": {
-    "totalLinesOfCode": 20990,
-    "totalClasses": 100,
-    "averageCoupling": 10.3
+    "totalLinesOfCode": 28393,
+    "totalClasses": 126,
+    "averageCoupling": 11.047619047619047
   },
   "nodes": [
     {
@@ -32,8 +32,8 @@
         "loc": 24,
         "complexity": 1,
         "fanOut": 0,
-        "fanIn": 4,
-        "coupling": 4
+        "fanIn": 1,
+        "coupling": 1
       }
     },
     {
@@ -50,6 +50,19 @@
       }
     },
     {
+      "id": "org.jsoup.SerializationException",
+      "name": "SerializationException",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/SerializationException.java",
+      "metrics": {
+        "loc": 44,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 5,
+        "coupling": 5
+      }
+    },
+    {
       "id": "org.jsoup.Connection",
       "name": "Connection",
       "type": "class",
@@ -57,9 +70,9 @@
       "metrics": {
         "loc": 724,
         "complexity": 132,
-        "fanOut": 7,
-        "fanIn": 11,
-        "coupling": 18
+        "fanOut": 2,
+        "fanIn": 13,
+        "coupling": 15
       }
     },
     {
@@ -71,8 +84,8 @@
         "loc": 20,
         "complexity": 1,
         "fanOut": 0,
-        "fanIn": 4,
-        "coupling": 4
+        "fanIn": 1,
+        "coupling": 1
       }
     },
     {
@@ -83,9 +96,9 @@
       "metrics": {
         "loc": 287,
         "complexity": 26,
-        "fanOut": 9,
-        "fanIn": 53,
-        "coupling": 62
+        "fanOut": 8,
+        "fanIn": 47,
+        "coupling": 55
       }
     },
     {
@@ -97,8 +110,8 @@
         "loc": 34,
         "complexity": 1,
         "fanOut": 0,
-        "fanIn": 3,
-        "coupling": 3
+        "fanIn": 5,
+        "coupling": 5
       }
     },
     {
@@ -109,9 +122,61 @@
       "metrics": {
         "loc": 201,
         "complexity": 25,
-        "fanOut": 7,
-        "fanIn": 30,
-        "coupling": 37
+        "fanOut": 10,
+        "fanIn": 32,
+        "coupling": 42
+      }
+    },
+    {
+      "id": "org.jsoup.parser.Tokeniser",
+      "name": "Tokeniser",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/parser/Tokeniser.java",
+      "metrics": {
+        "loc": 266,
+        "complexity": 61,
+        "fanOut": 10,
+        "fanIn": 5,
+        "coupling": 15
+      }
+    },
+    {
+      "id": "org.jsoup.parser.CharacterReader",
+      "name": "CharacterReader",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/parser/CharacterReader.java",
+      "metrics": {
+        "loc": 529,
+        "complexity": 117,
+        "fanOut": 3,
+        "fanIn": 8,
+        "coupling": 11
+      }
+    },
+    {
+      "id": "org.jsoup.parser.Token",
+      "name": "Token",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/parser/Token.java",
+      "metrics": {
+        "loc": 377,
+        "complexity": 33,
+        "fanOut": 6,
+        "fanIn": 6,
+        "coupling": 12
+      }
+    },
+    {
+      "id": "org.jsoup.parser.HtmlTreeBuilderState",
+      "name": "HtmlTreeBuilderState",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java",
+      "metrics": {
+        "loc": 1554,
+        "complexity": 359,
+        "fanOut": 13,
+        "fanIn": 1,
+        "coupling": 14
       }
     },
     {
@@ -122,9 +187,22 @@
       "metrics": {
         "loc": 656,
         "complexity": 128,
-        "fanOut": 13,
+        "fanOut": 19,
         "fanIn": 6,
-        "coupling": 19
+        "coupling": 25
+      }
+    },
+    {
+      "id": "org.jsoup.parser.TokeniserState",
+      "name": "TokeniserState",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/parser/TokeniserState.java",
+      "metrics": {
+        "loc": 1684,
+        "complexity": 58,
+        "fanOut": 4,
+        "fanIn": 6,
+        "coupling": 10
       }
     },
     {
@@ -135,9 +213,9 @@
       "metrics": {
         "loc": 275,
         "complexity": 45,
-        "fanOut": 2,
+        "fanOut": 3,
         "fanIn": 16,
-        "coupling": 18
+        "coupling": 19
       }
     },
     {
@@ -149,8 +227,21 @@
         "loc": 36,
         "complexity": 2,
         "fanOut": 1,
-        "fanIn": 4,
-        "coupling": 5
+        "fanIn": 6,
+        "coupling": 7
+      }
+    },
+    {
+      "id": "org.jsoup.parser.TreeBuilder",
+      "name": "TreeBuilder",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/parser/TreeBuilder.java",
+      "metrics": {
+        "loc": 128,
+        "complexity": 18,
+        "fanOut": 12,
+        "fanIn": 7,
+        "coupling": 19
       }
     },
     {
@@ -162,8 +253,8 @@
         "loc": 70,
         "complexity": 7,
         "fanOut": 1,
-        "fanIn": 14,
-        "coupling": 15
+        "fanIn": 15,
+        "coupling": 16
       }
     },
     {
@@ -174,9 +265,9 @@
       "metrics": {
         "loc": 377,
         "complexity": 92,
-        "fanOut": 0,
+        "fanOut": 2,
         "fanIn": 3,
-        "coupling": 3
+        "coupling": 5
       }
     },
     {
@@ -187,9 +278,22 @@
       "metrics": {
         "loc": 140,
         "complexity": 17,
-        "fanOut": 13,
-        "fanIn": 5,
+        "fanOut": 15,
+        "fanIn": 3,
         "coupling": 18
+      }
+    },
+    {
+      "id": "org.jsoup.nodes.NodeUtils",
+      "name": "NodeUtils",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/nodes/NodeUtils.java",
+      "metrics": {
+        "loc": 24,
+        "complexity": 6,
+        "fanOut": 4,
+        "fanIn": 3,
+        "coupling": 7
       }
     },
     {
@@ -200,9 +304,9 @@
       "metrics": {
         "loc": 57,
         "complexity": 3,
-        "fanOut": 2,
+        "fanOut": 3,
         "fanIn": 8,
-        "coupling": 10
+        "coupling": 11
       }
     },
     {
@@ -213,9 +317,9 @@
       "metrics": {
         "loc": 445,
         "complexity": 77,
-        "fanOut": 5,
-        "fanIn": 17,
-        "coupling": 22
+        "fanOut": 7,
+        "fanIn": 21,
+        "coupling": 28
       }
     },
     {
@@ -226,9 +330,9 @@
       "metrics": {
         "loc": 310,
         "complexity": 48,
-        "fanOut": 3,
-        "fanIn": 14,
-        "coupling": 17
+        "fanOut": 6,
+        "fanIn": 15,
+        "coupling": 21
       }
     },
     {
@@ -239,9 +343,9 @@
       "metrics": {
         "loc": 78,
         "complexity": 14,
-        "fanOut": 5,
-        "fanIn": 11,
-        "coupling": 16
+        "fanOut": 7,
+        "fanIn": 14,
+        "coupling": 21
       }
     },
     {
@@ -265,9 +369,22 @@
       "metrics": {
         "loc": 89,
         "complexity": 12,
-        "fanOut": 1,
-        "fanIn": 6,
-        "coupling": 7
+        "fanOut": 4,
+        "fanIn": 9,
+        "coupling": 13
+      }
+    },
+    {
+      "id": "org.jsoup.nodes.Node",
+      "name": "Node",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/nodes/Node.java",
+      "metrics": {
+        "loc": 689,
+        "complexity": 100,
+        "fanOut": 11,
+        "fanIn": 32,
+        "coupling": 43
       }
     },
     {
@@ -278,9 +395,22 @@
       "metrics": {
         "loc": 17,
         "complexity": 1,
-        "fanOut": 6,
+        "fanOut": 4,
         "fanIn": 1,
-        "coupling": 7
+        "coupling": 5
+      }
+    },
+    {
+      "id": "org.jsoup.nodes.EntitiesData",
+      "name": "EntitiesData",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/nodes/EntitiesData.java",
+      "metrics": {
+        "loc": 14,
+        "complexity": 2,
+        "fanOut": 0,
+        "fanIn": 1,
+        "coupling": 1
       }
     },
     {
@@ -291,9 +421,9 @@
       "metrics": {
         "loc": 108,
         "complexity": 18,
-        "fanOut": 8,
-        "fanIn": 7,
-        "coupling": 15
+        "fanOut": 10,
+        "fanIn": 6,
+        "coupling": 16
       }
     },
     {
@@ -304,9 +434,9 @@
       "metrics": {
         "loc": 566,
         "complexity": 69,
-        "fanOut": 11,
-        "fanIn": 58,
-        "coupling": 69
+        "fanOut": 17,
+        "fanIn": 63,
+        "coupling": 80
       }
     },
     {
@@ -317,9 +447,9 @@
       "metrics": {
         "loc": 188,
         "complexity": 24,
-        "fanOut": 3,
-        "fanIn": 15,
-        "coupling": 18
+        "fanOut": 6,
+        "fanIn": 18,
+        "coupling": 24
       }
     },
     {
@@ -329,6 +459,19 @@
       "filePath": "src/main/java/org/jsoup/nodes/XmlDeclaration.java",
       "metrics": {
         "loc": 79,
+        "complexity": 7,
+        "fanOut": 7,
+        "fanIn": 8,
+        "coupling": 15
+      }
+    },
+    {
+      "id": "org.jsoup.nodes.LeafNode",
+      "name": "LeafNode",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/nodes/LeafNode.java",
+      "metrics": {
+        "loc": 89,
         "complexity": 7,
         "fanOut": 3,
         "fanIn": 6,
@@ -343,9 +486,9 @@
       "metrics": {
         "loc": 1500,
         "complexity": 209,
-        "fanOut": 16,
-        "fanIn": 44,
-        "coupling": 60
+        "fanOut": 21,
+        "fanIn": 48,
+        "coupling": 69
       }
     },
     {
@@ -356,9 +499,9 @@
       "metrics": {
         "loc": 105,
         "complexity": 17,
-        "fanOut": 3,
+        "fanOut": 6,
         "fanIn": 18,
-        "coupling": 21
+        "coupling": 24
       }
     },
     {
@@ -369,9 +512,22 @@
       "metrics": {
         "loc": 1127,
         "complexity": 143,
-        "fanOut": 8,
-        "fanIn": 5,
-        "coupling": 13
+        "fanOut": 12,
+        "fanIn": 4,
+        "coupling": 16
+      }
+    },
+    {
+      "id": "org.jsoup.helper.DataUtil",
+      "name": "DataUtil",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/helper/DataUtil.java",
+      "metrics": {
+        "loc": 294,
+        "complexity": 69,
+        "fanOut": 11,
+        "fanIn": 6,
+        "coupling": 17
       }
     },
     {
@@ -382,9 +538,48 @@
       "metrics": {
         "loc": 252,
         "complexity": 33,
-        "fanOut": 11,
-        "fanIn": 3,
-        "coupling": 14
+        "fanOut": 13,
+        "fanIn": 2,
+        "coupling": 15
+      }
+    },
+    {
+      "id": "org.jsoup.helper.CookieUtil",
+      "name": "CookieUtil",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/helper/CookieUtil.java",
+      "metrics": {
+        "loc": 73,
+        "complexity": 12,
+        "fanOut": 3,
+        "fanIn": 1,
+        "coupling": 4
+      }
+    },
+    {
+      "id": "org.jsoup.helper.Validate",
+      "name": "Validate",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/helper/Validate.java",
+      "metrics": {
+        "loc": 107,
+        "complexity": 20,
+        "fanOut": 0,
+        "fanIn": 34,
+        "coupling": 34
+      }
+    },
+    {
+      "id": "org.jsoup.helper.ChangeNotifyingArrayList",
+      "name": "ChangeNotifyingArrayList",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/helper/ChangeNotifyingArrayList.java",
+      "metrics": {
+        "loc": 67,
+        "complexity": 2,
+        "fanOut": 0,
+        "fanIn": 1,
+        "coupling": 1
       }
     },
     {
@@ -395,9 +590,9 @@
       "metrics": {
         "loc": 110,
         "complexity": 23,
-        "fanOut": 7,
+        "fanOut": 10,
         "fanIn": 0,
-        "coupling": 7
+        "coupling": 10
       }
     },
     {
@@ -408,9 +603,9 @@
       "metrics": {
         "loc": 47,
         "complexity": 6,
-        "fanOut": 4,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 4
+        "coupling": 5
       }
     },
     {
@@ -434,9 +629,9 @@
       "metrics": {
         "loc": 161,
         "complexity": 18,
-        "fanOut": 14,
-        "fanIn": 5,
-        "coupling": 19
+        "fanOut": 15,
+        "fanIn": 3,
+        "coupling": 18
       }
     },
     {
@@ -460,9 +655,113 @@
       "metrics": {
         "loc": 562,
         "complexity": 92,
-        "fanOut": 5,
+        "fanOut": 4,
         "fanIn": 6,
-        "coupling": 11
+        "coupling": 10
+      }
+    },
+    {
+      "id": "org.jsoup.internal.ConstrainableInputStream",
+      "name": "ConstrainableInputStream",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/internal/ConstrainableInputStream.java",
+      "metrics": {
+        "loc": 104,
+        "complexity": 16,
+        "fanOut": 1,
+        "fanIn": 3,
+        "coupling": 4
+      }
+    },
+    {
+      "id": "org.jsoup.internal.FieldsAreNonnullByDefault",
+      "name": "FieldsAreNonnullByDefault",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/internal/FieldsAreNonnullByDefault.java",
+      "metrics": {
+        "loc": 17,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "org.jsoup.internal.Normalizer",
+      "name": "Normalizer",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/internal/Normalizer.java",
+      "metrics": {
+        "loc": 16,
+        "complexity": 2,
+        "fanOut": 0,
+        "fanIn": 2,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "org.jsoup.internal.StringUtil",
+      "name": "StringUtil",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/internal/StringUtil.java",
+      "metrics": {
+        "loc": 310,
+        "complexity": 60,
+        "fanOut": 1,
+        "fanIn": 26,
+        "coupling": 27
+      }
+    },
+    {
+      "id": "org.jsoup.internal.NonnullByDefault",
+      "name": "NonnullByDefault",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/internal/NonnullByDefault.java",
+      "metrics": {
+        "loc": 17,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "org.jsoup.internal.ReturnsAreNonnullByDefault",
+      "name": "ReturnsAreNonnullByDefault",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/internal/ReturnsAreNonnullByDefault.java",
+      "metrics": {
+        "loc": 17,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 0,
+        "coupling": 0
+      }
+    },
+    {
+      "id": "org.jsoup.select.Evaluator",
+      "name": "Evaluator",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/select/Evaluator.java",
+      "metrics": {
+        "loc": 649,
+        "complexity": 71,
+        "fanOut": 11,
+        "fanIn": 10,
+        "coupling": 21
+      }
+    },
+    {
+      "id": "org.jsoup.select.CombiningEvaluator",
+      "name": "CombiningEvaluator",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/select/CombiningEvaluator.java",
+      "metrics": {
+        "loc": 88,
+        "complexity": 8,
+        "fanOut": 3,
+        "fanIn": 2,
+        "coupling": 5
       }
     },
     {
@@ -473,9 +772,9 @@
       "metrics": {
         "loc": 117,
         "complexity": 28,
-        "fanOut": 4,
-        "fanIn": 9,
-        "coupling": 13
+        "fanOut": 6,
+        "fanIn": 8,
+        "coupling": 14
       }
     },
     {
@@ -486,9 +785,9 @@
       "metrics": {
         "loc": 157,
         "complexity": 16,
-        "fanOut": 5,
-        "fanIn": 5,
-        "coupling": 10
+        "fanOut": 6,
+        "fanIn": 3,
+        "coupling": 9
       }
     },
     {
@@ -499,9 +798,22 @@
       "metrics": {
         "loc": 619,
         "complexity": 95,
-        "fanOut": 12,
-        "fanIn": 24,
-        "coupling": 36
+        "fanOut": 14,
+        "fanIn": 26,
+        "coupling": 40
+      }
+    },
+    {
+      "id": "org.jsoup.select.StructuralEvaluator",
+      "name": "StructuralEvaluator",
+      "type": "class",
+      "filePath": "src/main/java/org/jsoup/select/StructuralEvaluator.java",
+      "metrics": {
+        "loc": 113,
+        "complexity": 15,
+        "fanOut": 2,
+        "fanIn": 2,
+        "coupling": 4
       }
     },
     {
@@ -512,9 +824,9 @@
       "metrics": {
         "loc": 32,
         "complexity": 4,
-        "fanOut": 3,
-        "fanIn": 11,
-        "coupling": 14
+        "fanOut": 1,
+        "fanIn": 12,
+        "coupling": 13
       }
     },
     {
@@ -525,9 +837,9 @@
       "metrics": {
         "loc": 340,
         "complexity": 71,
-        "fanOut": 4,
+        "fanOut": 9,
         "fanIn": 5,
-        "coupling": 9
+        "coupling": 14
       }
     },
     {
@@ -538,9 +850,9 @@
       "metrics": {
         "loc": 80,
         "complexity": 7,
-        "fanOut": 5,
+        "fanOut": 7,
         "fanIn": 2,
-        "coupling": 7
+        "coupling": 9
       }
     },
     {
@@ -578,8 +890,8 @@
         "loc": 30,
         "complexity": 1,
         "fanOut": 0,
-        "fanIn": 6,
-        "coupling": 6
+        "fanIn": 0,
+        "coupling": 0
       }
     },
     {
@@ -590,9 +902,9 @@
       "metrics": {
         "loc": 242,
         "complexity": 1,
-        "fanOut": 12,
+        "fanOut": 14,
         "fanIn": 0,
-        "coupling": 12
+        "coupling": 14
       }
     },
     {
@@ -603,9 +915,9 @@
       "metrics": {
         "loc": 39,
         "complexity": 1,
-        "fanOut": 3,
+        "fanOut": 2,
         "fanIn": 0,
-        "coupling": 3
+        "coupling": 2
       }
     },
     {
@@ -629,9 +941,9 @@
       "metrics": {
         "loc": 171,
         "complexity": 13,
-        "fanOut": 11,
+        "fanOut": 13,
         "fanIn": 0,
-        "coupling": 11
+        "coupling": 13
       }
     },
     {
@@ -642,9 +954,9 @@
       "metrics": {
         "loc": 291,
         "complexity": 6,
-        "fanOut": 0,
+        "fanOut": 1,
         "fanIn": 1,
-        "coupling": 1
+        "coupling": 2
       }
     },
     {
@@ -655,9 +967,9 @@
       "metrics": {
         "loc": 242,
         "complexity": 14,
-        "fanOut": 9,
+        "fanOut": 11,
         "fanIn": 0,
-        "coupling": 9
+        "coupling": 11
       }
     },
     {
@@ -707,8 +1019,8 @@
       "metrics": {
         "loc": 37,
         "complexity": 5,
-        "fanOut": 3,
-        "fanIn": 1,
+        "fanOut": 4,
+        "fanIn": 0,
         "coupling": 4
       }
     },
@@ -733,9 +1045,9 @@
       "metrics": {
         "loc": 1175,
         "complexity": 19,
-        "fanOut": 19,
+        "fanOut": 20,
         "fanIn": 0,
-        "coupling": 19
+        "coupling": 20
       }
     },
     {
@@ -746,9 +1058,9 @@
       "metrics": {
         "loc": 66,
         "complexity": 1,
-        "fanOut": 3,
+        "fanOut": 2,
         "fanIn": 0,
-        "coupling": 3
+        "coupling": 2
       }
     },
     {
@@ -759,9 +1071,22 @@
       "metrics": {
         "loc": 130,
         "complexity": 5,
-        "fanOut": 5,
+        "fanOut": 7,
         "fanIn": 0,
-        "coupling": 5
+        "coupling": 7
+      }
+    },
+    {
+      "id": "org.jsoup.nodes.BuildEntities",
+      "name": "BuildEntities",
+      "type": "class",
+      "filePath": "src/test/java/org/jsoup/nodes/BuildEntities.java",
+      "metrics": {
+        "loc": 112,
+        "complexity": 15,
+        "fanOut": 4,
+        "fanIn": 0,
+        "coupling": 4
       }
     },
     {
@@ -785,9 +1110,9 @@
       "metrics": {
         "loc": 67,
         "complexity": 3,
-        "fanOut": 3,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 3
+        "coupling": 4
       }
     },
     {
@@ -811,9 +1136,9 @@
       "metrics": {
         "loc": 53,
         "complexity": 1,
-        "fanOut": 4,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 4
+        "coupling": 5
       }
     },
     {
@@ -850,9 +1175,9 @@
       "metrics": {
         "loc": 57,
         "complexity": 2,
-        "fanOut": 6,
+        "fanOut": 7,
         "fanIn": 0,
-        "coupling": 6
+        "coupling": 7
       }
     },
     {
@@ -876,9 +1201,9 @@
       "metrics": {
         "loc": 269,
         "complexity": 6,
-        "fanOut": 9,
+        "fanOut": 10,
         "fanIn": 0,
-        "coupling": 9
+        "coupling": 10
       }
     },
     {
@@ -902,9 +1227,9 @@
       "metrics": {
         "loc": 1675,
         "complexity": 27,
-        "fanOut": 14,
+        "fanOut": 16,
         "fanIn": 0,
-        "coupling": 14
+        "coupling": 16
       }
     },
     {
@@ -915,9 +1240,9 @@
       "metrics": {
         "loc": 16,
         "complexity": 2,
-        "fanOut": 0,
+        "fanOut": 1,
         "fanIn": 0,
-        "coupling": 0
+        "coupling": 1
       }
     },
     {
@@ -928,9 +1253,9 @@
       "metrics": {
         "loc": 248,
         "complexity": 4,
-        "fanOut": 5,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 5
+        "coupling": 4
       }
     },
     {
@@ -941,9 +1266,9 @@
       "metrics": {
         "loc": 232,
         "complexity": 3,
-        "fanOut": 7,
+        "fanOut": 8,
         "fanIn": 0,
-        "coupling": 7
+        "coupling": 8
       }
     },
     {
@@ -967,9 +1292,9 @@
       "metrics": {
         "loc": 266,
         "complexity": 4,
-        "fanOut": 7,
+        "fanOut": 6,
         "fanIn": 0,
-        "coupling": 7
+        "coupling": 6
       }
     },
     {
@@ -980,9 +1305,9 @@
       "metrics": {
         "loc": 86,
         "complexity": 3,
-        "fanOut": 7,
+        "fanOut": 6,
         "fanIn": 0,
-        "coupling": 7
+        "coupling": 6
       }
     },
     {
@@ -993,9 +1318,9 @@
       "metrics": {
         "loc": 56,
         "complexity": 1,
-        "fanOut": 1,
+        "fanOut": 2,
         "fanIn": 0,
-        "coupling": 1
+        "coupling": 2
       }
     },
     {
@@ -1006,9 +1331,9 @@
       "metrics": {
         "loc": 113,
         "complexity": 2,
-        "fanOut": 1,
+        "fanOut": 2,
         "fanIn": 0,
-        "coupling": 1
+        "coupling": 2
       }
     },
     {
@@ -1032,8 +1357,8 @@
       "metrics": {
         "loc": 201,
         "complexity": 8,
-        "fanOut": 6,
-        "fanIn": 8,
+        "fanOut": 7,
+        "fanIn": 7,
         "coupling": 14
       }
     },
@@ -1045,9 +1370,9 @@
       "metrics": {
         "loc": 410,
         "complexity": 16,
-        "fanOut": 9,
+        "fanOut": 4,
         "fanIn": 1,
-        "coupling": 10
+        "coupling": 5
       }
     },
     {
@@ -1123,9 +1448,9 @@
       "metrics": {
         "loc": 50,
         "complexity": 7,
-        "fanOut": 0,
+        "fanOut": 1,
         "fanIn": 12,
-        "coupling": 12
+        "coupling": 13
       }
     },
     {
@@ -1136,9 +1461,9 @@
       "metrics": {
         "loc": 107,
         "complexity": 12,
-        "fanOut": 8,
+        "fanOut": 7,
         "fanIn": 0,
-        "coupling": 8
+        "coupling": 7
       }
     },
     {
@@ -1149,9 +1474,9 @@
       "metrics": {
         "loc": 564,
         "complexity": 9,
-        "fanOut": 20,
+        "fanOut": 18,
         "fanIn": 0,
-        "coupling": 20
+        "coupling": 18
       }
     },
     {
@@ -1162,9 +1487,22 @@
       "metrics": {
         "loc": 15,
         "complexity": 1,
-        "fanOut": 1,
+        "fanOut": 2,
         "fanIn": 1,
-        "coupling": 2
+        "coupling": 3
+      }
+    },
+    {
+      "id": "org.jsoup.integration.servlets.BaseServlet",
+      "name": "BaseServlet",
+      "type": "class",
+      "filePath": "src/test/java/org/jsoup/integration/servlets/BaseServlet.java",
+      "metrics": {
+        "loc": 21,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 9,
+        "coupling": 9
       }
     },
     {
@@ -1175,9 +1513,9 @@
       "metrics": {
         "loc": 40,
         "complexity": 4,
-        "fanOut": 2,
+        "fanOut": 3,
         "fanIn": 4,
-        "coupling": 6
+        "coupling": 7
       }
     },
     {
@@ -1188,9 +1526,9 @@
       "metrics": {
         "loc": 27,
         "complexity": 2,
-        "fanOut": 1,
+        "fanOut": 2,
         "fanIn": 1,
-        "coupling": 2
+        "coupling": 3
       }
     },
     {
@@ -1201,9 +1539,9 @@
       "metrics": {
         "loc": 53,
         "complexity": 9,
-        "fanOut": 1,
+        "fanOut": 2,
         "fanIn": 2,
-        "coupling": 3
+        "coupling": 4
       }
     },
     {
@@ -1214,9 +1552,9 @@
       "metrics": {
         "loc": 58,
         "complexity": 5,
-        "fanOut": 2,
+        "fanOut": 3,
         "fanIn": 2,
-        "coupling": 4
+        "coupling": 5
       }
     },
     {
@@ -1227,9 +1565,9 @@
       "metrics": {
         "loc": 111,
         "complexity": 14,
-        "fanOut": 2,
-        "fanIn": 5,
-        "coupling": 7
+        "fanOut": 4,
+        "fanIn": 4,
+        "coupling": 8
       }
     },
     {
@@ -1240,9 +1578,9 @@
       "metrics": {
         "loc": 32,
         "complexity": 4,
-        "fanOut": 1,
+        "fanOut": 2,
         "fanIn": 1,
-        "coupling": 2
+        "coupling": 3
       }
     },
     {
@@ -1253,9 +1591,9 @@
       "metrics": {
         "loc": 28,
         "complexity": 2,
-        "fanOut": 2,
+        "fanOut": 3,
         "fanIn": 1,
-        "coupling": 3
+        "coupling": 4
       }
     },
     {
@@ -1266,9 +1604,9 @@
       "metrics": {
         "loc": 71,
         "complexity": 3,
-        "fanOut": 6,
+        "fanOut": 7,
         "fanIn": 0,
-        "coupling": 6
+        "coupling": 7
       }
     },
     {
@@ -1292,9 +1630,9 @@
       "metrics": {
         "loc": 801,
         "complexity": 6,
-        "fanOut": 6,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 6
+        "coupling": 5
       }
     },
     {
@@ -1305,8 +1643,8 @@
       "metrics": {
         "loc": 352,
         "complexity": 3,
-        "fanOut": 10,
-        "fanIn": 1,
+        "fanOut": 11,
+        "fanIn": 0,
         "coupling": 11
       }
     },
@@ -1318,35 +1656,15 @@
       "metrics": {
         "loc": 185,
         "complexity": 9,
-        "fanOut": 5,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 5
+        "coupling": 4
       }
     }
   ],
   "edges": [
     {
       "source": "org.jsoup.Connection",
-      "target": "org.jsoup.UnsupportedMimeTypeException",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.Connection",
-      "target": "org.jsoup.UncheckedIOException",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.Connection",
-      "target": "org.jsoup.HttpStatusException",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.Connection",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.Connection",
       "target": "org.jsoup.parser.Parser",
       "type": "calls"
     },
@@ -1356,43 +1674,13 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.Connection",
-      "target": "org.jsoup.helper.HttpConnection",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.Jsoup",
-      "target": "org.jsoup.UnsupportedMimeTypeException",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.Jsoup",
-      "target": "org.jsoup.Connection",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.Jsoup",
-      "target": "org.jsoup.HttpStatusException",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.Jsoup",
-      "target": "org.jsoup.parser.Parser",
-      "type": "calls"
-    },
-    {
       "source": "org.jsoup.Jsoup",
       "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
       "source": "org.jsoup.Jsoup",
-      "target": "org.jsoup.helper.HttpConnection",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.Jsoup",
-      "target": "org.jsoup.safety.Cleaner",
+      "target": "org.jsoup.parser.Parser",
       "type": "calls"
     },
     {
@@ -1406,13 +1694,23 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.parser.Parser",
-      "target": "org.jsoup.Jsoup",
+      "source": "org.jsoup.Jsoup",
+      "target": "org.jsoup.Connection",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.parser.Parser",
-      "target": "org.jsoup.parser.HtmlTreeBuilder",
+      "source": "org.jsoup.Jsoup",
+      "target": "org.jsoup.safety.Cleaner",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.Jsoup",
+      "target": "org.jsoup.helper.DataUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.Jsoup",
+      "target": "org.jsoup.helper.HttpConnection",
       "type": "calls"
     },
     {
@@ -1422,7 +1720,22 @@
     },
     {
       "source": "org.jsoup.parser.Parser",
-      "target": "org.jsoup.parser.ParseSettings",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.parser.HtmlTreeBuilder",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.parser.TreeBuilder",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.parser.Tokeniser",
       "type": "calls"
     },
     {
@@ -1432,7 +1745,7 @@
     },
     {
       "source": "org.jsoup.parser.Parser",
-      "target": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.parser.ParseSettings",
       "type": "calls"
     },
     {
@@ -1441,8 +1754,213 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.parser.HtmlTreeBuilder",
+      "source": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.parser.CharacterReader",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tokeniser",
+      "target": "org.jsoup.parser.ParseErrorList",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tokeniser",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tokeniser",
+      "target": "org.jsoup.parser.Token",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tokeniser",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tokeniser",
+      "target": "org.jsoup.parser.TokeniserState",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tokeniser",
+      "target": "org.jsoup.nodes.Entities",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tokeniser",
+      "target": "org.jsoup.nodes.Comment",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tokeniser",
       "target": "org.jsoup.parser.ParseError",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tokeniser",
+      "target": "org.jsoup.parser.Tag",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tokeniser",
+      "target": "org.jsoup.parser.CharacterReader",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.CharacterReader",
+      "target": "org.jsoup.parser.TokeniserState",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.CharacterReader",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.CharacterReader",
+      "target": "org.jsoup.UncheckedIOException",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Token",
+      "target": "org.jsoup.nodes.Attributes",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Token",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Token",
+      "target": "org.jsoup.parser.Tokeniser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Token",
+      "target": "org.jsoup.parser.TokeniserState",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Token",
+      "target": "org.jsoup.nodes.Comment",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Token",
+      "target": "org.jsoup.parser.Tag",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.nodes.Attribute",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.parser.HtmlTreeBuilder",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.nodes.Attributes",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.parser.TreeBuilder",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.parser.Token",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.nodes.DocumentType",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.parser.TokeniserState",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.parser.ParseSettings",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilderState",
+      "target": "org.jsoup.parser.Tag",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilder",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilder",
+      "target": "org.jsoup.parser.TreeBuilder",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilder",
+      "target": "org.jsoup.nodes.CDataNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilder",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilder",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilder",
+      "target": "org.jsoup.parser.TokeniserState",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilder",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilder",
+      "target": "org.jsoup.nodes.FormElement",
       "type": "calls"
     },
     {
@@ -1452,7 +1970,7 @@
     },
     {
       "source": "org.jsoup.parser.HtmlTreeBuilder",
-      "target": "org.jsoup.parser.Tag",
+      "target": "org.jsoup.select.Elements",
       "type": "calls"
     },
     {
@@ -1467,17 +1985,7 @@
     },
     {
       "source": "org.jsoup.parser.HtmlTreeBuilder",
-      "target": "org.jsoup.nodes.Comment",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlTreeBuilder",
-      "target": "org.jsoup.nodes.CDataNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlTreeBuilder",
-      "target": "org.jsoup.nodes.FormElement",
+      "target": "org.jsoup.parser.ParseError",
       "type": "calls"
     },
     {
@@ -1487,22 +1995,52 @@
     },
     {
       "source": "org.jsoup.parser.HtmlTreeBuilder",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.parser.Tag",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.HtmlTreeBuilder",
-      "target": "org.jsoup.nodes.TextNode",
+      "target": "org.jsoup.parser.Token",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.HtmlTreeBuilder",
-      "target": "org.jsoup.select.Elements",
+      "target": "org.jsoup.internal.StringUtil",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.HtmlTreeBuilder",
-      "target": "org.jsoup.parser.HtmlTreeBuilderTest",
+      "target": "org.jsoup.nodes.Comment",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlTreeBuilder",
+      "target": "org.jsoup.parser.HtmlTreeBuilderState",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserState",
+      "target": "org.jsoup.parser.Tokeniser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserState",
+      "target": "org.jsoup.parser.Token",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserState",
+      "target": "org.jsoup.nodes.DocumentType",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserState",
+      "target": "org.jsoup.parser.CharacterReader",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.Tag",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
@@ -1512,7 +2050,7 @@
     },
     {
       "source": "org.jsoup.parser.Tag",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.internal.Normalizer",
       "type": "calls"
     },
     {
@@ -1521,13 +2059,78 @@
       "type": "calls"
     },
     {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.parser.ParseErrorList",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.nodes.Attributes",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.parser.Token",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.parser.Tokeniser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.parser.ParseSettings",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.parser.ParseError",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TreeBuilder",
+      "target": "org.jsoup.parser.CharacterReader",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.parser.ParseSettings",
       "target": "org.jsoup.nodes.Attributes",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.parser.XmlTreeBuilder",
-      "target": "org.jsoup.Jsoup",
+      "source": "org.jsoup.parser.TokenQueue",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokenQueue",
+      "target": "org.jsoup.internal.StringUtil",
       "type": "calls"
     },
     {
@@ -1537,32 +2140,22 @@
     },
     {
       "source": "org.jsoup.parser.XmlTreeBuilder",
-      "target": "org.jsoup.parser.HtmlTreeBuilder",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.XmlTreeBuilder",
-      "target": "org.jsoup.parser.Tag",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.XmlTreeBuilder",
-      "target": "org.jsoup.parser.ParseSettings",
+      "target": "org.jsoup.parser.TreeBuilder",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.XmlTreeBuilder",
-      "target": "org.jsoup.nodes.Entities",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.XmlTreeBuilder",
-      "target": "org.jsoup.nodes.Comment",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.XmlTreeBuilder",
-      "target": "org.jsoup.nodes.CDataNode",
+      "target": "org.jsoup.parser.Token",
       "type": "calls"
     },
     {
@@ -1572,7 +2165,17 @@
     },
     {
       "source": "org.jsoup.parser.XmlTreeBuilder",
-      "target": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilder",
+      "target": "org.jsoup.nodes.Entities",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilder",
+      "target": "org.jsoup.parser.ParseSettings",
       "type": "calls"
     },
     {
@@ -1582,7 +2185,7 @@
     },
     {
       "source": "org.jsoup.parser.XmlTreeBuilder",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.CDataNode",
       "type": "calls"
     },
     {
@@ -1591,8 +2194,43 @@
       "type": "calls"
     },
     {
+      "source": "org.jsoup.parser.XmlTreeBuilder",
+      "target": "org.jsoup.nodes.Comment",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilder",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilder",
+      "target": "org.jsoup.parser.Tag",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.NodeUtils",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.NodeUtils",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.NodeUtils",
+      "target": "org.jsoup.parser.HtmlTreeBuilder",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.NodeUtils",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.nodes.DataNode",
-      "target": "org.jsoup.nodes.Entities",
+      "target": "org.jsoup.nodes.LeafNode",
       "type": "calls"
     },
     {
@@ -1601,18 +2239,8 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.Attributes",
-      "target": "org.jsoup.parser.ParseSettings",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Attributes",
+      "source": "org.jsoup.nodes.DataNode",
       "target": "org.jsoup.nodes.Entities",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Attributes",
-      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -1622,12 +2250,32 @@
     },
     {
       "source": "org.jsoup.nodes.Attributes",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.SerializationException",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.Entities",
-      "target": "org.jsoup.Jsoup",
+      "source": "org.jsoup.nodes.Attributes",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Attributes",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Attributes",
+      "target": "org.jsoup.parser.ParseSettings",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Attributes",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Attributes",
+      "target": "org.jsoup.nodes.Entities",
       "type": "calls"
     },
     {
@@ -1637,22 +2285,47 @@
     },
     {
       "source": "org.jsoup.nodes.Entities",
-      "target": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.SerializationException",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Entities",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Entities",
+      "target": "org.jsoup.nodes.EntitiesData",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Entities",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Entities",
+      "target": "org.jsoup.parser.CharacterReader",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Comment",
+      "target": "org.jsoup.nodes.NodeUtils",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.Comment",
       "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Comment",
+      "target": "org.jsoup.nodes.LeafNode",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.Comment",
       "target": "org.jsoup.parser.ParseSettings",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Comment",
-      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -1663,6 +2336,16 @@
     {
       "source": "org.jsoup.nodes.Comment",
       "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Comment",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.CDataNode",
+      "target": "org.jsoup.nodes.TextNode",
       "type": "calls"
     },
     {
@@ -1676,8 +2359,13 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.CDataNode",
-      "target": "org.jsoup.nodes.TextNode",
+      "source": "org.jsoup.nodes.DocumentType",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.DocumentType",
+      "target": "org.jsoup.nodes.LeafNode",
       "type": "calls"
     },
     {
@@ -1686,8 +2374,68 @@
       "type": "calls"
     },
     {
+      "source": "org.jsoup.nodes.DocumentType",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.nodes.NodeUtils",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.nodes.Attribute",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.nodes.Attributes",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.SerializationException",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.select.NodeVisitor",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.select.NodeFilter",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Node",
+      "target": "org.jsoup.select.NodeTraversor",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.nodes.PseudoTextElement",
-      "target": "org.jsoup.parser.Tag",
+      "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
@@ -1702,17 +2450,22 @@
     },
     {
       "source": "org.jsoup.nodes.PseudoTextElement",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.parser.Tag",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.PseudoTextElement",
-      "target": "org.jsoup.nodes.TextNode",
+      "source": "org.jsoup.nodes.FormElement",
+      "target": "org.jsoup.nodes.Attributes",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.PseudoTextElement",
-      "target": "org.jsoup.select.Selector",
+      "source": "org.jsoup.nodes.FormElement",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.FormElement",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
@@ -1722,32 +2475,7 @@
     },
     {
       "source": "org.jsoup.nodes.FormElement",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.FormElement",
       "target": "org.jsoup.parser.Tag",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.FormElement",
-      "target": "org.jsoup.nodes.Attributes",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.FormElement",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.FormElement",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.FormElement",
-      "target": "org.jsoup.helper.HttpConnection",
       "type": "calls"
     },
     {
@@ -1756,13 +2484,23 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.Document",
-      "target": "org.jsoup.Connection",
+      "source": "org.jsoup.nodes.FormElement",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.Document",
-      "target": "org.jsoup.Jsoup",
+      "source": "org.jsoup.nodes.FormElement",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.FormElement",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.FormElement",
+      "target": "org.jsoup.helper.HttpConnection",
       "type": "calls"
     },
     {
@@ -1772,17 +2510,17 @@
     },
     {
       "source": "org.jsoup.nodes.Document",
-      "target": "org.jsoup.parser.Tag",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.Document",
-      "target": "org.jsoup.parser.ParseSettings",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.Document",
-      "target": "org.jsoup.nodes.Entities",
+      "target": "org.jsoup.Connection",
       "type": "calls"
     },
     {
@@ -1792,7 +2530,12 @@
     },
     {
       "source": "org.jsoup.nodes.Document",
-      "target": "org.jsoup.nodes.XmlDeclaration",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.select.Evaluator",
       "type": "calls"
     },
     {
@@ -1802,7 +2545,17 @@
     },
     {
       "source": "org.jsoup.nodes.Document",
-      "target": "org.jsoup.nodes.TextNode",
+      "target": "org.jsoup.nodes.LeafNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.nodes.Entities",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.nodes.XmlDeclaration",
       "type": "calls"
     },
     {
@@ -1811,48 +2564,113 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.Attribute",
-      "target": "org.jsoup.nodes.Attributes",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Attribute",
-      "target": "org.jsoup.nodes.Entities",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Attribute",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.XmlDeclaration",
-      "target": "org.jsoup.nodes.Entities",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.XmlDeclaration",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.XmlDeclaration",
-      "target": "org.jsoup.nodes.Attribute",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Element",
-      "target": "org.jsoup.parser.Tag",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Element",
+      "source": "org.jsoup.nodes.Document",
       "target": "org.jsoup.parser.ParseSettings",
       "type": "calls"
     },
     {
+      "source": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.helper.DataUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.parser.Tag",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Attribute",
+      "target": "org.jsoup.nodes.Attributes",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Attribute",
+      "target": "org.jsoup.SerializationException",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Attribute",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Attribute",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Attribute",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Attribute",
+      "target": "org.jsoup.nodes.Entities",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.XmlDeclaration",
+      "target": "org.jsoup.nodes.Attribute",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.XmlDeclaration",
+      "target": "org.jsoup.SerializationException",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.XmlDeclaration",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.XmlDeclaration",
+      "target": "org.jsoup.nodes.LeafNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.XmlDeclaration",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.XmlDeclaration",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.XmlDeclaration",
+      "target": "org.jsoup.nodes.Entities",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.LeafNode",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.LeafNode",
+      "target": "org.jsoup.nodes.Attributes",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.LeafNode",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.nodes.Element",
-      "target": "org.jsoup.nodes.DataNode",
+      "target": "org.jsoup.nodes.NodeUtils",
       "type": "calls"
     },
     {
@@ -1862,32 +2680,7 @@
     },
     {
       "source": "org.jsoup.nodes.Element",
-      "target": "org.jsoup.nodes.Comment",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Element",
-      "target": "org.jsoup.nodes.CDataNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Element",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Element",
       "target": "org.jsoup.nodes.Attribute",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Element",
-      "target": "org.jsoup.nodes.TextNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Element",
-      "target": "org.jsoup.select.NodeTraversor",
       "type": "calls"
     },
     {
@@ -1897,12 +2690,7 @@
     },
     {
       "source": "org.jsoup.nodes.Element",
-      "target": "org.jsoup.select.Elements",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.Element",
-      "target": "org.jsoup.select.NodeVisitor",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
@@ -1912,7 +2700,12 @@
     },
     {
       "source": "org.jsoup.nodes.Element",
-      "target": "org.jsoup.select.Collector",
+      "target": "org.jsoup.select.Evaluator",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.CDataNode",
       "type": "calls"
     },
     {
@@ -1921,8 +2714,83 @@
       "type": "calls"
     },
     {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.select.NodeVisitor",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.select.NodeTraversor",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.helper.ChangeNotifyingArrayList",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.select.Collector",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.DataNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.parser.Tag",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.Comment",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.nodes.TextNode",
-      "target": "org.jsoup.nodes.Entities",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.TextNode",
+      "target": "org.jsoup.nodes.LeafNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.TextNode",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.TextNode",
+      "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
@@ -1932,22 +2800,17 @@
     },
     {
       "source": "org.jsoup.nodes.TextNode",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.Entities",
       "type": "calls"
     },
     {
       "source": "org.jsoup.helper.HttpConnection",
-      "target": "org.jsoup.UnsupportedMimeTypeException",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
       "source": "org.jsoup.helper.HttpConnection",
-      "target": "org.jsoup.UncheckedIOException",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.helper.HttpConnection",
-      "target": "org.jsoup.Connection",
+      "target": "org.jsoup.parser.Parser",
       "type": "calls"
     },
     {
@@ -1957,12 +2820,27 @@
     },
     {
       "source": "org.jsoup.helper.HttpConnection",
-      "target": "org.jsoup.Jsoup",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
       "source": "org.jsoup.helper.HttpConnection",
-      "target": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.Connection",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.HttpConnection",
+      "target": "org.jsoup.helper.CookieUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.HttpConnection",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.HttpConnection",
+      "target": "org.jsoup.internal.ConstrainableInputStream",
       "type": "calls"
     },
     {
@@ -1972,17 +2850,82 @@
     },
     {
       "source": "org.jsoup.helper.HttpConnection",
+      "target": "org.jsoup.UncheckedIOException",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.HttpConnection",
+      "target": "org.jsoup.UnsupportedMimeTypeException",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.HttpConnection",
+      "target": "org.jsoup.helper.DataUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.DataUtil",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.DataUtil",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.DataUtil",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.DataUtil",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.DataUtil",
+      "target": "org.jsoup.internal.ConstrainableInputStream",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.DataUtil",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.DataUtil",
+      "target": "org.jsoup.nodes.XmlDeclaration",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.DataUtil",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.DataUtil",
+      "target": "org.jsoup.nodes.Comment",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.DataUtil",
       "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.helper.W3CDom",
-      "target": "org.jsoup.parser.Tag",
+      "source": "org.jsoup.helper.DataUtil",
+      "target": "org.jsoup.internal.Normalizer",
       "type": "calls"
     },
     {
       "source": "org.jsoup.helper.W3CDom",
-      "target": "org.jsoup.nodes.DataNode",
+      "target": "org.jsoup.nodes.Attribute",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.W3CDom",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
@@ -1992,7 +2935,7 @@
     },
     {
       "source": "org.jsoup.helper.W3CDom",
-      "target": "org.jsoup.nodes.Comment",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
@@ -2002,12 +2945,7 @@
     },
     {
       "source": "org.jsoup.helper.W3CDom",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.helper.W3CDom",
-      "target": "org.jsoup.nodes.Attribute",
+      "target": "org.jsoup.internal.StringUtil",
       "type": "calls"
     },
     {
@@ -2017,7 +2955,27 @@
     },
     {
       "source": "org.jsoup.helper.W3CDom",
+      "target": "org.jsoup.select.NodeVisitor",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.W3CDom",
+      "target": "org.jsoup.nodes.DataNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.W3CDom",
       "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.W3CDom",
+      "target": "org.jsoup.nodes.Comment",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.W3CDom",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -2026,7 +2984,47 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.helper.W3CDom",
+      "source": "org.jsoup.helper.CookieUtil",
+      "target": "org.jsoup.Connection",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.CookieUtil",
+      "target": "org.jsoup.helper.HttpConnection",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.CookieUtil",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.examples.HtmlToPlainText",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.examples.HtmlToPlainText",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.examples.HtmlToPlainText",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.examples.HtmlToPlainText",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.examples.HtmlToPlainText",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.examples.HtmlToPlainText",
       "target": "org.jsoup.select.NodeVisitor",
       "type": "calls"
     },
@@ -2037,17 +3035,12 @@
     },
     {
       "source": "org.jsoup.examples.HtmlToPlainText",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.examples.HtmlToPlainText",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.examples.HtmlToPlainText",
       "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.examples.HtmlToPlainText",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -2056,23 +3049,18 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.examples.HtmlToPlainText",
-      "target": "org.jsoup.select.Elements",
+      "source": "org.jsoup.examples.ListLinks",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.examples.HtmlToPlainText",
-      "target": "org.jsoup.select.NodeVisitor",
+      "source": "org.jsoup.examples.ListLinks",
+      "target": "org.jsoup.select.Elements",
       "type": "calls"
     },
     {
       "source": "org.jsoup.examples.ListLinks",
       "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.examples.ListLinks",
-      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -2082,16 +3070,6 @@
     },
     {
       "source": "org.jsoup.examples.ListLinks",
-      "target": "org.jsoup.select.Elements",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.examples.Wikipedia",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.examples.Wikipedia",
       "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
@@ -2106,18 +3084,13 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.safety.Cleaner",
+      "source": "org.jsoup.examples.Wikipedia",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.examples.Wikipedia",
       "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.safety.Cleaner",
-      "target": "org.jsoup.parser.Parser",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.safety.Cleaner",
-      "target": "org.jsoup.parser.Tag",
       "type": "calls"
     },
     {
@@ -2127,17 +3100,7 @@
     },
     {
       "source": "org.jsoup.safety.Cleaner",
-      "target": "org.jsoup.nodes.DataNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.safety.Cleaner",
-      "target": "org.jsoup.nodes.Attributes",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.safety.Cleaner",
-      "target": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.parser.Parser",
       "type": "calls"
     },
     {
@@ -2147,12 +3110,12 @@
     },
     {
       "source": "org.jsoup.safety.Cleaner",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
       "source": "org.jsoup.safety.Cleaner",
-      "target": "org.jsoup.nodes.TextNode",
+      "target": "org.jsoup.nodes.Attributes",
       "type": "calls"
     },
     {
@@ -2167,7 +3130,12 @@
     },
     {
       "source": "org.jsoup.safety.Cleaner",
-      "target": "org.jsoup.select.NodeTraversor",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.safety.Cleaner",
+      "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
@@ -2176,18 +3144,28 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.safety.Whitelist",
-      "target": "org.jsoup.nodes.Attributes",
+      "source": "org.jsoup.safety.Cleaner",
+      "target": "org.jsoup.select.NodeTraversor",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.safety.Whitelist",
-      "target": "org.jsoup.nodes.Attribute",
+      "source": "org.jsoup.safety.Cleaner",
+      "target": "org.jsoup.nodes.DataNode",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.safety.Whitelist",
-      "target": "org.jsoup.nodes.Element",
+      "source": "org.jsoup.safety.Cleaner",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.safety.Cleaner",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.safety.Cleaner",
+      "target": "org.jsoup.parser.Tag",
       "type": "calls"
     },
     {
@@ -2196,13 +3174,23 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.safety.Safelist",
-      "target": "org.jsoup.parser.Tag",
+      "source": "org.jsoup.safety.Whitelist",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.safety.Whitelist",
+      "target": "org.jsoup.nodes.Attributes",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.safety.Whitelist",
+      "target": "org.jsoup.nodes.Attribute",
       "type": "calls"
     },
     {
       "source": "org.jsoup.safety.Safelist",
-      "target": "org.jsoup.nodes.Attributes",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
@@ -2217,12 +3205,97 @@
     },
     {
       "source": "org.jsoup.safety.Safelist",
-      "target": "org.jsoup.safety.Cleaner",
+      "target": "org.jsoup.nodes.Attributes",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.internal.ConstrainableInputStream",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.internal.StringUtil",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.nodes.Attribute",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.nodes.DocumentType",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.nodes.PseudoTextElement",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.nodes.XmlDeclaration",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.nodes.Comment",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Evaluator",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.CombiningEvaluator",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.CombiningEvaluator",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.CombiningEvaluator",
+      "target": "org.jsoup.select.Evaluator",
       "type": "calls"
     },
     {
       "source": "org.jsoup.select.NodeTraversor",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.NodeTraversor",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
@@ -2233,6 +3306,11 @@
     {
       "source": "org.jsoup.select.NodeTraversor",
       "target": "org.jsoup.select.NodeVisitor",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.NodeTraversor",
+      "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
@@ -2242,17 +3320,7 @@
     },
     {
       "source": "org.jsoup.select.Selector",
-      "target": "org.jsoup.nodes.PseudoTextElement",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.Selector",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.Selector",
-      "target": "org.jsoup.select.Elements",
+      "target": "org.jsoup.helper.Validate",
       "type": "calls"
     },
     {
@@ -2262,22 +3330,22 @@
     },
     {
       "source": "org.jsoup.select.Selector",
+      "target": "org.jsoup.select.Evaluator",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Selector",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Selector",
       "target": "org.jsoup.select.Collector",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.Elements",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.Elements",
-      "target": "org.jsoup.nodes.DataNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.Elements",
-      "target": "org.jsoup.nodes.Comment",
+      "source": "org.jsoup.select.Selector",
+      "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
@@ -2287,22 +3355,7 @@
     },
     {
       "source": "org.jsoup.select.Elements",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.Elements",
-      "target": "org.jsoup.nodes.TextNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.Elements",
-      "target": "org.jsoup.safety.Cleaner",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.Elements",
-      "target": "org.jsoup.select.NodeTraversor",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
@@ -2312,7 +3365,22 @@
     },
     {
       "source": "org.jsoup.select.Elements",
-      "target": "org.jsoup.select.NodeVisitor",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Elements",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Elements",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Elements",
+      "target": "org.jsoup.select.Evaluator",
       "type": "calls"
     },
     {
@@ -2322,32 +3390,47 @@
     },
     {
       "source": "org.jsoup.select.Elements",
+      "target": "org.jsoup.select.NodeVisitor",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Elements",
+      "target": "org.jsoup.nodes.DataNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Elements",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Elements",
+      "target": "org.jsoup.nodes.Comment",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Elements",
       "target": "org.jsoup.select.NodeFilter",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.NodeVisitor",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.NodeVisitor",
+      "source": "org.jsoup.select.Elements",
       "target": "org.jsoup.select.NodeTraversor",
       "type": "calls"
     },
     {
+      "source": "org.jsoup.select.StructuralEvaluator",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.StructuralEvaluator",
+      "target": "org.jsoup.select.Evaluator",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.select.NodeVisitor",
-      "target": "org.jsoup.select.NodeFilter",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.QueryParser",
-      "target": "org.jsoup.parser.Tag",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.QueryParser",
-      "target": "org.jsoup.parser.TokenQueue",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
@@ -2361,13 +3444,48 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.Collector",
-      "target": "org.jsoup.nodes.Element",
+      "source": "org.jsoup.select.QueryParser",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.QueryParser",
+      "target": "org.jsoup.select.StructuralEvaluator",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.QueryParser",
+      "target": "org.jsoup.select.CombiningEvaluator",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.QueryParser",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.QueryParser",
+      "target": "org.jsoup.select.Evaluator",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.QueryParser",
+      "target": "org.jsoup.parser.TokenQueue",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.QueryParser",
+      "target": "org.jsoup.parser.Tag",
       "type": "calls"
     },
     {
       "source": "org.jsoup.select.Collector",
-      "target": "org.jsoup.select.NodeTraversor",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Collector",
+      "target": "org.jsoup.select.Evaluator",
       "type": "calls"
     },
     {
@@ -2382,17 +3500,22 @@
     },
     {
       "source": "org.jsoup.select.Collector",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.Collector",
       "target": "org.jsoup.select.NodeFilter",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.NodeFilter",
+      "source": "org.jsoup.select.Collector",
       "target": "org.jsoup.select.NodeTraversor",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.parser.XmlTreeBuilderTest",
-      "target": "org.jsoup.Jsoup",
+      "source": "org.jsoup.select.NodeFilter",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
@@ -2402,32 +3525,12 @@
     },
     {
       "source": "org.jsoup.parser.XmlTreeBuilderTest",
-      "target": "org.jsoup.parser.ParseSettings",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.XmlTreeBuilderTest",
-      "target": "org.jsoup.parser.XmlTreeBuilder",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.XmlTreeBuilderTest",
-      "target": "org.jsoup.nodes.Entities",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.XmlTreeBuilderTest",
-      "target": "org.jsoup.nodes.CDataNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.XmlTreeBuilderTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.XmlTreeBuilderTest",
-      "target": "org.jsoup.nodes.XmlDeclaration",
+      "target": "org.jsoup.parser.TreeBuilder",
       "type": "calls"
     },
     {
@@ -2437,12 +3540,47 @@
     },
     {
       "source": "org.jsoup.parser.XmlTreeBuilderTest",
-      "target": "org.jsoup.nodes.TextNode",
+      "target": "org.jsoup.parser.XmlTreeBuilder",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilderTest",
+      "target": "org.jsoup.nodes.XmlDeclaration",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.XmlTreeBuilderTest",
       "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilderTest",
+      "target": "org.jsoup.parser.ParseSettings",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilderTest",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilderTest",
+      "target": "org.jsoup.nodes.CDataNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilderTest",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilderTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.XmlTreeBuilderTest",
+      "target": "org.jsoup.nodes.Entities",
       "type": "calls"
     },
     {
@@ -2452,17 +3590,12 @@
     },
     {
       "source": "org.jsoup.parser.ParserSettingsTest",
-      "target": "org.jsoup.parser.ParseSettings",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.ParserSettingsTest",
       "target": "org.jsoup.nodes.Attributes",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.ParserSettingsTest",
-      "target": "org.jsoup.MultiLocaleExtension",
+      "target": "org.jsoup.parser.ParseSettings",
       "type": "calls"
     },
     {
@@ -2472,7 +3605,12 @@
     },
     {
       "source": "org.jsoup.parser.TokeniserTest",
-      "target": "org.jsoup.Jsoup",
+      "target": "org.jsoup.nodes.Attribute",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserTest",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
@@ -2483,6 +3621,21 @@
     {
       "source": "org.jsoup.parser.TokeniserTest",
       "target": "org.jsoup.parser.HtmlTreeBuilder",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserTest",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserTest",
+      "target": "org.jsoup.parser.Tokeniser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserTest",
+      "target": "org.jsoup.select.Elements",
       "type": "calls"
     },
     {
@@ -2492,7 +3645,7 @@
     },
     {
       "source": "org.jsoup.parser.TokeniserTest",
-      "target": "org.jsoup.nodes.Comment",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
@@ -2502,26 +3655,46 @@
     },
     {
       "source": "org.jsoup.parser.TokeniserTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.TokeniserTest",
-      "target": "org.jsoup.nodes.Attribute",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.TokeniserTest",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.TokeniserTest",
       "target": "org.jsoup.nodes.TextNode",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.TokeniserTest",
+      "target": "org.jsoup.nodes.Comment",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.CharacterReaderTest",
+      "target": "org.jsoup.parser.CharacterReader",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserStateTest",
+      "target": "org.jsoup.parser.ParseErrorList",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserStateTest",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserStateTest",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserStateTest",
+      "target": "org.jsoup.parser.TokeniserState",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.TokeniserStateTest",
       "target": "org.jsoup.select.Elements",
       "type": "calls"
     },
@@ -2532,12 +3705,12 @@
     },
     {
       "source": "org.jsoup.parser.TokeniserStateTest",
-      "target": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.TextUtil",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.TokeniserStateTest",
-      "target": "org.jsoup.parser.ParseErrorList",
+      "target": "org.jsoup.nodes.TextNode",
       "type": "calls"
     },
     {
@@ -2552,32 +3725,7 @@
     },
     {
       "source": "org.jsoup.parser.TokeniserStateTest",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.TokeniserStateTest",
-      "target": "org.jsoup.nodes.TextNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.TokeniserStateTest",
-      "target": "org.jsoup.select.Elements",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.TokeniserStateTest",
-      "target": "org.jsoup.TextUtil",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.AttributeParseTest",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.AttributeParseTest",
-      "target": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.parser.CharacterReader",
       "type": "calls"
     },
     {
@@ -2587,12 +3735,22 @@
     },
     {
       "source": "org.jsoup.parser.AttributeParseTest",
-      "target": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.nodes.Attribute",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.AttributeParseTest",
-      "target": "org.jsoup.nodes.Attribute",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.AttributeParseTest",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.AttributeParseTest",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
@@ -2602,7 +3760,7 @@
     },
     {
       "source": "org.jsoup.parser.AttributeParseTest",
-      "target": "org.jsoup.select.Elements",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -2612,6 +3770,16 @@
     },
     {
       "source": "org.jsoup.parser.ParserIT",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.ParserTest",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.ParserTest",
       "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
@@ -2621,18 +3789,13 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.parser.ParserTest",
+      "source": "org.jsoup.parser.HtmlTreeBuilderTest",
       "target": "org.jsoup.parser.Parser",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.ParserTest",
-      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.HtmlTreeBuilderTest",
-      "target": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.parser.HtmlTreeBuilderStateTest",
       "type": "calls"
     },
     {
@@ -2642,12 +3805,12 @@
     },
     {
       "source": "org.jsoup.parser.HtmlTreeBuilderTest",
-      "target": "org.jsoup.parser.HtmlTreeBuilderStateTest",
+      "target": "org.jsoup.parser.TreeBuilder",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.TokenQueueTest",
-      "target": "org.jsoup.Jsoup",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -2657,57 +3820,17 @@
     },
     {
       "source": "org.jsoup.parser.TokenQueueTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlParserTest",
       "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.parser.ParseError",
+      "target": "org.jsoup.parser.TreeBuilder",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.parser.Parser",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.parser.Tag",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.parser.ParseSettings",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.parser.XmlTreeBuilder",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.nodes.DataNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.nodes.Attributes",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.nodes.Entities",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.nodes.Comment",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
@@ -2717,7 +3840,62 @@
     },
     {
       "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.integration.ParseTest",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.parser.CharacterReader",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
       "target": "org.jsoup.nodes.FormElement",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.parser.ParseSettings",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.nodes.DataNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.TextUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.parser.HtmlParserTest",
+      "target": "org.jsoup.parser.ParseError",
       "type": "calls"
     },
     {
@@ -2727,12 +3905,7 @@
     },
     {
       "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.nodes.TextNode",
+      "target": "org.jsoup.nodes.Entities",
       "type": "calls"
     },
     {
@@ -2742,22 +3915,12 @@
     },
     {
       "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.select.Elements",
+      "target": "org.jsoup.internal.StringUtil",
       "type": "calls"
     },
     {
       "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.TextUtil",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.HtmlParserTest",
-      "target": "org.jsoup.integration.ParseTest",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.parser.TagTest",
-      "target": "org.jsoup.parser.Tag",
+      "target": "org.jsoup.nodes.Comment",
       "type": "calls"
     },
     {
@@ -2767,17 +3930,12 @@
     },
     {
       "source": "org.jsoup.parser.TagTest",
-      "target": "org.jsoup.MultiLocaleExtension",
+      "target": "org.jsoup.parser.Tag",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.TextNodeTest",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.TextNodeTest",
-      "target": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
@@ -2787,12 +3945,62 @@
     },
     {
       "source": "org.jsoup.nodes.TextNodeTest",
-      "target": "org.jsoup.nodes.TextNode",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.TextNodeTest",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.TextNodeTest",
       "target": "org.jsoup.TextUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.TextNodeTest",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.TextNodeTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.BuildEntities",
+      "target": "org.jsoup.integration.UrlConnectTest",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.BuildEntities",
+      "target": "org.jsoup.Connection",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.BuildEntities",
+      "target": "org.jsoup.nodes.Entities",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.BuildEntities",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.FormElementTest",
+      "target": "org.jsoup.integration.servlets.EchoServlet",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.FormElementTest",
+      "target": "org.jsoup.integration.servlets.CookieServlet",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.FormElementTest",
+      "target": "org.jsoup.integration.servlets.FileServlet",
       "type": "calls"
     },
     {
@@ -2802,7 +4010,22 @@
     },
     {
       "source": "org.jsoup.nodes.FormElementTest",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.FormElementTest",
       "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.FormElementTest",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.FormElementTest",
+      "target": "org.jsoup.integration.TestServer",
       "type": "calls"
     },
     {
@@ -2816,38 +4039,13 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.FormElementTest",
+      "source": "org.jsoup.nodes.ElementIT",
       "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.FormElementTest",
-      "target": "org.jsoup.select.Elements",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.FormElementTest",
-      "target": "org.jsoup.integration.TestServer",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.FormElementTest",
-      "target": "org.jsoup.integration.servlets.FileServlet",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.FormElementTest",
-      "target": "org.jsoup.integration.servlets.CookieServlet",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.FormElementTest",
-      "target": "org.jsoup.integration.servlets.EchoServlet",
-      "type": "calls"
-    },
-    {
       "source": "org.jsoup.nodes.ElementIT",
-      "target": "org.jsoup.Jsoup",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
@@ -2857,11 +4055,6 @@
     },
     {
       "source": "org.jsoup.nodes.ElementIT",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.DocumentTest",
       "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
@@ -2872,27 +4065,7 @@
     },
     {
       "source": "org.jsoup.nodes.DocumentTest",
-      "target": "org.jsoup.parser.ParseSettings",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.DocumentTest",
-      "target": "org.jsoup.nodes.Entities",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.DocumentTest",
       "target": "org.jsoup.nodes.DocumentType",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.DocumentTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.DocumentTest",
-      "target": "org.jsoup.nodes.XmlDeclaration",
       "type": "calls"
     },
     {
@@ -2902,7 +4075,22 @@
     },
     {
       "source": "org.jsoup.nodes.DocumentTest",
+      "target": "org.jsoup.parser.ParseSettings",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.DocumentTest",
+      "target": "org.jsoup.nodes.XmlDeclaration",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.DocumentTest",
       "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.DocumentTest",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
@@ -2913,6 +4101,26 @@
     {
       "source": "org.jsoup.nodes.DocumentTest",
       "target": "org.jsoup.integration.ParseTest",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.DocumentTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.DocumentTest",
+      "target": "org.jsoup.nodes.Entities",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.CommentTest",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.CommentTest",
+      "target": "org.jsoup.nodes.XmlDeclaration",
       "type": "calls"
     },
     {
@@ -2931,16 +4139,6 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.CommentTest",
-      "target": "org.jsoup.nodes.XmlDeclaration",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.DocumentTypeTest",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
       "source": "org.jsoup.nodes.DocumentTypeTest",
       "target": "org.jsoup.parser.Parser",
       "type": "calls"
@@ -2951,18 +4149,13 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.AttributeTest",
+      "source": "org.jsoup.nodes.DocumentTypeTest",
       "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.AttributeTest",
       "target": "org.jsoup.nodes.Attributes",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.AttributeTest",
-      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -2971,7 +4164,12 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.LeafNodeTest",
+      "source": "org.jsoup.nodes.AttributeTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.AttributeTest",
       "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
@@ -2982,17 +4180,22 @@
     },
     {
       "source": "org.jsoup.nodes.LeafNodeTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.LeafNodeTest",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.LeafNodeTest",
       "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.LeafNodeTest",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.LeafNodeTest",
+      "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
@@ -3001,13 +4204,28 @@
       "type": "calls"
     },
     {
+      "source": "org.jsoup.nodes.LeafNodeTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.EntitiesTest",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.nodes.EntitiesTest",
       "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.EntitiesTest",
-      "target": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.EntitiesTest",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -3016,33 +4234,8 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.EntitiesTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.EntitiesTest",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.NodeTest",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.NodeTest",
-      "target": "org.jsoup.parser.Tag",
-      "type": "calls"
-    },
-    {
       "source": "org.jsoup.nodes.NodeTest",
       "target": "org.jsoup.nodes.Attributes",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.NodeTest",
-      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -3052,12 +4245,12 @@
     },
     {
       "source": "org.jsoup.nodes.NodeTest",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.NodeTest",
-      "target": "org.jsoup.nodes.TextNode",
+      "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
@@ -3067,17 +4260,32 @@
     },
     {
       "source": "org.jsoup.nodes.NodeTest",
-      "target": "org.jsoup.TextUtil",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.AttributesTest",
       "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
+      "source": "org.jsoup.nodes.NodeTest",
+      "target": "org.jsoup.TextUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.NodeTest",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.NodeTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.NodeTest",
+      "target": "org.jsoup.parser.Tag",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.nodes.AttributesTest",
-      "target": "org.jsoup.nodes.Attributes",
+      "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
@@ -3087,11 +4295,11 @@
     },
     {
       "source": "org.jsoup.nodes.AttributesTest",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.nodes.Attributes",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.nodes.ElementTest",
+      "source": "org.jsoup.nodes.AttributesTest",
       "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
@@ -3102,22 +4310,12 @@
     },
     {
       "source": "org.jsoup.nodes.ElementTest",
-      "target": "org.jsoup.parser.Tag",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.ElementTest",
-      "target": "org.jsoup.nodes.DataNode",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.ElementTest",
       "target": "org.jsoup.nodes.Attributes",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.ElementTest",
-      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -3132,17 +4330,7 @@
     },
     {
       "source": "org.jsoup.nodes.ElementTest",
-      "target": "org.jsoup.nodes.TextNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.ElementTest",
-      "target": "org.jsoup.select.Elements",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.nodes.ElementTest",
-      "target": "org.jsoup.select.NodeVisitor",
+      "target": "org.jsoup.select.Evaluator",
       "type": "calls"
     },
     {
@@ -3152,12 +4340,57 @@
     },
     {
       "source": "org.jsoup.nodes.ElementTest",
-      "target": "org.jsoup.select.NodeFilter",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.ElementTest",
+      "target": "org.jsoup.select.NodeVisitor",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.ElementTest",
+      "target": "org.jsoup.nodes.DataNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.ElementTest",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
       "source": "org.jsoup.nodes.ElementTest",
       "target": "org.jsoup.TextUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.ElementTest",
+      "target": "org.jsoup.nodes.TextNode",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.ElementTest",
+      "target": "org.jsoup.select.NodeFilter",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.ElementTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.nodes.ElementTest",
+      "target": "org.jsoup.parser.Tag",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.ValidateTest",
+      "target": "org.jsoup.helper.Validate",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.HttpConnectionTest",
+      "target": "org.jsoup.integration.ParseTest",
       "type": "calls"
     },
     {
@@ -3167,27 +4400,22 @@
     },
     {
       "source": "org.jsoup.helper.HttpConnectionTest",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.helper.HttpConnectionTest",
       "target": "org.jsoup.helper.HttpConnection",
       "type": "calls"
     },
     {
       "source": "org.jsoup.helper.HttpConnectionTest",
-      "target": "org.jsoup.MultiLocaleExtension",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.helper.HttpConnectionTest",
-      "target": "org.jsoup.integration.ParseTest",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
       "source": "org.jsoup.helper.W3CDomTest",
-      "target": "org.jsoup.Jsoup",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.helper.W3CDomTest",
+      "target": "org.jsoup.helper.W3CDom",
       "type": "calls"
     },
     {
@@ -3197,17 +4425,12 @@
     },
     {
       "source": "org.jsoup.helper.W3CDomTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.helper.W3CDomTest",
       "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
       "source": "org.jsoup.helper.W3CDomTest",
-      "target": "org.jsoup.helper.W3CDom",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
@@ -3221,8 +4444,13 @@
       "type": "calls"
     },
     {
+      "source": "org.jsoup.helper.W3CDomTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.helper.DataUtilTest",
-      "target": "org.jsoup.Jsoup",
+      "target": "org.jsoup.helper.DataUtil",
       "type": "calls"
     },
     {
@@ -3237,27 +4465,7 @@
     },
     {
       "source": "org.jsoup.helper.DataUtilTest",
-      "target": "org.jsoup.integration.ParseTest",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.safety.CleanerTest",
       "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.safety.CleanerTest",
-      "target": "org.jsoup.nodes.Entities",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.safety.CleanerTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.safety.CleanerTest",
-      "target": "org.jsoup.safety.Cleaner",
       "type": "calls"
     },
     {
@@ -3267,32 +4475,27 @@
     },
     {
       "source": "org.jsoup.safety.CleanerTest",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.safety.CleanerTest",
       "target": "org.jsoup.TextUtil",
       "type": "calls"
     },
     {
       "source": "org.jsoup.safety.CleanerTest",
-      "target": "org.jsoup.MultiLocaleExtension",
+      "target": "org.jsoup.safety.Cleaner",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.safety.CompatibilityTests",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.safety.CompatibilityTests",
-      "target": "org.jsoup.nodes.Entities",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.safety.CompatibilityTests",
+      "source": "org.jsoup.safety.CleanerTest",
       "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.safety.CompatibilityTests",
-      "target": "org.jsoup.safety.Cleaner",
+      "source": "org.jsoup.safety.CleanerTest",
+      "target": "org.jsoup.nodes.Entities",
       "type": "calls"
     },
     {
@@ -3302,12 +4505,32 @@
     },
     {
       "source": "org.jsoup.safety.CompatibilityTests",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.safety.CompatibilityTests",
       "target": "org.jsoup.TextUtil",
       "type": "calls"
     },
     {
       "source": "org.jsoup.safety.CompatibilityTests",
-      "target": "org.jsoup.MultiLocaleExtension",
+      "target": "org.jsoup.safety.Cleaner",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.safety.CompatibilityTests",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.safety.CompatibilityTests",
+      "target": "org.jsoup.nodes.Entities",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.internal.ConstrainableInputStreamTest",
+      "target": "org.jsoup.internal.ConstrainableInputStream",
       "type": "calls"
     },
     {
@@ -3317,42 +4540,22 @@
     },
     {
       "source": "org.jsoup.internal.StringUtilTest",
+      "target": "org.jsoup.internal.StringUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.internal.StringUtilTest",
       "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
       "source": "org.jsoup.integration.SessionTest",
-      "target": "org.jsoup.Connection",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.SessionTest",
-      "target": "org.jsoup.Jsoup",
+      "target": "org.jsoup.integration.servlets.EchoServlet",
       "type": "calls"
     },
     {
       "source": "org.jsoup.integration.SessionTest",
       "target": "org.jsoup.parser.Parser",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.SessionTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.SessionTest",
-      "target": "org.jsoup.select.Elements",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.SessionTest",
-      "target": "org.jsoup.integration.TestServer",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.SessionTest",
-      "target": "org.jsoup.integration.servlets.FileServlet",
       "type": "calls"
     },
     {
@@ -3362,17 +4565,37 @@
     },
     {
       "source": "org.jsoup.integration.SessionTest",
-      "target": "org.jsoup.integration.servlets.EchoServlet",
+      "target": "org.jsoup.integration.servlets.FileServlet",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.integration.ParseTest",
+      "source": "org.jsoup.integration.SessionTest",
+      "target": "org.jsoup.Connection",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.SessionTest",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.SessionTest",
       "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
+      "source": "org.jsoup.integration.SessionTest",
+      "target": "org.jsoup.integration.TestServer",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.SessionTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.integration.ParseTest",
-      "target": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -3382,12 +4605,7 @@
     },
     {
       "source": "org.jsoup.integration.ParseTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.ParseTest",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.parser.Parser",
       "type": "calls"
     },
     {
@@ -3396,8 +4614,28 @@
       "type": "calls"
     },
     {
+      "source": "org.jsoup.integration.ParseTest",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ParseTest",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ParseTest",
+      "target": "org.jsoup.helper.DataUtil",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.integration.UrlConnectTest",
-      "target": "org.jsoup.UnsupportedMimeTypeException",
+      "target": "org.jsoup.parser.Parser",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.UrlConnectTest",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -3411,48 +4649,8 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.integration.UrlConnectTest",
-      "target": "org.jsoup.parser.Parser",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.UrlConnectTest",
-      "target": "org.jsoup.parser.HtmlTreeBuilder",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.UrlConnectTest",
-      "target": "org.jsoup.parser.XmlTreeBuilder",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.UrlConnectTest",
-      "target": "org.jsoup.nodes.FormElement",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.UrlConnectTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.UrlConnectTest",
-      "target": "org.jsoup.helper.W3CDom",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.FuzzFixesTest",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
       "source": "org.jsoup.integration.FuzzFixesTest",
       "target": "org.jsoup.parser.Parser",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.FuzzFixesTest",
-      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -3461,8 +4659,18 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.integration.FuzzFixesIT",
+      "source": "org.jsoup.integration.FuzzFixesTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.FuzzFixesTest",
       "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.FuzzFixesIT",
+      "target": "org.jsoup.integration.ParseTest",
       "type": "calls"
     },
     {
@@ -3477,7 +4685,12 @@
     },
     {
       "source": "org.jsoup.integration.FuzzFixesIT",
-      "target": "org.jsoup.integration.ParseTest",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ConnectIT",
+      "target": "org.jsoup.integration.servlets.SlowRider",
       "type": "calls"
     },
     {
@@ -3488,11 +4701,6 @@
     {
       "source": "org.jsoup.integration.ConnectIT",
       "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.ConnectIT",
-      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -3502,12 +4710,7 @@
     },
     {
       "source": "org.jsoup.integration.ConnectIT",
-      "target": "org.jsoup.integration.servlets.SlowRider",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.SafelistExtensionTest",
-      "target": "org.jsoup.Jsoup",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
@@ -3517,12 +4720,12 @@
     },
     {
       "source": "org.jsoup.integration.SafelistExtensionTest",
-      "target": "org.jsoup.nodes.Element",
+      "target": "org.jsoup.safety.Safelist",
       "type": "calls"
     },
     {
       "source": "org.jsoup.integration.SafelistExtensionTest",
-      "target": "org.jsoup.safety.Safelist",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
@@ -3531,33 +4734,13 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.integration.SessionIT",
-      "target": "org.jsoup.UncheckedIOException",
+      "source": "org.jsoup.integration.SafelistExtensionTest",
+      "target": "org.jsoup.nodes.Element",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.integration.SessionIT",
-      "target": "org.jsoup.Connection",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.SessionIT",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.SessionIT",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.SessionIT",
-      "target": "org.jsoup.integration.TestServer",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.SessionIT",
-      "target": "org.jsoup.integration.servlets.FileServlet",
+      "source": "org.jsoup.integration.TestServer",
+      "target": "org.jsoup.integration.servlets.BaseServlet",
       "type": "calls"
     },
     {
@@ -3567,22 +4750,37 @@
     },
     {
       "source": "org.jsoup.integration.SessionIT",
-      "target": "org.jsoup.integration.servlets.EchoServlet",
+      "target": "org.jsoup.integration.servlets.FileServlet",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.integration.ConnectTest",
+      "source": "org.jsoup.integration.SessionIT",
       "target": "org.jsoup.Connection",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.HttpStatusException",
+      "source": "org.jsoup.integration.SessionIT",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.SessionIT",
+      "target": "org.jsoup.integration.TestServer",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.SessionIT",
+      "target": "org.jsoup.UncheckedIOException",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.SessionIT",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
       "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.Jsoup",
+      "target": "org.jsoup.integration.servlets.EchoServlet",
       "type": "calls"
     },
     {
@@ -3597,47 +4795,7 @@
     },
     {
       "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.parser.XmlTreeBuilder",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.nodes.FormElement",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.helper.HttpConnection",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.helper.W3CDom",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.integration.ParseTest",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.integration.UrlConnectTest",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.integration.TestServer",
+      "target": "org.jsoup.integration.servlets.Deflateservlet",
       "type": "calls"
     },
     {
@@ -3647,17 +4805,32 @@
     },
     {
       "source": "org.jsoup.integration.ConnectTest",
+      "target": "org.jsoup.integration.servlets.InterruptedServlet",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ConnectTest",
+      "target": "org.jsoup.helper.W3CDom",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ConnectTest",
       "target": "org.jsoup.integration.servlets.FileServlet",
       "type": "calls"
     },
     {
       "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.integration.servlets.Deflateservlet",
+      "target": "org.jsoup.Connection",
       "type": "calls"
     },
     {
       "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.integration.servlets.EchoServlet",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ConnectTest",
+      "target": "org.jsoup.internal.StringUtil",
       "type": "calls"
     },
     {
@@ -3667,12 +4840,42 @@
     },
     {
       "source": "org.jsoup.integration.ConnectTest",
-      "target": "org.jsoup.integration.servlets.InterruptedServlet",
+      "target": "org.jsoup.parser.XmlTreeBuilder",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ConnectTest",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ConnectTest",
+      "target": "org.jsoup.integration.ParseTest",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ConnectTest",
+      "target": "org.jsoup.integration.TestServer",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ConnectTest",
+      "target": "org.jsoup.nodes.FormElement",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.ConnectTest",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
       "source": "org.jsoup.integration.servlets.HelloServlet",
       "target": "org.jsoup.integration.TestServer",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.servlets.HelloServlet",
+      "target": "org.jsoup.integration.servlets.BaseServlet",
       "type": "calls"
     },
     {
@@ -3686,8 +4889,18 @@
       "type": "calls"
     },
     {
+      "source": "org.jsoup.integration.servlets.FileServlet",
+      "target": "org.jsoup.integration.servlets.BaseServlet",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.integration.servlets.Deflateservlet",
       "target": "org.jsoup.integration.TestServer",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.servlets.Deflateservlet",
+      "target": "org.jsoup.integration.servlets.BaseServlet",
       "type": "calls"
     },
     {
@@ -3696,8 +4909,8 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.integration.servlets.CookieServlet",
-      "target": "org.jsoup.integration.TestServer",
+      "source": "org.jsoup.integration.servlets.SlowRider",
+      "target": "org.jsoup.integration.servlets.BaseServlet",
       "type": "calls"
     },
     {
@@ -3706,13 +4919,33 @@
       "type": "calls"
     },
     {
+      "source": "org.jsoup.integration.servlets.CookieServlet",
+      "target": "org.jsoup.integration.TestServer",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.servlets.CookieServlet",
+      "target": "org.jsoup.integration.servlets.BaseServlet",
+      "type": "calls"
+    },
+    {
       "source": "org.jsoup.integration.servlets.EchoServlet",
-      "target": "org.jsoup.nodes.Entities",
+      "target": "org.jsoup.helper.DataUtil",
       "type": "calls"
     },
     {
       "source": "org.jsoup.integration.servlets.EchoServlet",
       "target": "org.jsoup.integration.TestServer",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.servlets.EchoServlet",
+      "target": "org.jsoup.integration.servlets.BaseServlet",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.servlets.EchoServlet",
+      "target": "org.jsoup.internal.StringUtil",
       "type": "calls"
     },
     {
@@ -3721,8 +4954,8 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.integration.servlets.InterruptedServlet",
-      "target": "org.jsoup.parser.CharacterReaderTest",
+      "source": "org.jsoup.integration.servlets.RedirectServlet",
+      "target": "org.jsoup.integration.servlets.BaseServlet",
       "type": "calls"
     },
     {
@@ -3731,28 +4964,23 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.QueryParserTest",
-      "target": "org.jsoup.Jsoup",
+      "source": "org.jsoup.integration.servlets.InterruptedServlet",
+      "target": "org.jsoup.integration.servlets.BaseServlet",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.integration.servlets.InterruptedServlet",
+      "target": "org.jsoup.parser.CharacterReaderTest",
       "type": "calls"
     },
     {
       "source": "org.jsoup.select.QueryParserTest",
-      "target": "org.jsoup.parser.Parser",
+      "target": "org.jsoup.select.StructuralEvaluator",
       "type": "calls"
     },
     {
       "source": "org.jsoup.select.QueryParserTest",
-      "target": "org.jsoup.parser.Tag",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.QueryParserTest",
-      "target": "org.jsoup.nodes.Document",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.QueryParserTest",
-      "target": "org.jsoup.select.Selector",
+      "target": "org.jsoup.select.CombiningEvaluator",
       "type": "calls"
     },
     {
@@ -3761,23 +4989,28 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.TraversorTest",
+      "source": "org.jsoup.select.QueryParserTest",
+      "target": "org.jsoup.select.Evaluator",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.QueryParserTest",
       "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.TraversorTest",
+      "source": "org.jsoup.select.QueryParserTest",
       "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.TraversorTest",
-      "target": "org.jsoup.nodes.Element",
+      "source": "org.jsoup.select.QueryParserTest",
+      "target": "org.jsoup.parser.Tag",
       "type": "calls"
     },
     {
       "source": "org.jsoup.select.TraversorTest",
-      "target": "org.jsoup.select.NodeTraversor",
+      "target": "org.jsoup.nodes.Node",
       "type": "calls"
     },
     {
@@ -3787,17 +5020,27 @@
     },
     {
       "source": "org.jsoup.select.TraversorTest",
+      "target": "org.jsoup.Jsoup",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.TraversorTest",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.TraversorTest",
       "target": "org.jsoup.select.NodeFilter",
       "type": "calls"
     },
     {
       "source": "org.jsoup.select.TraversorTest",
-      "target": "org.jsoup.select.ElementsTest",
+      "target": "org.jsoup.nodes.Document",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.SelectorTest",
-      "target": "org.jsoup.Jsoup",
+      "source": "org.jsoup.select.TraversorTest",
+      "target": "org.jsoup.select.NodeTraversor",
       "type": "calls"
     },
     {
@@ -3807,7 +5050,12 @@
     },
     {
       "source": "org.jsoup.select.SelectorTest",
-      "target": "org.jsoup.nodes.Document",
+      "target": "org.jsoup.select.Elements",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.SelectorTest",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     },
     {
@@ -3817,12 +5065,32 @@
     },
     {
       "source": "org.jsoup.select.SelectorTest",
+      "target": "org.jsoup.nodes.Document",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.ElementsTest",
+      "target": "org.jsoup.nodes.Node",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.ElementsTest",
+      "target": "org.jsoup.nodes.Element",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.ElementsTest",
       "target": "org.jsoup.select.Elements",
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.SelectorTest",
-      "target": "org.jsoup.MultiLocaleExtension",
+      "source": "org.jsoup.select.ElementsTest",
+      "target": "org.jsoup.select.NodeVisitor",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.ElementsTest",
+      "target": "org.jsoup.nodes.DataNode",
       "type": "calls"
     },
     {
@@ -3832,7 +5100,12 @@
     },
     {
       "source": "org.jsoup.select.ElementsTest",
-      "target": "org.jsoup.nodes.DataNode",
+      "target": "org.jsoup.TextUtil",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.ElementsTest",
+      "target": "org.jsoup.nodes.TextNode",
       "type": "calls"
     },
     {
@@ -3851,43 +5124,8 @@
       "type": "calls"
     },
     {
-      "source": "org.jsoup.select.ElementsTest",
-      "target": "org.jsoup.nodes.Element",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.ElementsTest",
-      "target": "org.jsoup.nodes.TextNode",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.ElementsTest",
+      "source": "org.jsoup.select.CssTest",
       "target": "org.jsoup.select.Elements",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.ElementsTest",
-      "target": "org.jsoup.select.NodeVisitor",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.ElementsTest",
-      "target": "org.jsoup.TextUtil",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.CssTest",
-      "target": "org.jsoup.Jsoup",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.CssTest",
-      "target": "org.jsoup.parser.Tag",
-      "type": "calls"
-    },
-    {
-      "source": "org.jsoup.select.CssTest",
-      "target": "org.jsoup.nodes.Comment",
       "type": "calls"
     },
     {
@@ -3897,7 +5135,12 @@
     },
     {
       "source": "org.jsoup.select.CssTest",
-      "target": "org.jsoup.select.Elements",
+      "target": "org.jsoup.parser.Tag",
+      "type": "calls"
+    },
+    {
+      "source": "org.jsoup.select.CssTest",
+      "target": "org.jsoup.Jsoup",
       "type": "calls"
     }
   ]

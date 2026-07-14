@@ -2,7 +2,7 @@ Architectural Evolution Report (Version javapoet-1.12.0 -> javapoet-1.13.0)
 ===========================================================
 1. Structural Changes:
    * Added Nodes: 0
-   * Added Dependencies (Edges): 1
+   * Added Dependencies (Edges): 2
    * Removed Nodes: 0
    * Removed Dependencies (Edges): 0
 
@@ -11,7 +11,7 @@ Architectural Evolution Report (Version javapoet-1.12.0 -> javapoet-1.13.0)
    * Broken Cycles: 0
 
 3. Coupling & Complexity Hubs:
-   * Top Coupled Nodes in New Version: com.squareup.javapoet.TypeName, com.squareup.javapoet.Foo, com.squareup.javapoet.ParameterSpecTest
+   * Top Coupled Nodes in New Version: com.squareup.javapoet.TypeName, com.squareup.javapoet.CodeWriter, com.squareup.javapoet.ClassName
 
 4. Intent Conformance Evaluation:
    * All intents successfully satisfied. No modularity or cycle violations detected.

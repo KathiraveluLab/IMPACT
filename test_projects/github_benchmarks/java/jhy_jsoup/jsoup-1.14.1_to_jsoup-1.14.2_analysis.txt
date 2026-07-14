@@ -2,19 +2,19 @@ Architectural Evolution Report (Version jsoup-1.14.1 -> jsoup-1.14.2)
 ===========================================================
 1. Structural Changes:
    * Added Nodes: 1
-   * Added Dependencies (Edges): 13
+   * Added Dependencies (Edges): 16
    * Removed Nodes: 0
    * Removed Dependencies (Edges): 1
 
 2. Dependency Cycles:
-   * New Cycles Detected: 4
-   * Broken Cycles: 4
+   * New Cycles Detected: 48
+   * Broken Cycles: 48
 
 3. Coupling & Complexity Hubs:
-   * Top Coupled Nodes in New Version: org.jsoup.nodes.Document, org.jsoup.Jsoup, org.jsoup.nodes.Element
+   * Top Coupled Nodes in New Version: org.jsoup.nodes.Document, org.jsoup.nodes.Element, org.jsoup.Jsoup
 
 4. Intent Conformance Evaluation:
-   * VIOLATION: New cyclic dependencies detected (4 new cycles). This breaches the intent to 'avoid cyclic dependencies'.
+   * VIOLATION: New cyclic dependencies detected (48 new cycles). This breaches the intent to 'avoid cyclic dependencies'.
 
 5. Recommendations:
    * Action required: Break the newly introduced dependency cycle(s) to preserve modular boundaries.

@@ -16,13 +16,195 @@
   "projectName": "javapoet",
   "version": "javapoet-1.12.0",
   "language": "Java",
-  "extractedAt": "2026-07-14T12:29:51.247551Z",
+  "extractedAt": "2026-07-14T12:40:21.229300Z",
   "systemMetrics": {
-    "totalLinesOfCode": 3758,
-    "totalClasses": 10,
-    "averageCoupling": 0.8
+    "totalLinesOfCode": 10636,
+    "totalClasses": 39,
+    "averageCoupling": 8.051282051282051
   },
   "nodes": [
+    {
+      "id": "com.squareup.javapoet.JavaFile",
+      "name": "JavaFile",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/JavaFile.java",
+      "metrics": {
+        "loc": 291,
+        "complexity": 23,
+        "fanOut": 5,
+        "fanIn": 5,
+        "coupling": 10
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.NameAllocator",
+      "name": "NameAllocator",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/NameAllocator.java",
+      "metrics": {
+        "loc": 152,
+        "complexity": 19,
+        "fanOut": 0,
+        "fanIn": 1,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.LineWrapper",
+      "name": "LineWrapper",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/LineWrapper.java",
+      "metrics": {
+        "loc": 140,
+        "complexity": 20,
+        "fanOut": 0,
+        "fanIn": 2,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.CodeWriter",
+      "name": "CodeWriter",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/CodeWriter.java",
+      "metrics": {
+        "loc": 456,
+        "complexity": 67,
+        "fanOut": 7,
+        "fanIn": 14,
+        "coupling": 21
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.ParameterSpec",
+      "name": "ParameterSpec",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/ParameterSpec.java",
+      "metrics": {
+        "loc": 169,
+        "complexity": 11,
+        "fanOut": 6,
+        "fanIn": 6,
+        "coupling": 12
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.Util",
+      "name": "Util",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/Util.java",
+      "metrics": {
+        "loc": 112,
+        "complexity": 14,
+        "fanOut": 0,
+        "fanIn": 12,
+        "coupling": 12
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.MethodSpec",
+      "name": "MethodSpec",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/MethodSpec.java",
+      "metrics": {
+        "loc": 455,
+        "complexity": 51,
+        "fanOut": 8,
+        "fanIn": 8,
+        "coupling": 16
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.WildcardTypeName",
+      "name": "WildcardTypeName",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/WildcardTypeName.java",
+      "metrics": {
+        "loc": 112,
+        "complexity": 12,
+        "fanOut": 5,
+        "fanIn": 5,
+        "coupling": 10
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.AnnotationSpec",
+      "name": "AnnotationSpec",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/AnnotationSpec.java",
+      "metrics": {
+        "loc": 242,
+        "complexity": 32,
+        "fanOut": 5,
+        "fanIn": 15,
+        "coupling": 20
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.ClassName",
+      "name": "ClassName",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/ClassName.java",
+      "metrics": {
+        "loc": 250,
+        "complexity": 38,
+        "fanOut": 3,
+        "fanIn": 18,
+        "coupling": 21
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.FieldSpec",
+      "name": "FieldSpec",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/FieldSpec.java",
+      "metrics": {
+        "loc": 149,
+        "complexity": 8,
+        "fanOut": 6,
+        "fanIn": 4,
+        "coupling": 10
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.ArrayTypeName",
+      "name": "ArrayTypeName",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/ArrayTypeName.java",
+      "metrics": {
+        "loc": 89,
+        "complexity": 5,
+        "fanOut": 4,
+        "fanIn": 4,
+        "coupling": 8
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.ParameterizedTypeName",
+      "name": "ParameterizedTypeName",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/ParameterizedTypeName.java",
+      "metrics": {
+        "loc": 123,
+        "complexity": 13,
+        "fanOut": 6,
+        "fanIn": 7,
+        "coupling": 13
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.TypeSpec",
+      "name": "TypeSpec",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/TypeSpec.java",
+      "metrics": {
+        "loc": 729,
+        "complexity": 103,
+        "fanOut": 9,
+        "fanIn": 8,
+        "coupling": 17
+      }
+    },
     {
       "id": "com.squareup.javapoet.TypeName",
       "name": "TypeName",
@@ -31,22 +213,61 @@
       "metrics": {
         "loc": 338,
         "complexity": 77,
-        "fanOut": 0,
-        "fanIn": 3,
-        "coupling": 3
+        "fanOut": 8,
+        "fanIn": 19,
+        "coupling": 27
       }
     },
     {
-      "id": "com.squareup.javapoet.Foo",
-      "name": "Foo",
+      "id": "com.squareup.javapoet.CodeBlock",
+      "name": "CodeBlock",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/CodeBlock.java",
+      "metrics": {
+        "loc": 409,
+        "complexity": 56,
+        "fanOut": 7,
+        "fanIn": 13,
+        "coupling": 20
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.TypeVariableName",
+      "name": "TypeVariableName",
+      "type": "class",
+      "filePath": "src/main/java/com/squareup/javapoet/TypeVariableName.java",
+      "metrics": {
+        "loc": 141,
+        "complexity": 13,
+        "fanOut": 3,
+        "fanIn": 13,
+        "coupling": 16
+      }
+    },
+    {
+      "id": "ClassNameNoPackageTest",
+      "name": "ClassNameNoPackageTest",
+      "type": "class",
+      "filePath": "src/test/java/ClassNameNoPackageTest.java",
+      "metrics": {
+        "loc": 30,
+        "complexity": 2,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.TypeSpecTest",
+      "name": "TypeSpecTest",
       "type": "class",
       "filePath": "src/test/java/com/squareup/javapoet/TypeSpecTest.java",
       "metrics": {
         "loc": 2390,
         "complexity": 67,
-        "fanOut": 1,
-        "fanIn": 1,
-        "coupling": 2
+        "fanOut": 12,
+        "fanIn": 0,
+        "coupling": 12
       }
     },
     {
@@ -57,9 +278,22 @@
       "metrics": {
         "loc": 115,
         "complexity": 5,
-        "fanOut": 0,
+        "fanOut": 1,
         "fanIn": 0,
-        "coupling": 0
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.MethodSpecTest",
+      "name": "MethodSpecTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/MethodSpecTest.java",
+      "metrics": {
+        "loc": 406,
+        "complexity": 19,
+        "fanOut": 6,
+        "fanIn": 0,
+        "coupling": 6
       }
     },
     {
@@ -70,9 +304,61 @@
       "metrics": {
         "loc": 179,
         "complexity": 2,
+        "fanOut": 9,
+        "fanIn": 0,
+        "coupling": 9
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.NameAllocatorTest",
+      "name": "NameAllocatorTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/NameAllocatorTest.java",
+      "metrics": {
+        "loc": 95,
+        "complexity": 5,
         "fanOut": 1,
         "fanIn": 0,
         "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.ClassNameTest",
+      "name": "ClassNameTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/ClassNameTest.java",
+      "metrics": {
+        "loc": 186,
+        "complexity": 6,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.TypesEclipseTest",
+      "name": "TypesEclipseTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/TypesEclipseTest.java",
+      "metrics": {
+        "loc": 141,
+        "complexity": 7,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.AbstractTypesTest",
+      "name": "AbstractTypesTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/AbstractTypesTest.java",
+      "metrics": {
+        "loc": 248,
+        "complexity": 6,
+        "fanOut": 6,
+        "fanIn": 2,
+        "coupling": 8
       }
     },
     {
@@ -83,9 +369,22 @@
       "metrics": {
         "loc": 105,
         "complexity": 3,
-        "fanOut": 0,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 0
+        "coupling": 4
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.JavaFileTest",
+      "name": "JavaFileTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/JavaFileTest.java",
+      "metrics": {
+        "loc": 940,
+        "complexity": 4,
+        "fanOut": 9,
+        "fanIn": 0,
+        "coupling": 9
       }
     },
     {
@@ -96,9 +395,9 @@
       "metrics": {
         "loc": 151,
         "complexity": 2,
-        "fanOut": 1,
+        "fanOut": 6,
         "fanIn": 0,
-        "coupling": 1
+        "coupling": 6
       }
     },
     {
@@ -109,9 +408,22 @@
       "metrics": {
         "loc": 66,
         "complexity": 2,
-        "fanOut": 0,
+        "fanOut": 1,
         "fanIn": 0,
-        "coupling": 0
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.CodeBlockTest",
+      "name": "CodeBlockTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/CodeBlockTest.java",
+      "metrics": {
+        "loc": 304,
+        "complexity": 36,
+        "fanOut": 2,
+        "fanIn": 0,
+        "coupling": 2
       }
     },
     {
@@ -122,22 +434,35 @@
       "metrics": {
         "loc": 18,
         "complexity": 1,
-        "fanOut": 0,
+        "fanOut": 2,
         "fanIn": 0,
-        "coupling": 0
+        "coupling": 2
       }
     },
     {
-      "id": "com.squareup.javapoet.IsAnnotated",
-      "name": "IsAnnotated",
+      "id": "com.squareup.javapoet.AnnotationSpecTest",
+      "name": "AnnotationSpecTest",
       "type": "class",
       "filePath": "src/test/java/com/squareup/javapoet/AnnotationSpecTest.java",
       "metrics": {
         "loc": 339,
         "complexity": 4,
-        "fanOut": 1,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 1
+        "coupling": 4
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.FileWritingTest",
+      "name": "FileWritingTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/FileWritingTest.java",
+      "metrics": {
+        "loc": 193,
+        "complexity": 7,
+        "fanOut": 4,
+        "fanIn": 0,
+        "coupling": 4
       }
     },
     {
@@ -148,16 +473,583 @@
       "metrics": {
         "loc": 57,
         "complexity": 3,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.LineWrapperTest",
+      "name": "LineWrapperTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/LineWrapperTest.java",
+      "metrics": {
+        "loc": 189,
+        "complexity": 2,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.TypesTest",
+      "name": "TypesTest",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/TypesTest.java",
+      "metrics": {
+        "loc": 34,
+        "complexity": 2,
+        "fanOut": 1,
+        "fanIn": 0,
+        "coupling": 1
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.TestUtil",
+      "name": "TestUtil",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/TestUtil.java",
+      "metrics": {
+        "loc": 15,
+        "complexity": 3,
         "fanOut": 0,
         "fanIn": 0,
         "coupling": 0
+      }
+    },
+    {
+      "id": "com.squareup.javapoet.TestFiler",
+      "name": "TestFiler",
+      "type": "class",
+      "filePath": "src/test/java/com/squareup/javapoet/TestFiler.java",
+      "metrics": {
+        "loc": 78,
+        "complexity": 3,
+        "fanOut": 1,
+        "fanIn": 1,
+        "coupling": 2
       }
     }
   ],
   "edges": [
     {
-      "source": "com.squareup.javapoet.Foo",
+      "source": "com.squareup.javapoet.JavaFile",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFile",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFile",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFile",
+      "target": "com.squareup.javapoet.TypeSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFile",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeWriter",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeWriter",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeWriter",
       "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeWriter",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeWriter",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeWriter",
+      "target": "com.squareup.javapoet.LineWrapper",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeWriter",
+      "target": "com.squareup.javapoet.TypeSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterSpec",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterSpec",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterSpec",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterSpec",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterSpec",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterSpec",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpec",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpec",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpec",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpec",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpec",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpec",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpec",
+      "target": "com.squareup.javapoet.ParameterSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpec",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.WildcardTypeName",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.WildcardTypeName",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.WildcardTypeName",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.WildcardTypeName",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.WildcardTypeName",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotationSpec",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotationSpec",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotationSpec",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotationSpec",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotationSpec",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ClassName",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ClassName",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ClassName",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FieldSpec",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FieldSpec",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FieldSpec",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FieldSpec",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FieldSpec",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FieldSpec",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ArrayTypeName",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ArrayTypeName",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ArrayTypeName",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ArrayTypeName",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterizedTypeName",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterizedTypeName",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterizedTypeName",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterizedTypeName",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterizedTypeName",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterizedTypeName",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpec",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpec",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpec",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpec",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpec",
+      "target": "com.squareup.javapoet.FieldSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpec",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpec",
+      "target": "com.squareup.javapoet.MethodSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpec",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpec",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeName",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeName",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeName",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeName",
+      "target": "com.squareup.javapoet.ParameterizedTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeName",
+      "target": "com.squareup.javapoet.WildcardTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeName",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeName",
+      "target": "com.squareup.javapoet.ArrayTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeName",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeBlock",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeBlock",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeBlock",
+      "target": "com.squareup.javapoet.FieldSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeBlock",
+      "target": "com.squareup.javapoet.MethodSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeBlock",
+      "target": "com.squareup.javapoet.TypeSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeBlock",
+      "target": "com.squareup.javapoet.ParameterSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeBlock",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeVariableName",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeVariableName",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeVariableName",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "ClassNameNoPackageTest",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.FieldSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.ParameterizedTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.WildcardTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.MethodSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.JavaFile",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.TypeSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeSpecTest",
+      "target": "com.squareup.javapoet.ParameterSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ParameterSpecTest",
+      "target": "com.squareup.javapoet.ParameterSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpecTest",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpecTest",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpecTest",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpecTest",
+      "target": "com.squareup.javapoet.MethodSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpecTest",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.MethodSpecTest",
+      "target": "com.squareup.javapoet.ParameterSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotatedTypeNameTest",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotatedTypeNameTest",
+      "target": "com.squareup.javapoet.TypeVariableName",
       "type": "calls"
     },
     {
@@ -166,13 +1058,263 @@
       "type": "calls"
     },
     {
+      "source": "com.squareup.javapoet.AnnotatedTypeNameTest",
+      "target": "com.squareup.javapoet.ParameterizedTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotatedTypeNameTest",
+      "target": "com.squareup.javapoet.WildcardTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotatedTypeNameTest",
+      "target": "com.squareup.javapoet.MethodSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotatedTypeNameTest",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotatedTypeNameTest",
+      "target": "com.squareup.javapoet.ArrayTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotatedTypeNameTest",
+      "target": "com.squareup.javapoet.ParameterSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.NameAllocatorTest",
+      "target": "com.squareup.javapoet.NameAllocator",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ClassNameTest",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.ClassNameTest",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypesEclipseTest",
+      "target": "com.squareup.javapoet.AbstractTypesTest",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AbstractTypesTest",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AbstractTypesTest",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AbstractTypesTest",
+      "target": "com.squareup.javapoet.ParameterizedTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AbstractTypesTest",
+      "target": "com.squareup.javapoet.WildcardTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AbstractTypesTest",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AbstractTypesTest",
+      "target": "com.squareup.javapoet.ArrayTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FileReadingTest",
+      "target": "com.squareup.javapoet.ParameterizedTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FileReadingTest",
+      "target": "com.squareup.javapoet.TypeSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FileReadingTest",
+      "target": "com.squareup.javapoet.MethodSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FileReadingTest",
+      "target": "com.squareup.javapoet.JavaFile",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFileTest",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFileTest",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFileTest",
+      "target": "com.squareup.javapoet.TypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFileTest",
+      "target": "com.squareup.javapoet.ParameterizedTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFileTest",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFileTest",
+      "target": "com.squareup.javapoet.MethodSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFileTest",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFileTest",
+      "target": "com.squareup.javapoet.TypeSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.JavaFileTest",
+      "target": "com.squareup.javapoet.JavaFile",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeNameTest",
+      "target": "com.squareup.javapoet.TypeVariableName",
+      "type": "calls"
+    },
+    {
       "source": "com.squareup.javapoet.TypeNameTest",
       "target": "com.squareup.javapoet.TypeName",
       "type": "calls"
     },
     {
-      "source": "com.squareup.javapoet.IsAnnotated",
-      "target": "com.squareup.javapoet.Foo",
+      "source": "com.squareup.javapoet.TypeNameTest",
+      "target": "com.squareup.javapoet.ParameterizedTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeNameTest",
+      "target": "com.squareup.javapoet.WildcardTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeNameTest",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypeNameTest",
+      "target": "com.squareup.javapoet.ArrayTypeName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.UtilTest",
+      "target": "com.squareup.javapoet.Util",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeBlockTest",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeBlockTest",
+      "target": "com.squareup.javapoet.ClassName",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeWriterTest",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.CodeWriterTest",
+      "target": "com.squareup.javapoet.CodeWriter",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotationSpecTest",
+      "target": "com.squareup.javapoet.CodeBlock",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotationSpecTest",
+      "target": "com.squareup.javapoet.AnnotationSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotationSpecTest",
+      "target": "com.squareup.javapoet.TypeSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.AnnotationSpecTest",
+      "target": "com.squareup.javapoet.JavaFile",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FileWritingTest",
+      "target": "com.squareup.javapoet.MethodSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FileWritingTest",
+      "target": "com.squareup.javapoet.TypeSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FileWritingTest",
+      "target": "com.squareup.javapoet.TestFiler",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FileWritingTest",
+      "target": "com.squareup.javapoet.JavaFile",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.FieldSpecTest",
+      "target": "com.squareup.javapoet.FieldSpec",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.LineWrapperTest",
+      "target": "com.squareup.javapoet.LineWrapper",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TypesTest",
+      "target": "com.squareup.javapoet.AbstractTypesTest",
+      "type": "calls"
+    },
+    {
+      "source": "com.squareup.javapoet.TestFiler",
+      "target": "com.squareup.javapoet.Util",
       "type": "calls"
     }
   ]

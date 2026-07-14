@@ -16,13 +16,91 @@
   "projectName": "reactive-streams-jvm",
   "version": "v1.0.2",
   "language": "Java",
-  "extractedAt": "2026-07-14T12:30:03.648284Z",
+  "extractedAt": "2026-07-14T12:40:35.994007Z",
   "systemMetrics": {
-    "totalLinesOfCode": 8912,
-    "totalClasses": 47,
-    "averageCoupling": 6.808510638297872
+    "totalLinesOfCode": 10691,
+    "totalClasses": 63,
+    "averageCoupling": 7.396825396825397
   },
   "nodes": [
+    {
+      "id": "org.reactivestreams.tck.flow.FlowPublisherVerification",
+      "name": "FlowPublisherVerification",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/tck-flow/src/main/java/org/reactivestreams/tck/flow/FlowPublisherVerification.java",
+      "metrics": {
+        "loc": 55,
+        "complexity": 4,
+        "fanOut": 4,
+        "fanIn": 4,
+        "coupling": 8
+      }
+    },
+    {
+      "id": "org.reactivestreams.tck.flow.FlowSubscriberWhiteboxVerification",
+      "name": "FlowSubscriberWhiteboxVerification",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/tck-flow/src/main/java/org/reactivestreams/tck/flow/FlowSubscriberWhiteboxVerification.java",
+      "metrics": {
+        "loc": 42,
+        "complexity": 2,
+        "fanOut": 5,
+        "fanIn": 1,
+        "coupling": 6
+      }
+    },
+    {
+      "id": "org.reactivestreams.tck.flow.IdentityFlowProcessorVerification",
+      "name": "IdentityFlowProcessorVerification",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/tck-flow/src/main/java/org/reactivestreams/tck/flow/IdentityFlowProcessorVerification.java",
+      "metrics": {
+        "loc": 54,
+        "complexity": 1,
+        "fanOut": 7,
+        "fanIn": 1,
+        "coupling": 8
+      }
+    },
+    {
+      "id": "org.reactivestreams.tck.flow.FlowSubscriberBlackboxVerification",
+      "name": "FlowSubscriberBlackboxVerification",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/tck-flow/src/main/java/org/reactivestreams/tck/flow/FlowSubscriberBlackboxVerification.java",
+      "metrics": {
+        "loc": 56,
+        "complexity": 4,
+        "fanOut": 5,
+        "fanIn": 1,
+        "coupling": 6
+      }
+    },
+    {
+      "id": "org.reactivestreams.TestEitherConsumer",
+      "name": "TestEitherConsumer",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/flow-adapters/src/test/java/org/reactivestreams/TestEitherConsumer.java",
+      "metrics": {
+        "loc": 146,
+        "complexity": 19,
+        "fanOut": 2,
+        "fanIn": 1,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "org.reactivestreams.MulticastPublisher",
+      "name": "MulticastPublisher",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/flow-adapters/src/test/java/org/reactivestreams/MulticastPublisher.java",
+      "metrics": {
+        "loc": 302,
+        "complexity": 48,
+        "fanOut": 3,
+        "fanIn": 1,
+        "coupling": 4
+      }
+    },
     {
       "id": "org.reactivestreams.SubmissionPublisherTckTest",
       "name": "SubmissionPublisherTckTest",
@@ -31,9 +109,9 @@
       "metrics": {
         "loc": 49,
         "complexity": 3,
-        "fanOut": 2,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 2
+        "coupling": 4
       }
     },
     {
@@ -44,9 +122,9 @@
       "metrics": {
         "loc": 184,
         "complexity": 1,
-        "fanOut": 4,
+        "fanOut": 7,
         "fanIn": 0,
-        "coupling": 4
+        "coupling": 7
       }
     },
     {
@@ -57,8 +135,8 @@
       "metrics": {
         "loc": 71,
         "complexity": 3,
-        "fanOut": 4,
-        "fanIn": 1,
+        "fanOut": 5,
+        "fanIn": 0,
         "coupling": 5
       }
     },
@@ -70,8 +148,8 @@
       "metrics": {
         "loc": 47,
         "complexity": 3,
-        "fanOut": 3,
-        "fanIn": 1,
+        "fanOut": 4,
+        "fanIn": 0,
         "coupling": 4
       }
     },
@@ -83,9 +161,9 @@
       "metrics": {
         "loc": 141,
         "complexity": 19,
-        "fanOut": 4,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 4
+        "coupling": 5
       }
     },
     {
@@ -96,9 +174,9 @@
       "metrics": {
         "loc": 46,
         "complexity": 2,
-        "fanOut": 3,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 3
+        "coupling": 5
       }
     },
     {
@@ -109,9 +187,9 @@
       "metrics": {
         "loc": 281,
         "complexity": 43,
-        "fanOut": 5,
+        "fanOut": 6,
         "fanIn": 0,
-        "coupling": 5
+        "coupling": 6
       }
     },
     {
@@ -122,9 +200,9 @@
       "metrics": {
         "loc": 49,
         "complexity": 4,
-        "fanOut": 2,
+        "fanOut": 3,
         "fanIn": 0,
-        "coupling": 2
+        "coupling": 3
       }
     },
     {
@@ -135,9 +213,35 @@
       "metrics": {
         "loc": 45,
         "complexity": 2,
-        "fanOut": 3,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 3
+        "coupling": 5
+      }
+    },
+    {
+      "id": "org.reactivestreams.tck.flow.support.SyncTriggeredDemandFlowSubscriber",
+      "name": "SyncTriggeredDemandFlowSubscriber",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/tck-flow/src/test/java/org/reactivestreams/tck/flow/support/SyncTriggeredDemandFlowSubscriber.java",
+      "metrics": {
+        "loc": 100,
+        "complexity": 26,
+        "fanOut": 2,
+        "fanIn": 2,
+        "coupling": 4
+      }
+    },
+    {
+      "id": "org.reactivestreams.example.unicast.SyncSubscriber",
+      "name": "SyncSubscriber",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/examples/src/main/java/org/reactivestreams/example/unicast/SyncSubscriber.java",
+      "metrics": {
+        "loc": 90,
+        "complexity": 23,
+        "fanOut": 2,
+        "fanIn": 2,
+        "coupling": 4
       }
     },
     {
@@ -148,9 +252,22 @@
       "metrics": {
         "loc": 35,
         "complexity": 3,
-        "fanOut": 4,
+        "fanOut": 1,
         "fanIn": 2,
-        "coupling": 6
+        "coupling": 3
+      }
+    },
+    {
+      "id": "org.reactivestreams.example.unicast.RangePublisher",
+      "name": "RangePublisher",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/examples/src/main/java/org/reactivestreams/example/unicast/RangePublisher.java",
+      "metrics": {
+        "loc": 155,
+        "complexity": 27,
+        "fanOut": 3,
+        "fanIn": 2,
+        "coupling": 5
       }
     },
     {
@@ -167,6 +284,19 @@
       }
     },
     {
+      "id": "org.reactivestreams.example.unicast.AsyncSubscriber",
+      "name": "AsyncSubscriber",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/examples/src/main/java/org/reactivestreams/example/unicast/AsyncSubscriber.java",
+      "metrics": {
+        "loc": 177,
+        "complexity": 44,
+        "fanOut": 2,
+        "fanIn": 1,
+        "coupling": 3
+      }
+    },
+    {
       "id": "org.reactivestreams.example.unicast.InfiniteIncrementNumberPublisher",
       "name": "InfiniteIncrementNumberPublisher",
       "type": "class",
@@ -174,9 +304,9 @@
       "metrics": {
         "loc": 30,
         "complexity": 1,
-        "fanOut": 4,
+        "fanOut": 1,
         "fanIn": 1,
-        "coupling": 5
+        "coupling": 2
       }
     },
     {
@@ -187,8 +317,8 @@
       "metrics": {
         "loc": 27,
         "complexity": 1,
-        "fanOut": 3,
-        "fanIn": 1,
+        "fanOut": 4,
+        "fanIn": 0,
         "coupling": 4
       }
     },
@@ -200,9 +330,9 @@
       "metrics": {
         "loc": 42,
         "complexity": 3,
-        "fanOut": 4,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 4
+        "coupling": 5
       }
     },
     {
@@ -213,9 +343,9 @@
       "metrics": {
         "loc": 46,
         "complexity": 3,
-        "fanOut": 4,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 4
+        "coupling": 5
       }
     },
     {
@@ -226,9 +356,9 @@
       "metrics": {
         "loc": 43,
         "complexity": 3,
-        "fanOut": 2,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 2
+        "coupling": 4
       }
     },
     {
@@ -239,9 +369,9 @@
       "metrics": {
         "loc": 71,
         "complexity": 3,
-        "fanOut": 3,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 3
+        "coupling": 5
       }
     },
     {
@@ -252,22 +382,22 @@
       "metrics": {
         "loc": 61,
         "complexity": 3,
-        "fanOut": 4,
+        "fanOut": 5,
         "fanIn": 0,
-        "coupling": 4
+        "coupling": 5
       }
     },
     {
-      "id": "org.reactivestreams.tck.BlackboxTestStage",
-      "name": "BlackboxTestStage",
+      "id": "org.reactivestreams.tck.SubscriberBlackboxVerification",
+      "name": "SubscriberBlackboxVerification",
       "type": "class",
       "filePath": "reactive-streams-jvm-1.0.2/tck/src/main/java/org/reactivestreams/tck/SubscriberBlackboxVerification.java",
       "metrics": {
         "loc": 412,
         "complexity": 20,
-        "fanOut": 5,
-        "fanIn": 0,
-        "coupling": 5
+        "fanOut": 8,
+        "fanIn": 5,
+        "coupling": 13
       }
     },
     {
@@ -278,48 +408,74 @@
       "metrics": {
         "loc": 856,
         "complexity": 78,
-        "fanOut": 3,
-        "fanIn": 31,
-        "coupling": 34
+        "fanOut": 5,
+        "fanIn": 33,
+        "coupling": 38
       }
     },
     {
-      "id": "org.reactivestreams.tck.WhiteboxTestStage",
-      "name": "WhiteboxTestStage",
+      "id": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "name": "SubscriberWhiteboxVerification",
       "type": "class",
       "filePath": "reactive-streams-jvm-1.0.2/tck/src/main/java/org/reactivestreams/tck/SubscriberWhiteboxVerification.java",
       "metrics": {
         "loc": 632,
         "complexity": 25,
-        "fanOut": 5,
-        "fanIn": 0,
-        "coupling": 5
+        "fanOut": 8,
+        "fanIn": 7,
+        "coupling": 15
       }
     },
     {
-      "id": "org.reactivestreams.tck.PublisherTestRun",
-      "name": "PublisherTestRun",
+      "id": "org.reactivestreams.tck.WithHelperPublisher",
+      "name": "WithHelperPublisher",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/tck/src/main/java/org/reactivestreams/tck/WithHelperPublisher.java",
+      "metrics": {
+        "loc": 71,
+        "complexity": 5,
+        "fanOut": 4,
+        "fanIn": 3,
+        "coupling": 7
+      }
+    },
+    {
+      "id": "org.reactivestreams.tck.PublisherVerification",
+      "name": "PublisherVerification",
       "type": "class",
       "filePath": "reactive-streams-jvm-1.0.2/tck/src/main/java/org/reactivestreams/tck/PublisherVerification.java",
       "metrics": {
         "loc": 994,
         "complexity": 72,
-        "fanOut": 6,
-        "fanIn": 0,
-        "coupling": 6
+        "fanOut": 7,
+        "fanIn": 11,
+        "coupling": 18
       }
     },
     {
-      "id": "org.reactivestreams.tck.ManualSubscriberWithErrorCollection",
-      "name": "ManualSubscriberWithErrorCollection",
+      "id": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "name": "IdentityProcessorVerification",
       "type": "class",
       "filePath": "reactive-streams-jvm-1.0.2/tck/src/main/java/org/reactivestreams/tck/IdentityProcessorVerification.java",
       "metrics": {
         "loc": 690,
         "complexity": 32,
-        "fanOut": 8,
-        "fanIn": 0,
-        "coupling": 8
+        "fanOut": 11,
+        "fanIn": 4,
+        "coupling": 15
+      }
+    },
+    {
+      "id": "org.reactivestreams.tck.flow.support.TestException",
+      "name": "TestException",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/tck/src/main/java/org/reactivestreams/tck/flow/support/TestException.java",
+      "metrics": {
+        "loc": 20,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 3,
+        "coupling": 3
       }
     },
     {
@@ -330,9 +486,9 @@
       "metrics": {
         "loc": 644,
         "complexity": 130,
-        "fanOut": 4,
-        "fanIn": 2,
-        "coupling": 6
+        "fanOut": 0,
+        "fanIn": 3,
+        "coupling": 3
       }
     },
     {
@@ -356,9 +512,9 @@
       "metrics": {
         "loc": 377,
         "complexity": 38,
-        "fanOut": 5,
-        "fanIn": 1,
-        "coupling": 6
+        "fanOut": 0,
+        "fanIn": 2,
+        "coupling": 2
       }
     },
     {
@@ -370,8 +526,8 @@
         "loc": 44,
         "complexity": 2,
         "fanOut": 0,
-        "fanIn": 2,
-        "coupling": 2
+        "fanIn": 4,
+        "coupling": 4
       }
     },
     {
@@ -383,8 +539,21 @@
         "loc": 37,
         "complexity": 5,
         "fanOut": 2,
-        "fanIn": 0,
-        "coupling": 2
+        "fanIn": 1,
+        "coupling": 3
+      }
+    },
+    {
+      "id": "org.reactivestreams.tck.flow.support.Optional",
+      "name": "Optional",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/tck/src/main/java/org/reactivestreams/tck/flow/support/Optional.java",
+      "metrics": {
+        "loc": 62,
+        "complexity": 2,
+        "fanOut": 0,
+        "fanIn": 4,
+        "coupling": 4
       }
     },
     {
@@ -396,8 +565,21 @@
         "loc": 14,
         "complexity": 1,
         "fanOut": 0,
-        "fanIn": 5,
-        "coupling": 5
+        "fanIn": 6,
+        "coupling": 6
+      }
+    },
+    {
+      "id": "org.reactivestreams.tck.flow.support.SubscriberBufferOverflowException",
+      "name": "SubscriberBufferOverflowException",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/tck/src/main/java/org/reactivestreams/tck/flow/support/SubscriberBufferOverflowException.java",
+      "metrics": {
+        "loc": 24,
+        "complexity": 1,
+        "fanOut": 0,
+        "fanIn": 1,
+        "coupling": 1
       }
     },
     {
@@ -409,8 +591,8 @@
         "loc": 35,
         "complexity": 3,
         "fanOut": 2,
-        "fanIn": 0,
-        "coupling": 2
+        "fanIn": 1,
+        "coupling": 3
       }
     },
     {
@@ -421,9 +603,9 @@
       "metrics": {
         "loc": 42,
         "complexity": 2,
-        "fanOut": 3,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 3
+        "coupling": 4
       }
     },
     {
@@ -434,8 +616,8 @@
       "metrics": {
         "loc": 140,
         "complexity": 19,
-        "fanOut": 5,
-        "fanIn": 1,
+        "fanOut": 6,
+        "fanIn": 0,
         "coupling": 6
       }
     },
@@ -447,8 +629,8 @@
       "metrics": {
         "loc": 69,
         "complexity": 3,
-        "fanOut": 4,
-        "fanIn": 1,
+        "fanOut": 5,
+        "fanIn": 0,
         "coupling": 5
       }
     },
@@ -460,9 +642,9 @@
       "metrics": {
         "loc": 44,
         "complexity": 2,
-        "fanOut": 5,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 5
+        "coupling": 4
       }
     },
     {
@@ -473,9 +655,9 @@
       "metrics": {
         "loc": 280,
         "complexity": 43,
-        "fanOut": 5,
+        "fanOut": 6,
         "fanIn": 0,
-        "coupling": 5
+        "coupling": 6
       }
     },
     {
@@ -486,8 +668,8 @@
       "metrics": {
         "loc": 44,
         "complexity": 3,
-        "fanOut": 3,
-        "fanIn": 1,
+        "fanOut": 4,
+        "fanIn": 0,
         "coupling": 4
       }
     },
@@ -499,9 +681,9 @@
       "metrics": {
         "loc": 786,
         "complexity": 37,
-        "fanOut": 5,
+        "fanOut": 7,
         "fanIn": 0,
-        "coupling": 5
+        "coupling": 7
       }
     },
     {
@@ -512,9 +694,9 @@
       "metrics": {
         "loc": 361,
         "complexity": 6,
-        "fanOut": 5,
+        "fanOut": 6,
         "fanIn": 0,
-        "coupling": 5
+        "coupling": 6
       }
     },
     {
@@ -525,9 +707,9 @@
       "metrics": {
         "loc": 128,
         "complexity": 4,
-        "fanOut": 6,
+        "fanOut": 7,
         "fanIn": 0,
-        "coupling": 6
+        "coupling": 7
       }
     },
     {
@@ -538,9 +720,9 @@
       "metrics": {
         "loc": 63,
         "complexity": 5,
-        "fanOut": 0,
+        "fanOut": 3,
         "fanIn": 0,
-        "coupling": 0
+        "coupling": 3
       }
     },
     {
@@ -551,9 +733,9 @@
       "metrics": {
         "loc": 162,
         "complexity": 14,
-        "fanOut": 3,
+        "fanOut": 4,
         "fanIn": 0,
-        "coupling": 3
+        "coupling": 4
       }
     },
     {
@@ -564,8 +746,21 @@
       "metrics": {
         "loc": 267,
         "complexity": 4,
-        "fanOut": 4,
+        "fanOut": 5,
         "fanIn": 0,
+        "coupling": 5
+      }
+    },
+    {
+      "id": "org.reactivestreams.tck.flow.support.SyncTriggeredDemandSubscriber",
+      "name": "SyncTriggeredDemandSubscriber",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/tck/src/test/java/org/reactivestreams/tck/flow/support/SyncTriggeredDemandSubscriber.java",
+      "metrics": {
+        "loc": 101,
+        "complexity": 26,
+        "fanOut": 2,
+        "fanIn": 2,
         "coupling": 4
       }
     },
@@ -583,6 +778,19 @@
       }
     },
     {
+      "id": "org.reactivestreams.FlowAdapters",
+      "name": "FlowAdapters",
+      "type": "class",
+      "filePath": "reactive-streams-jvm-1.0.2/flow-adapters/src/main/java/org/reactivestreams/FlowAdapters.java",
+      "metrics": {
+        "loc": 324,
+        "complexity": 19,
+        "fanOut": 4,
+        "fanIn": 8,
+        "coupling": 12
+      }
+    },
+    {
       "id": "org.reactivestreams.Publisher",
       "name": "Publisher",
       "type": "class",
@@ -590,9 +798,9 @@
       "metrics": {
         "loc": 37,
         "complexity": 2,
-        "fanOut": 2,
-        "fanIn": 31,
-        "coupling": 33
+        "fanOut": 1,
+        "fanIn": 30,
+        "coupling": 31
       }
     },
     {
@@ -604,8 +812,8 @@
         "loc": 20,
         "complexity": 1,
         "fanOut": 2,
-        "fanIn": 6,
-        "coupling": 8
+        "fanIn": 7,
+        "coupling": 9
       }
     },
     {
@@ -616,8 +824,8 @@
       "metrics": {
         "loc": 41,
         "complexity": 4,
-        "fanOut": 2,
-        "fanIn": 27,
+        "fanOut": 0,
+        "fanIn": 29,
         "coupling": 29
       }
     },
@@ -629,14 +837,154 @@
       "metrics": {
         "loc": 61,
         "complexity": 3,
-        "fanOut": 2,
-        "fanIn": 32,
-        "coupling": 34
+        "fanOut": 1,
+        "fanIn": 36,
+        "coupling": 37
       }
     }
   ],
   "edges": [
     {
+      "source": "org.reactivestreams.tck.flow.FlowPublisherVerification",
+      "target": "org.reactivestreams.FlowAdapters",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowPublisherVerification",
+      "target": "org.reactivestreams.tck.PublisherVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowPublisherVerification",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowPublisherVerification",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowSubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowSubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowSubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.FlowAdapters",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowSubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowSubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.tck.flow.support.SubscriberWhiteboxVerificationRules",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.IdentityFlowProcessorVerification",
+      "target": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.IdentityFlowProcessorVerification",
+      "target": "org.reactivestreams.tck.flow.support.PublisherVerificationRules",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.IdentityFlowProcessorVerification",
+      "target": "org.reactivestreams.FlowAdapters",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.IdentityFlowProcessorVerification",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.IdentityFlowProcessorVerification",
+      "target": "org.reactivestreams.tck.flow.support.SubscriberWhiteboxVerificationRules",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.IdentityFlowProcessorVerification",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.IdentityFlowProcessorVerification",
+      "target": "org.reactivestreams.Processor",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowSubscriberBlackboxVerification",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowSubscriberBlackboxVerification",
+      "target": "org.reactivestreams.tck.SubscriberBlackboxVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowSubscriberBlackboxVerification",
+      "target": "org.reactivestreams.tck.flow.support.SubscriberBlackboxVerificationRules",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowSubscriberBlackboxVerification",
+      "target": "org.reactivestreams.FlowAdapters",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.FlowSubscriberBlackboxVerification",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.TestEitherConsumer",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.TestEitherConsumer",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.MulticastPublisher",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.MulticastPublisher",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.MulticastPublisher",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.SubmissionPublisherTckTest",
+      "target": "org.reactivestreams.FlowAdapters",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.SubmissionPublisherTckTest",
+      "target": "org.reactivestreams.tck.PublisherVerification",
+      "type": "calls"
+    },
+    {
       "source": "org.reactivestreams.SubmissionPublisherTckTest",
       "target": "org.reactivestreams.tck.TestEnvironment",
       "type": "calls"
@@ -644,6 +992,31 @@
     {
       "source": "org.reactivestreams.SubmissionPublisherTckTest",
       "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.FlowAdaptersTest",
+      "target": "org.reactivestreams.MulticastPublisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.FlowAdaptersTest",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.FlowAdaptersTest",
+      "target": "org.reactivestreams.FlowAdapters",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.FlowAdaptersTest",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.FlowAdaptersTest",
+      "target": "org.reactivestreams.TestEitherConsumer",
       "type": "calls"
     },
     {
@@ -657,23 +1030,13 @@
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.FlowAdaptersTest",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.FlowAdaptersTest",
+      "source": "org.reactivestreams.tck.flow.SyncTriggeredDemandSubscriberWhiteboxTest",
       "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.flow.SyncTriggeredDemandSubscriberWhiteboxTest",
-      "target": "org.reactivestreams.tck.TestEnvironment",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.SyncTriggeredDemandSubscriberWhiteboxTest",
-      "target": "org.reactivestreams.tck.SyncTriggeredDemandSubscriberWhiteboxTest",
+      "target": "org.reactivestreams.tck.flow.support.SyncTriggeredDemandFlowSubscriber",
       "type": "calls"
     },
     {
@@ -683,7 +1046,17 @@
     },
     {
       "source": "org.reactivestreams.tck.flow.SyncTriggeredDemandSubscriberWhiteboxTest",
-      "target": "org.reactivestreams.Subscriber",
+      "target": "org.reactivestreams.tck.flow.FlowSubscriberWhiteboxVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.SyncTriggeredDemandSubscriberWhiteboxTest",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.SyncTriggeredDemandSubscriberTest",
+      "target": "org.reactivestreams.tck.flow.support.SyncTriggeredDemandFlowSubscriber",
       "type": "calls"
     },
     {
@@ -693,12 +1066,27 @@
     },
     {
       "source": "org.reactivestreams.tck.flow.SyncTriggeredDemandSubscriberTest",
-      "target": "org.reactivestreams.tck.SyncTriggeredDemandSubscriberTest",
+      "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.flow.SyncTriggeredDemandSubscriberTest",
+      "target": "org.reactivestreams.tck.flow.FlowSubscriberBlackboxVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.RangeFlowPublisherTest",
       "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.RangeFlowPublisherTest",
+      "target": "org.reactivestreams.tck.flow.FlowPublisherVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.RangeFlowPublisherTest",
+      "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
@@ -712,13 +1100,8 @@
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.flow.RangeFlowPublisherTest",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.RangeFlowPublisherTest",
-      "target": "org.reactivestreams.Subscriber",
+      "source": "org.reactivestreams.tck.flow.EmptyLazyFlowPublisherTest",
+      "target": "org.reactivestreams.tck.flow.FlowPublisherVerification",
       "type": "calls"
     },
     {
@@ -728,6 +1111,11 @@
     },
     {
       "source": "org.reactivestreams.tck.flow.EmptyLazyFlowPublisherTest",
+      "target": "org.reactivestreams.FlowAdapters",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.EmptyLazyFlowPublisherTest",
       "target": "org.reactivestreams.tck.TestEnvironment",
       "type": "calls"
     },
@@ -738,12 +1126,12 @@
     },
     {
       "source": "org.reactivestreams.tck.flow.LockstepFlowProcessorTest",
-      "target": "org.reactivestreams.tck.TestEnvironment",
+      "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.flow.LockstepFlowProcessorTest",
-      "target": "org.reactivestreams.Publisher",
+      "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
@@ -753,12 +1141,17 @@
     },
     {
       "source": "org.reactivestreams.tck.flow.LockstepFlowProcessorTest",
-      "target": "org.reactivestreams.Subscription",
+      "target": "org.reactivestreams.tck.TestEnvironment",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.flow.LockstepFlowProcessorTest",
-      "target": "org.reactivestreams.Subscriber",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.LockstepFlowProcessorTest",
+      "target": "org.reactivestreams.tck.flow.IdentityFlowProcessorVerification",
       "type": "calls"
     },
     {
@@ -772,8 +1165,23 @@
       "type": "calls"
     },
     {
+      "source": "org.reactivestreams.tck.flow.SubmissionPublisherTest",
+      "target": "org.reactivestreams.tck.flow.FlowPublisherVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.SingleElementFlowPublisherTest",
+      "target": "org.reactivestreams.tck.flow.FlowPublisherVerification",
+      "type": "calls"
+    },
+    {
       "source": "org.reactivestreams.tck.flow.SingleElementFlowPublisherTest",
       "target": "org.reactivestreams.example.unicast.AsyncIterablePublisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.SingleElementFlowPublisherTest",
+      "target": "org.reactivestreams.FlowAdapters",
       "type": "calls"
     },
     {
@@ -787,37 +1195,67 @@
       "type": "calls"
     },
     {
+      "source": "org.reactivestreams.tck.flow.support.SyncTriggeredDemandFlowSubscriber",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.support.SyncTriggeredDemandFlowSubscriber",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.SyncSubscriber",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.SyncSubscriber",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
       "source": "org.reactivestreams.example.unicast.NumberIterablePublisher",
       "target": "org.reactivestreams.example.unicast.AsyncIterablePublisher",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.example.unicast.NumberIterablePublisher",
-      "target": "org.reactivestreams.Publisher",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.example.unicast.NumberIterablePublisher",
+      "source": "org.reactivestreams.example.unicast.RangePublisher",
       "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.example.unicast.NumberIterablePublisher",
+      "source": "org.reactivestreams.example.unicast.RangePublisher",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.RangePublisher",
       "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.example.unicast.AsyncIterablePublisher",
-      "target": "org.reactivestreams.Publisher",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.example.unicast.AsyncIterablePublisher",
       "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.example.unicast.AsyncIterablePublisher",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.AsyncIterablePublisher",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.AsyncSubscriber",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.AsyncSubscriber",
       "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
@@ -827,28 +1265,18 @@
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.example.unicast.InfiniteIncrementNumberPublisher",
-      "target": "org.reactivestreams.Publisher",
+      "source": "org.reactivestreams.example.unicast.RangePublisherTest",
+      "target": "org.reactivestreams.example.unicast.RangePublisher",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.example.unicast.InfiniteIncrementNumberPublisher",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.example.unicast.InfiniteIncrementNumberPublisher",
-      "target": "org.reactivestreams.Subscriber",
+      "source": "org.reactivestreams.example.unicast.RangePublisherTest",
+      "target": "org.reactivestreams.tck.PublisherVerification",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.example.unicast.RangePublisherTest",
       "target": "org.reactivestreams.tck.TestEnvironment",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.example.unicast.RangePublisherTest",
-      "target": "org.reactivestreams.tck.RangePublisherTest",
       "type": "calls"
     },
     {
@@ -858,7 +1286,7 @@
     },
     {
       "source": "org.reactivestreams.example.unicast.UnboundedIntegerIncrementPublisherTest",
-      "target": "org.reactivestreams.example.unicast.AsyncIterablePublisher",
+      "target": "org.reactivestreams.tck.PublisherVerification",
       "type": "calls"
     },
     {
@@ -868,6 +1296,11 @@
     },
     {
       "source": "org.reactivestreams.example.unicast.UnboundedIntegerIncrementPublisherTest",
+      "target": "org.reactivestreams.example.unicast.AsyncIterablePublisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.UnboundedIntegerIncrementPublisherTest",
       "target": "org.reactivestreams.tck.TestEnvironment",
       "type": "calls"
     },
@@ -878,7 +1311,7 @@
     },
     {
       "source": "org.reactivestreams.example.unicast.IterablePublisherTest",
-      "target": "org.reactivestreams.example.unicast.NumberIterablePublisher",
+      "target": "org.reactivestreams.tck.PublisherVerification",
       "type": "calls"
     },
     {
@@ -888,6 +1321,11 @@
     },
     {
       "source": "org.reactivestreams.example.unicast.IterablePublisherTest",
+      "target": "org.reactivestreams.example.unicast.NumberIterablePublisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.IterablePublisherTest",
       "target": "org.reactivestreams.tck.TestEnvironment",
       "type": "calls"
     },
@@ -898,7 +1336,7 @@
     },
     {
       "source": "org.reactivestreams.example.unicast.SyncSubscriberTest",
-      "target": "org.reactivestreams.tck.TestEnvironment",
+      "target": "org.reactivestreams.example.unicast.SyncSubscriber",
       "type": "calls"
     },
     {
@@ -907,8 +1345,23 @@
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.example.unicast.SyncSubscriberWhiteboxTest",
+      "source": "org.reactivestreams.example.unicast.SyncSubscriberTest",
+      "target": "org.reactivestreams.tck.SubscriberBlackboxVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.SyncSubscriberTest",
       "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.SyncSubscriberWhiteboxTest",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.SyncSubscriberWhiteboxTest",
+      "target": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
       "type": "calls"
     },
     {
@@ -918,7 +1371,27 @@
     },
     {
       "source": "org.reactivestreams.example.unicast.SyncSubscriberWhiteboxTest",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.SyncSubscriberWhiteboxTest",
+      "target": "org.reactivestreams.example.unicast.SyncSubscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.AsyncSubscriberTest",
       "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.AsyncSubscriberTest",
+      "target": "org.reactivestreams.example.unicast.AsyncSubscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.example.unicast.AsyncSubscriberTest",
+      "target": "org.reactivestreams.tck.SubscriberBlackboxVerification",
       "type": "calls"
     },
     {
@@ -932,193 +1405,218 @@
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.example.unicast.AsyncSubscriberTest",
-      "target": "org.reactivestreams.Publisher",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.example.unicast.AsyncSubscriberTest",
+      "source": "org.reactivestreams.tck.SubscriberBlackboxVerification",
       "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.BlackboxTestStage",
-      "target": "org.reactivestreams.tck.TestEnvironment",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.BlackboxTestStage",
+      "source": "org.reactivestreams.tck.SubscriberBlackboxVerification",
       "target": "org.reactivestreams.tck.flow.support.SubscriberBlackboxVerificationRules",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.BlackboxTestStage",
-      "target": "org.reactivestreams.Publisher",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.BlackboxTestStage",
+      "source": "org.reactivestreams.tck.SubscriberBlackboxVerification",
       "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.BlackboxTestStage",
-      "target": "org.reactivestreams.Subscriber",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.TestEnvironment",
-      "target": "org.reactivestreams.Publisher",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.TestEnvironment",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.TestEnvironment",
-      "target": "org.reactivestreams.Subscriber",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.WhiteboxTestStage",
+      "source": "org.reactivestreams.tck.SubscriberBlackboxVerification",
       "target": "org.reactivestreams.tck.TestEnvironment",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.WhiteboxTestStage",
+      "source": "org.reactivestreams.tck.SubscriberBlackboxVerification",
+      "target": "org.reactivestreams.tck.flow.support.Optional",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberBlackboxVerification",
+      "target": "org.reactivestreams.tck.WithHelperPublisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberBlackboxVerification",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberBlackboxVerification",
+      "target": "org.reactivestreams.tck.flow.support.TestException",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.TestEnvironment",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.TestEnvironment",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.TestEnvironment",
+      "target": "org.reactivestreams.tck.flow.support.Optional",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.TestEnvironment",
+      "target": "org.reactivestreams.tck.flow.support.SubscriberBufferOverflowException",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.TestEnvironment",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.tck.flow.support.Optional",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.tck.WithHelperPublisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
       "target": "org.reactivestreams.tck.flow.support.SubscriberWhiteboxVerificationRules",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.WhiteboxTestStage",
+      "source": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
       "target": "org.reactivestreams.Publisher",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.WhiteboxTestStage",
-      "target": "org.reactivestreams.Subscription",
+      "source": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "target": "org.reactivestreams.tck.flow.support.TestException",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.WhiteboxTestStage",
-      "target": "org.reactivestreams.Subscriber",
+      "source": "org.reactivestreams.tck.WithHelperPublisher",
+      "target": "org.reactivestreams.tck.flow.support.InfiniteHelperPublisher",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.PublisherTestRun",
-      "target": "org.reactivestreams.tck.TestEnvironment",
+      "source": "org.reactivestreams.tck.WithHelperPublisher",
+      "target": "org.reactivestreams.Publisher",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.PublisherTestRun",
-      "target": "org.reactivestreams.tck.flow.support.PublisherVerificationRules",
+      "source": "org.reactivestreams.tck.WithHelperPublisher",
+      "target": "org.reactivestreams.tck.flow.support.HelperPublisher",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.PublisherTestRun",
+      "source": "org.reactivestreams.tck.WithHelperPublisher",
       "target": "org.reactivestreams.tck.flow.support.Function",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.PublisherTestRun",
-      "target": "org.reactivestreams.Publisher",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.PublisherTestRun",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.PublisherTestRun",
+      "source": "org.reactivestreams.tck.PublisherVerification",
       "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.ManualSubscriberWithErrorCollection",
-      "target": "org.reactivestreams.tck.TestEnvironment",
+      "source": "org.reactivestreams.tck.PublisherVerification",
+      "target": "org.reactivestreams.tck.flow.support.Function",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.ManualSubscriberWithErrorCollection",
+      "source": "org.reactivestreams.tck.PublisherVerification",
       "target": "org.reactivestreams.tck.flow.support.PublisherVerificationRules",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.ManualSubscriberWithErrorCollection",
+      "source": "org.reactivestreams.tck.PublisherVerification",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.PublisherVerification",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.PublisherVerification",
+      "target": "org.reactivestreams.tck.flow.support.Optional",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.PublisherVerification",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "target": "org.reactivestreams.tck.PublisherVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "target": "org.reactivestreams.tck.flow.support.Function",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "target": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "target": "org.reactivestreams.tck.flow.support.PublisherVerificationRules",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "target": "org.reactivestreams.tck.WithHelperPublisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
       "target": "org.reactivestreams.tck.flow.support.SubscriberWhiteboxVerificationRules",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.ManualSubscriberWithErrorCollection",
-      "target": "org.reactivestreams.tck.flow.support.Function",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.ManualSubscriberWithErrorCollection",
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
       "target": "org.reactivestreams.Publisher",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.ManualSubscriberWithErrorCollection",
+      "source": "org.reactivestreams.tck.IdentityProcessorVerification",
       "target": "org.reactivestreams.Processor",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.ManualSubscriberWithErrorCollection",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.ManualSubscriberWithErrorCollection",
-      "target": "org.reactivestreams.Subscriber",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.support.PublisherVerificationRules",
-      "target": "org.reactivestreams.tck.TestEnvironment",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.support.PublisherVerificationRules",
-      "target": "org.reactivestreams.Publisher",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.support.PublisherVerificationRules",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.support.PublisherVerificationRules",
-      "target": "org.reactivestreams.Subscriber",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.support.SubscriberBlackboxVerificationRules",
-      "target": "org.reactivestreams.tck.TestEnvironment",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.support.SubscriberBlackboxVerificationRules",
-      "target": "org.reactivestreams.Publisher",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.support.SubscriberBlackboxVerificationRules",
-      "target": "org.reactivestreams.Processor",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.support.SubscriberBlackboxVerificationRules",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.support.SubscriberBlackboxVerificationRules",
-      "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
@@ -1148,6 +1646,11 @@
     },
     {
       "source": "org.reactivestreams.tck.EmptyLazyPublisherTest",
+      "target": "org.reactivestreams.tck.PublisherVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.EmptyLazyPublisherTest",
       "target": "org.reactivestreams.tck.TestEnvironment",
       "type": "calls"
     },
@@ -1158,12 +1661,27 @@
     },
     {
       "source": "org.reactivestreams.tck.RangePublisherTest",
-      "target": "org.reactivestreams.example.unicast.RangePublisherTest",
+      "target": "org.reactivestreams.tck.PublisherVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.RangePublisherTest",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.RangePublisherTest",
+      "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.RangePublisherTest",
       "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.RangePublisherTest",
+      "target": "org.reactivestreams.example.unicast.RangePublisher",
       "type": "calls"
     },
     {
@@ -1172,18 +1690,18 @@
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.RangePublisherTest",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.RangePublisherTest",
+      "source": "org.reactivestreams.tck.SyncTriggeredDemandSubscriberWhiteboxTest",
       "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.SyncTriggeredDemandSubscriberWhiteboxTest",
-      "target": "org.reactivestreams.tck.flow.SyncTriggeredDemandSubscriberWhiteboxTest",
+      "target": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SyncTriggeredDemandSubscriberWhiteboxTest",
+      "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
@@ -1193,12 +1711,7 @@
     },
     {
       "source": "org.reactivestreams.tck.SyncTriggeredDemandSubscriberWhiteboxTest",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.SyncTriggeredDemandSubscriberWhiteboxTest",
-      "target": "org.reactivestreams.Subscriber",
+      "target": "org.reactivestreams.tck.flow.support.SyncTriggeredDemandSubscriber",
       "type": "calls"
     },
     {
@@ -1208,6 +1721,11 @@
     },
     {
       "source": "org.reactivestreams.tck.SingleElementPublisherTest",
+      "target": "org.reactivestreams.tck.PublisherVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SingleElementPublisherTest",
       "target": "org.reactivestreams.tck.TestEnvironment",
       "type": "calls"
     },
@@ -1217,13 +1735,18 @@
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.SingleElementPublisherTest",
-      "target": "org.reactivestreams.Subscription",
+      "source": "org.reactivestreams.tck.LockstepProcessorTest",
+      "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.SingleElementPublisherTest",
-      "target": "org.reactivestreams.Subscriber",
+      "source": "org.reactivestreams.tck.LockstepProcessorTest",
+      "target": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.LockstepProcessorTest",
+      "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
@@ -1242,18 +1765,8 @@
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.LockstepProcessorTest",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.LockstepProcessorTest",
-      "target": "org.reactivestreams.Subscriber",
-      "type": "calls"
-    },
-    {
       "source": "org.reactivestreams.tck.SyncTriggeredDemandSubscriberTest",
-      "target": "org.reactivestreams.tck.flow.SyncTriggeredDemandSubscriberTest",
+      "target": "org.reactivestreams.tck.flow.support.SyncTriggeredDemandSubscriber",
       "type": "calls"
     },
     {
@@ -1264,11 +1777,21 @@
     {
       "source": "org.reactivestreams.tck.SyncTriggeredDemandSubscriberTest",
       "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SyncTriggeredDemandSubscriberTest",
+      "target": "org.reactivestreams.tck.SubscriberBlackboxVerification",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.PublisherVerificationTest",
-      "target": "org.reactivestreams.tck.TestEnvironment",
+      "target": "org.reactivestreams.tck.PublisherVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.PublisherVerificationTest",
+      "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
@@ -1278,22 +1801,27 @@
     },
     {
       "source": "org.reactivestreams.tck.PublisherVerificationTest",
-      "target": "org.reactivestreams.Publisher",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.PublisherVerificationTest",
       "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.PublisherVerificationTest",
-      "target": "org.reactivestreams.Subscriber",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.PublisherVerificationTest",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.PublisherVerificationTest",
+      "target": "org.reactivestreams.tck.flow.support.TestException",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.SubscriberWhiteboxVerificationTest",
-      "target": "org.reactivestreams.tck.TestEnvironment",
+      "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
@@ -1303,6 +1831,11 @@
     },
     {
       "source": "org.reactivestreams.tck.SubscriberWhiteboxVerificationTest",
+      "target": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberWhiteboxVerificationTest",
       "target": "org.reactivestreams.tck.flow.support.TCKVerificationSupport",
       "type": "calls"
     },
@@ -1313,17 +1846,32 @@
     },
     {
       "source": "org.reactivestreams.tck.SubscriberWhiteboxVerificationTest",
-      "target": "org.reactivestreams.Subscriber",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.IdentityProcessorVerificationTest",
       "target": "org.reactivestreams.tck.TestEnvironment",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.IdentityProcessorVerificationTest",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerificationTest",
       "target": "org.reactivestreams.tck.flow.support.TCKVerificationSupport",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerificationTest",
+      "target": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerificationTest",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerificationTest",
+      "target": "org.reactivestreams.tck.TestEnvironment",
       "type": "calls"
     },
     {
@@ -1337,13 +1885,23 @@
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.IdentityProcessorVerificationTest",
-      "target": "org.reactivestreams.Subscription",
+      "source": "org.reactivestreams.tck.IdentityProcessorVerificationDelegationTest",
+      "target": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.tck.IdentityProcessorVerificationTest",
-      "target": "org.reactivestreams.Subscriber",
+      "source": "org.reactivestreams.tck.IdentityProcessorVerificationDelegationTest",
+      "target": "org.reactivestreams.tck.PublisherVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.IdentityProcessorVerificationDelegationTest",
+      "target": "org.reactivestreams.tck.IdentityProcessorVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberNoRegisterOnSubscribeTest",
+      "target": "org.reactivestreams.tck.SubscriberWhiteboxVerification",
       "type": "calls"
     },
     {
@@ -1353,17 +1911,17 @@
     },
     {
       "source": "org.reactivestreams.tck.SubscriberNoRegisterOnSubscribeTest",
-      "target": "org.reactivestreams.Subscription",
+      "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.SubscriberNoRegisterOnSubscribeTest",
-      "target": "org.reactivestreams.Subscriber",
+      "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.SubscriberBlackboxVerificationTest",
-      "target": "org.reactivestreams.tck.TestEnvironment",
+      "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
@@ -1373,12 +1931,32 @@
     },
     {
       "source": "org.reactivestreams.tck.SubscriberBlackboxVerificationTest",
+      "target": "org.reactivestreams.tck.SubscriberBlackboxVerification",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.SubscriberBlackboxVerificationTest",
       "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
       "source": "org.reactivestreams.tck.SubscriberBlackboxVerificationTest",
+      "target": "org.reactivestreams.tck.TestEnvironment",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.support.SyncTriggeredDemandSubscriber",
+      "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.support.SyncTriggeredDemandSubscriber",
       "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.tck.flow.support.TCKVerificationSupport",
+      "target": "org.reactivestreams.Subscription",
       "type": "calls"
     },
     {
@@ -1388,17 +1966,27 @@
     },
     {
       "source": "org.reactivestreams.tck.flow.support.TCKVerificationSupport",
-      "target": "org.reactivestreams.Subscription",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.tck.flow.support.TCKVerificationSupport",
       "target": "org.reactivestreams.Subscriber",
       "type": "calls"
     },
     {
-      "source": "org.reactivestreams.Publisher",
+      "source": "org.reactivestreams.FlowAdapters",
       "target": "org.reactivestreams.Subscription",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.FlowAdapters",
+      "target": "org.reactivestreams.Publisher",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.FlowAdapters",
+      "target": "org.reactivestreams.Subscriber",
+      "type": "calls"
+    },
+    {
+      "source": "org.reactivestreams.FlowAdapters",
+      "target": "org.reactivestreams.Processor",
       "type": "calls"
     },
     {
@@ -1414,21 +2002,6 @@
     {
       "source": "org.reactivestreams.Processor",
       "target": "org.reactivestreams.Subscriber",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.Subscription",
-      "target": "org.reactivestreams.Publisher",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.Subscription",
-      "target": "org.reactivestreams.Subscriber",
-      "type": "calls"
-    },
-    {
-      "source": "org.reactivestreams.Subscriber",
-      "target": "org.reactivestreams.Publisher",
       "type": "calls"
     },
     {
