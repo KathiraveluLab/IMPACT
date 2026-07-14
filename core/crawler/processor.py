@@ -32,9 +32,15 @@ def process_repo(repo_id, owner, repo, github_token, db_path):
     tag2, tag1 = tags[0], tags[1]
     print(f"Selected adjacent tags for evolution: {tag1} -> {tag2}")
 
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
-    cursor.execute("UPDATE queue SET tag1 = ?, tag2 = ? WHERE id = ?", (tag1, tag2, repo_id))
+    if db_path.startswith("postgresql://") or db_path.startswith("postgres://"):
+        import psycopg2
+        conn = psycopg2.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("UPDATE queue SET tag1 = %s, tag2 = %s WHERE id = %s", (tag1, tag2, repo_id))
+    else:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("UPDATE queue SET tag1 = ?, tag2 = ? WHERE id = ?", (tag1, tag2, repo_id))
     conn.commit()
     conn.close()
 

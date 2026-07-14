@@ -179,5 +179,50 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
         self.assertEqual(transitions[0], ("pending", "crawled", None))
         self.assertEqual(transitions[1], ("crawled", "failed", "Validation failed"))
 
+    def test_concurrent_claims(self):
+        """Verify that multiple concurrent threads claiming repositories do not receive duplicates."""
+        import threading
+        from core.crawler.database import claim_next_pending
+
+        # Seed 20 pending repositories in the queue
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        for i in range(20):
+            cursor.execute(
+                "INSERT INTO queue (owner, repo, stars) VALUES (?, ?, ?)",
+                (f"owner_{i}", f"repo_{i}", 100 + i)
+            )
+        conn.commit()
+        conn.close()
+
+        claimed_by_thread_1 = []
+        claimed_by_thread_2 = []
+
+        def worker(target_list):
+            while True:
+                claimed = claim_next_pending(TEST_DB_PATH)
+                if not claimed:
+                    break
+                target_list.append(claimed[0])  # Store repo_id
+                time.sleep(0.01)
+
+        t1 = threading.Thread(target=worker, args=(claimed_by_thread_1,))
+        t2 = threading.Thread(target=worker, args=(claimed_by_thread_2,))
+
+        t1.start()
+        t2.start()
+        t1.join()
+        t2.join()
+
+        # Check total claimed
+        total_claimed = len(claimed_by_thread_1) + len(claimed_by_thread_2)
+        self.assertEqual(total_claimed, 20)
+
+        # Check mutual exclusivity
+        set1 = set(claimed_by_thread_1)
+        set2 = set(claimed_by_thread_2)
+        intersection = set1.intersection(set2)
+        self.assertEqual(len(intersection), 0, f"Duplicate claims detected: {intersection}")
+
 if __name__ == "__main__":
     unittest.main()
