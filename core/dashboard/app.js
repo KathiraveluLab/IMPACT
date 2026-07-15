@@ -51,10 +51,12 @@ let intents = [
 
 // Crawler Queue State (Task 8b/13b)
 let crawlerQueue = [
+    { repo: "KathiraveluLab/IMPACT", status: "crawled", graphs: null },
     { repo: "jhy/jsoup", status: "crawled" },
     { repo: "spring-projects/spring-petclinic", status: "pending" },
     { repo: "google/guava", status: "processing" }
 ];
+let activeRepoName = "KathiraveluLab/IMPACT";
 
 // App State
 let currentGraph = GRAPH_DATA_V2;
@@ -135,23 +137,72 @@ function renderIntents() {
     });
 }
 
-// Render Crawler Queue (Task 13b)
+// // Render Crawler Queue (Task 13b)
 function renderCrawlerQueue() {
     crawlerQueueList.innerHTML = "";
     crawlerQueue.forEach((job) => {
         const li = document.createElement("li");
-        li.className = "intent-item";
         
         let badgeClass = "badge-pending";
         if (job.status === "crawled") badgeClass = "badge-crawled";
         if (job.status === "processing") badgeClass = "badge-processing";
         
+        li.className = `crawler-job-item ${job.status}`;
+        if (job.repo === activeRepoName) {
+            li.className += " active";
+        }
+        
         li.innerHTML = `
             <span>${job.repo}</span>
             <span class="badge ${badgeClass}" style="padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">${job.status}</span>
         `;
+        
+        if (job.status === "crawled") {
+            li.addEventListener("click", () => {
+                switchToRepo(job);
+            });
+        }
+        
         crawlerQueueList.appendChild(li);
     });
+}
+
+// Switch visualization context to a different crawled repository
+function switchToRepo(job) {
+    if (job.status !== "crawled") return;
+    
+    activeRepoName = job.repo;
+    
+    // If the job does not have graphs yet, generate them dynamically
+    if (!job.graphs) {
+        job.graphs = generateRepositoryGraph(job.repo);
+    }
+    
+    baseGraph = job.graphs.v1;
+    currentGraph = job.graphs.v2;
+    
+    // Update UI headers & selectors
+    const cleanName = job.repo.split("/")[1] || job.repo;
+    const headerTitle = document.querySelector(".content-header h2");
+    if (headerTitle) {
+        headerTitle.innerText = `${job.repo} Architecture Evolution`;
+    }
+    
+    const baseVersionSelect = document.getElementById("base-version-select");
+    const targetVersionSelect = document.getElementById("target-version-select");
+    if (baseVersionSelect && targetVersionSelect) {
+        baseVersionSelect.innerHTML = `<option value="v1">v1.0.0 (${cleanName})</option>`;
+        targetVersionSelect.innerHTML = `<option value="v2">v2.0.0 (${cleanName})</option>`;
+    }
+    
+    // Re-initialize layout, metrics, diff, and swarm analysis
+    resetLayout();
+    updateKPIs();
+    renderDiffTable();
+    runAnalysis();
+    
+    // Refresh queue UI to update active highlight
+    renderCrawlerQueue();
 }
 
 // Add custom queue styles inline dynamically
@@ -236,7 +287,7 @@ triggerCrawlBtn.addEventListener("click", () => {
     const repo = crawlerRepoInput.value.trim();
     if (repo) {
         // Enqueue new repo (Task 8b)
-        const newJob = { repo, status: "pending" };
+        const newJob = { repo, status: "pending", graphs: null };
         crawlerQueue.push(newJob);
         crawlerRepoInput.value = "";
         renderCrawlerQueue();
@@ -252,14 +303,15 @@ triggerCrawlBtn.addEventListener("click", () => {
         
         setTimeout(() => {
             newJob.status = "crawled";
-            renderCrawlerQueue();
-            addAgentMessage("System", `Successfully crawled ${repo}. Schema metrics validated via SHACL. Conformance report generated.`, "system");
             
             // Dynamically load the crawled repo's architecture evolution graph
             const cleanName = repo.split("/")[1] || repo;
             const newGraphData = generateRepositoryGraph(repo);
+            newJob.graphs = newGraphData;
+            
             baseGraph = newGraphData.v1;
             currentGraph = newGraphData.v2;
+            activeRepoName = repo;
             
             // Update UI headers & selectors
             const headerTitle = document.querySelector(".content-header h2");
@@ -279,6 +331,9 @@ triggerCrawlBtn.addEventListener("click", () => {
             updateKPIs();
             renderDiffTable();
             runAnalysis();
+            
+            renderCrawlerQueue();
+            addAgentMessage("System", `Successfully crawled ${repo}. Schema metrics validated via SHACL. Conformance report generated.`, "system");
         }, 4000);
     }
 });
@@ -893,9 +948,11 @@ async function loadGraphs() {
         const data2 = await res2.json();
         baseGraph = data1;
         currentGraph = data2;
+        crawlerQueue[0].graphs = { v1: data1, v2: data2 };
         console.log("[Dashboard] Successfully loaded live graph files via fetch.");
     } catch (e) {
         console.log("[Dashboard] Fetch failed or blocked by CORS, using embedded fallback graph data:", e);
+        crawlerQueue[0].graphs = { v1: GRAPH_DATA_V1, v2: GRAPH_DATA_V2 };
     }
     init();
 }

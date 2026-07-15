@@ -565,3 +565,32 @@ tr:hover td {
     background-color: rgba(245, 158, 11, 0.15);
     color: var(--color-warning);
 }
+
+/* Clickable Crawler Job List Items */
+.crawler-job-item {
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 1px solid var(--border-color);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    margin-bottom: 6px;
+}
+
+.crawler-job-item.crawled {
+    cursor: pointer;
+}
+
+.crawler-job-item.crawled:hover {
+    background-color: rgba(2, 132, 199, 0.05);
+    border-color: rgba(2, 132, 199, 0.3);
+}
+
+.crawler-job-item.active {
+    background-color: rgba(2, 132, 199, 0.08);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 10px rgba(2, 132, 199, 0.1);
+}
