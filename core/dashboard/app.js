@@ -207,40 +207,67 @@ async function switchToRepo(job) {
     
     activeRepoName = job.repo;
     
-    // Attempt dynamic language detection from GitHub API if it's a new crawl without explicit override
-    // Skip demo repos — they don't exist on GitHub
-    if (!job.detectedLanguage && !job.repo.includes(":") && !job.graphs && !job.isDemo) {
-        let displayRepo = job.repo;
+    const graphPanel = document.querySelector(".graph-panel");
+    let loader = null;
+    
+    if (!job.graphs && !job.isDemo) {
+        if (graphPanel) {
+            loader = document.createElement("div");
+            loader.className = "crawler-loader-overlay";
+            loader.innerHTML = `
+                <div class="crawler-loader-spinner"></div>
+                <div class="crawler-loader-text">Crawling Repository...</div>
+                <div class="crawler-loader-subtext">Fetching release tags, downloading source, and extracting real dependencies. This may take a few seconds.</div>
+            `;
+            graphPanel.appendChild(loader);
+        }
+        
         try {
-            // Fetch language breakdown from GitHub API to find the dominant language
-            const res = await fetch(`https://api.github.com/repos/${displayRepo}/languages`);
-            if (res.ok) {
-                const data = await res.json();
-                if (data && Object.keys(data).length > 0) {
-                    let maxLang = null;
-                    let maxBytes = -1;
-                    for (const [lang, bytes] of Object.entries(data)) {
-                        // Skip shell scripts or config markup if other languages exist
-                        if (Object.keys(data).length > 1 && ["Shell", "HTML", "CSS", "Dockerfile"].includes(lang)) {
-                            continue;
-                        }
-                        if (bytes > maxBytes) {
-                            maxBytes = bytes;
-                            maxLang = lang;
-                        }
-                    }
-                    if (maxLang) {
-                        job.detectedLanguage = maxLang;
-                        console.log(`[Dashboard] Dynamically detected major language: ${maxLang}`);
-                    }
-                }
+            const apiPort = window.IMPACT_API_PORT || 7842;
+            const response = await fetch(`http://localhost:${apiPort}/api/crawl`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ repo: job.repo })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Server returned HTTP ${response.status}`);
+            }
+            
+            const data = await response.json();
+            if (data.success) {
+                job.graphs = {
+                    v1: data.v1,
+                    v2: data.v2
+                };
+                job.detectedLanguage = data.detected_language;
+                job.tag1 = data.tag1;
+                job.tag2 = data.tag2;
+                console.log(`[Dashboard] Successfully crawled and loaded ${job.repo}`);
+            } else {
+                throw new Error(data.error || "Unknown crawling error");
             }
         } catch (e) {
-            console.log("[Dashboard] GitHub API request failed:", e);
+            console.error("[Dashboard] Crawl failed:", e);
+            addAgentMessage("System", `❌ [Crawl Error] Failed to crawl and extract actual dependency graphs for ${job.repo}. Error: ${e.message}`, "system");
+            if (loader) {
+                loader.remove();
+            }
+            job.status = "pending";
+            renderCrawlerQueue();
+            return;
         }
     }
     
-    // If the job does not have graphs yet, generate them dynamically
+    if (loader) {
+        loader.remove();
+    } else if (graphPanel) {
+        const existingLoaders = graphPanel.querySelectorAll(".crawler-loader-overlay");
+        existingLoaders.forEach(l => l.remove());
+    }
+    
     if (!job.graphs) {
         job.graphs = generateRepositoryGraph(job.repo, job.detectedLanguage);
     }
@@ -267,8 +294,10 @@ async function switchToRepo(job) {
     const baseVersionSelect = document.getElementById("base-version-select");
     const targetVersionSelect = document.getElementById("target-version-select");
     if (baseVersionSelect && targetVersionSelect) {
-        baseVersionSelect.innerHTML = `<option value="v1">v1.0.0 (${cleanName})</option>`;
-        targetVersionSelect.innerHTML = `<option value="v2">v2.0.0 (${cleanName})</option>`;
+        const t1 = job.tag1 || "v1.0.0";
+        const t2 = job.tag2 || "v2.0.0";
+        baseVersionSelect.innerHTML = `<option value="v1">${t1} (${cleanName})</option>`;
+        targetVersionSelect.innerHTML = `<option value="v2">${t2} (${cleanName})</option>`;
     }
     
     // Re-initialize layout, metrics, diff, and swarm analysis
@@ -448,6 +477,49 @@ function addQueueStyles() {
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.4; }
+        }
+
+        /* Glassmorphic Loader Overlay */
+        .crawler-loader-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 15, 30, 0.85);
+            backdrop-filter: blur(6px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+        .crawler-loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(56, 189, 248, 0.1);
+            border-top: 3px solid #38bdf8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+        .crawler-loader-text {
+            color: #e2e8f0;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .crawler-loader-subtext {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 8px;
+            text-align: center;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     `;
     document.head.appendChild(style);
@@ -1622,7 +1694,8 @@ function showReportModal(repoName, lang) {
         }
     };
 
-    fetch("http://localhost:7842/api/llm-analysis", {
+    const apiPort = window.IMPACT_API_PORT || 7842;
+    fetch(`http://localhost:${apiPort}/api/llm-analysis`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

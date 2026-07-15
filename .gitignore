@@ -57,3 +57,7 @@ k8s/secret.yaml
 *.db-journal
 *.db-wal
 *.db-shm
+
+# Dynamic runtime configuration for the dashboard
+core/dashboard/config.js
+core/dashboard/test_projects/
