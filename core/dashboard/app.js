@@ -302,12 +302,21 @@ function resetLayout() {
     const w = canvas.width;
     const h = canvas.height;
 
+    // Configure font once to measure text width
+    ctx.font = "bold 11px Outfit, sans-serif";
+
     nodes = currentGraph.nodes.map((n, i) => {
+        const textWidth = ctx.measureText(n.name).width;
+        const rx = Math.max(35, (textWidth + 24) / 2);
+        const ry = 16;
+        
         const angle = (i / currentGraph.nodes.length) * Math.PI * 2;
         const radius = Math.min(w, h) * (layoutMode === "circular" ? 0.35 : 0.25);
         if (layoutMode === "circular") {
             return {
                 ...n,
+                rx,
+                ry,
                 x: w / 2 + Math.cos(angle) * radius,
                 y: h / 2 + Math.sin(angle) * radius,
                 vx: 0,
@@ -318,6 +327,8 @@ function resetLayout() {
             const prev = nodes.find(pn => pn.id === n.id);
             return {
                 ...n,
+                rx,
+                ry,
                 x: prev ? prev.x : w / 2 + Math.cos(angle) * radius,
                 y: prev ? prev.y : h / 2 + Math.sin(angle) * radius,
                 vx: 0,
@@ -352,6 +363,13 @@ function resetLayout() {
     });
 
     transform = { x: 0, y: 0, scale: 1 };
+
+    // Warm up the physics simulation so it starts in a settled state and doesn't flash/jump
+    if (layoutMode === "force") {
+        for (let step = 0; step < 100; step++) {
+            tickPhysics();
+        }
+    }
 }
 
 // Physics engine tick
@@ -360,8 +378,8 @@ function tickPhysics() {
     const w = canvas.width;
     const h = canvas.height;
     
-    // Repel force
-    const kRepel = 200;
+    // Repel force (using inverse-square law for stability + clamping)
+    const kRepel = 70;
     for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
             const n1 = nodes[i];
@@ -369,8 +387,8 @@ function tickPhysics() {
             const dx = n2.x - n1.x;
             const dy = n2.y - n1.y;
             const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-            if (dist < 400) {
-                const force = (kRepel * kRepel) / dist;
+            if (dist < 350) {
+                const force = Math.min(20, (kRepel * kRepel) / (dist * dist));
                 const fx = (dx / dist) * force;
                 const fy = (dy / dist) * force;
                 if (n1 !== draggedNode) {
@@ -386,7 +404,7 @@ function tickPhysics() {
     }
 
     // Attract force (edges)
-    const kAttract = 0.03;
+    const kAttract = 0.04;
     const targetDist = 120;
     edges.forEach(e => {
         const sourceNode = nodes.find(n => n.id === e.source);
@@ -411,7 +429,7 @@ function tickPhysics() {
     });
 
     // Center gravity
-    const kGravity = 0.01;
+    const kGravity = 0.015;
     nodes.forEach(n => {
         if (n !== draggedNode) {
             n.vx += (w / 2 - n.x) * kGravity;
@@ -419,10 +437,13 @@ function tickPhysics() {
         }
     });
 
-    // Update positions
+    // Update positions (with speed clamping to avoid node explosions)
     const friction = 0.85;
+    const maxSpeed = 8;
     nodes.forEach(n => {
         if (n !== draggedNode) {
+            n.vx = Math.max(-maxSpeed, Math.min(maxSpeed, n.vx));
+            n.vy = Math.max(-maxSpeed, Math.min(maxSpeed, n.vy));
             n.x += n.vx;
             n.y += n.vy;
             n.vx *= friction;
@@ -468,7 +489,14 @@ function draw() {
             // Draw edge direction arrow
             const angle = Math.atan2(tNode.y - sNode.y, tNode.x - sNode.x);
             const arrowLength = 10;
-            const targetOffset = 22; // node radius is 18
+            
+            // Calculate intersection with the target ellipse boundary
+            const theta = angle + Math.PI; // direction from target to source
+            const rx = tNode.rx || 20;
+            const ry = tNode.ry || 16;
+            const denom = Math.sqrt(Math.pow(ry * Math.cos(theta), 2) + Math.pow(rx * Math.sin(theta), 2)) || 1;
+            const targetOffset = (rx * ry) / denom + 4; // add 4px padding for arrow visibility
+            
             const arrowX = tNode.x - targetOffset * Math.cos(angle);
             const arrowY = tNode.y - targetOffset * Math.sin(angle);
 
@@ -485,33 +513,41 @@ function draw() {
     // Draw Nodes
     nodes.forEach(n => {
         const isAdded = !baseGraph.nodes.some(bn => bn.id === n.id);
+        const rx = n.rx || 20;
+        const ry = n.ry || 16;
         
         ctx.beginPath();
-        ctx.arc(n.x, n.y, 18, 0, Math.PI * 2);
+        ctx.ellipse(n.x, n.y, rx, ry, 0, 0, Math.PI * 2);
         
-        // Coloring
+        // Colors & Text styles
+        let textColor = "#0f172a";
+        
         if (selectedNode === n) {
-            ctx.fillStyle = varColor("--accent-purple");
-            ctx.strokeStyle = "rgba(15, 23, 42, 0.3)";
-            ctx.lineWidth = 3;
-            ctx.shadowColor = varColor("--accent-purple");
-            ctx.shadowBlur = 10;
+            ctx.fillStyle = "#e9d5ff"; // light purple
+            ctx.strokeStyle = "#7c3aed";
+            ctx.lineWidth = 2.5;
+            ctx.shadowColor = "#7c3aed";
+            ctx.shadowBlur = 6;
+            textColor = "#5b21b6"; // dark purple
         } else if (hoveredNode === n) {
-            ctx.fillStyle = varColor("--accent-blue");
-            ctx.strokeStyle = "rgba(15, 23, 42, 0.3)";
+            ctx.fillStyle = "#e0f2fe"; // light blue
+            ctx.strokeStyle = "#0284c7";
             ctx.lineWidth = 2;
-            ctx.shadowColor = varColor("--accent-blue");
-            ctx.shadowBlur = 8;
+            ctx.shadowColor = "#0284c7";
+            ctx.shadowBlur = 5;
+            textColor = "#0369a1"; // dark blue
         } else if (isAdded) {
-            ctx.fillStyle = "#10b981";
-            ctx.strokeStyle = "rgba(15, 23, 42, 0.15)";
-            ctx.lineWidth = 1;
-            ctx.shadowBlur = 0;
-        } else {
-            ctx.fillStyle = "#1e293b";
-            ctx.strokeStyle = varColor("--accent-blue");
+            ctx.fillStyle = "#d1fae5"; // light green
+            ctx.strokeStyle = "#10b981";
             ctx.lineWidth = 1.5;
             ctx.shadowBlur = 0;
+            textColor = "#065f46"; // dark green
+        } else {
+            ctx.fillStyle = "#f8fafc"; // very light slate
+            ctx.strokeStyle = "#38bdf8"; // cyan-ish blue border
+            ctx.lineWidth = 1.5;
+            ctx.shadowBlur = 0;
+            textColor = "#0f172a"; // dark slate text
         }
         
         ctx.fill();
@@ -519,7 +555,7 @@ function draw() {
         ctx.shadowBlur = 0; // reset glow
 
         // Labels
-        ctx.fillStyle = "#ffffff";
+        ctx.fillStyle = textColor;
         ctx.font = "bold 11px Outfit, sans-serif";
         ctx.textAlign = "center";
         ctx.fillText(n.name, n.x, n.y + 4);
@@ -553,7 +589,9 @@ canvas.addEventListener("mousedown", (e) => {
     const clicked = nodes.find(n => {
         const dx = n.x - coords.x;
         const dy = n.y - coords.y;
-        return Math.sqrt(dx * dx + dy * dy) < 22;
+        const rx = n.rx || 20;
+        const ry = n.ry || 16;
+        return (dx * dx) / (rx * rx) + (dy * dy) / (ry * ry) <= 1.25;
     });
 
     if (clicked) {
@@ -579,7 +617,9 @@ canvas.addEventListener("mousemove", (e) => {
         const hovered = nodes.find(n => {
             const dx = n.x - coords.x;
             const dy = n.y - coords.y;
-            return Math.sqrt(dx * dx + dy * dy) < 22;
+            const rx = n.rx || 20;
+            const ry = n.ry || 16;
+            return (dx * dx) / (rx * rx) + (dy * dy) / (ry * ry) <= 1.25;
         });
 
         if (hovered) {
@@ -754,9 +794,9 @@ function init() {
 
 async function loadGraphs() {
     try {
-        const res1 = await fetch("../test_projects/v1_graph.json");
+        const res1 = await fetch("./v1_graph.json");
         const data1 = await res1.json();
-        const res2 = await fetch("../test_projects/v2_graph.json");
+        const res2 = await fetch("./v2_graph.json");
         const data2 = await res2.json();
         baseGraph = data1;
         currentGraph = data2;
