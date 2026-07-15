@@ -43,6 +43,12 @@ body {
 /* Sidebar Navigation */
 .sidebar {
     width: 320px;
+    min-width: 250px;
+    max-width: 480px;
+    resize: horizontal;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex: none;
     background-color: rgba(255, 255, 255, 0.85);
     border-right: 1px solid var(--border-color);
     padding: 24px;
@@ -330,11 +336,29 @@ select:focus, input[type="text"]:focus {
 
 /* Panel Layouts */
 .workspace-grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    display: flex;
     gap: 16px;
+    height: 480px;
+    min-height: 250px;
+    max-height: 800px;
+    resize: vertical;
+    overflow: hidden;
+    flex: none;
+}
+
+.graph-panel {
+    width: 60%;
+    min-width: 30%;
+    max-width: 85%;
+    resize: horizontal;
+    overflow: hidden;
+    flex: none;
+}
+
+.report-panel {
     flex-grow: 1;
-    min-height: 400px;
+    flex-shrink: 1;
+    min-width: 15%;
 }
 
 .panel {
@@ -482,7 +506,12 @@ canvas:active {
 
 /* Diff Panel Table */
 .diff-panel {
-    max-height: 250px;
+    height: 200px;
+    min-height: 100px;
+    max-height: 600px;
+    resize: vertical;
+    overflow: hidden;
+    flex: none;
 }
 
 .table-container {

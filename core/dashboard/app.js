@@ -106,10 +106,11 @@ function resizeCanvas() {
     canvas.height = rect.height;
 }
 
-window.addEventListener("resize", () => {
+// Observe container resizing to dynamically adjust the canvas size
+const resizeObserver = new ResizeObserver(() => {
     resizeCanvas();
-    resetLayout();
 });
+resizeObserver.observe(canvas.parentElement);
 
 // Setup intents list UI
 function renderIntents() {
