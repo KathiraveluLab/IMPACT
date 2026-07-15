@@ -53,6 +53,8 @@ let intents = [
 let crawlerQueue = [
     { repo: "KathiraveluLab/IMPACT", status: "crawled", graphs: null },
     { repo: "jhy/jsoup", status: "crawled" },
+    { repo: "pallets/flask", status: "crawled" },
+    { repo: "gleam-lang/gleam", status: "crawled" },
     { repo: "spring-projects/spring-petclinic", status: "pending" },
     { repo: "google/guava", status: "processing" }
 ];
@@ -173,32 +175,7 @@ function renderCrawlerQueue() {
                 
                 setTimeout(() => {
                     job.status = "crawled";
-                    const cleanName = job.repo.split("/")[1] || job.repo;
-                    const newGraphData = generateRepositoryGraph(job.repo);
-                    job.graphs = newGraphData;
-                    
-                    baseGraph = newGraphData.v1;
-                    currentGraph = newGraphData.v2;
-                    activeRepoName = job.repo;
-                    
-                    const headerTitle = document.querySelector(".content-header h2");
-                    if (headerTitle) {
-                        headerTitle.innerText = `${job.repo} Architecture Evolution`;
-                    }
-                    
-                    const baseVersionSelect = document.getElementById("base-version-select");
-                    const targetVersionSelect = document.getElementById("target-version-select");
-                    if (baseVersionSelect && targetVersionSelect) {
-                        baseVersionSelect.innerHTML = `<option value="v1">v1.0.0 (${cleanName})</option>`;
-                        targetVersionSelect.innerHTML = `<option value="v2">v2.0.0 (${cleanName})</option>`;
-                    }
-                    
-                    resetLayout();
-                    updateKPIs();
-                    renderDiffTable();
-                    runAnalysis();
-                    
-                    renderCrawlerQueue();
+                    switchToRepo(job);
                     addAgentMessage("System", `Successfully crawled ${job.repo}. Conformance report generated.`, "system");
                 }, 2500);
             } else if (job.status === "processing") {
@@ -206,32 +183,7 @@ function renderCrawlerQueue() {
                 addAgentMessage("System", `Expediting active crawl for ${job.repo}...`, "system");
                 setTimeout(() => {
                     job.status = "crawled";
-                    const cleanName = job.repo.split("/")[1] || job.repo;
-                    const newGraphData = generateRepositoryGraph(job.repo);
-                    job.graphs = newGraphData;
-                    
-                    baseGraph = newGraphData.v1;
-                    currentGraph = newGraphData.v2;
-                    activeRepoName = job.repo;
-                    
-                    const headerTitle = document.querySelector(".content-header h2");
-                    if (headerTitle) {
-                        headerTitle.innerText = `${job.repo} Architecture Evolution`;
-                    }
-                    
-                    const baseVersionSelect = document.getElementById("base-version-select");
-                    const targetVersionSelect = document.getElementById("target-version-select");
-                    if (baseVersionSelect && targetVersionSelect) {
-                        baseVersionSelect.innerHTML = `<option value="v1">v1.0.0 (${cleanName})</option>`;
-                        targetVersionSelect.innerHTML = `<option value="v2">v2.0.0 (${cleanName})</option>`;
-                    }
-                    
-                    resetLayout();
-                    updateKPIs();
-                    renderDiffTable();
-                    runAnalysis();
-                    
-                    renderCrawlerQueue();
+                    switchToRepo(job);
                     addAgentMessage("System", `Successfully crawled ${job.repo}. Conformance report generated.`, "system");
                 }, 1500);
             }
@@ -272,6 +224,7 @@ function switchToRepo(job) {
     // Re-initialize layout, metrics, diff, and swarm analysis
     resetLayout();
     updateKPIs();
+    updateUILabels();
     renderDiffTable();
     runAnalysis();
     
@@ -301,6 +254,7 @@ function generateRepositoryGraph(repoName) {
     let v2Edges = [];
     let averageCoupling1 = 1.5;
     let averageCoupling2 = 1.8;
+    let language = "Java";
     
     if (lowerName.includes("jsoup")) {
         const pkg = "org.jsoup";
@@ -335,6 +289,64 @@ function generateRepositoryGraph(repoName) {
         ];
         averageCoupling1 = 2.4;
         averageCoupling2 = 2.8;
+        language = "Java";
+    } else if (lowerName.includes("flask")) {
+        const pkg = "flask";
+        v1Nodes = [
+            { id: `${pkg}.app`, name: "app.py", type: "module", metrics: { loc: 650, complexity: 25, coupling: 6, fanIn: 2, fanOut: 4 } },
+            { id: `${pkg}.blueprints`, name: "blueprints.py", type: "module", metrics: { loc: 320, complexity: 12, coupling: 4, fanIn: 1, fanOut: 3 } },
+            { id: `${pkg}.config`, name: "config.py", type: "module", metrics: { loc: 180, complexity: 5, coupling: 3, fanIn: 1, fanOut: 0 } },
+            { id: `${pkg}.helpers`, name: "helpers.py", type: "module", metrics: { loc: 290, complexity: 9, coupling: 5, fanIn: 2, fanOut: 1 } },
+            { id: `${pkg}.sessions`, name: "sessions.py", type: "module", metrics: { loc: 150, complexity: 4, coupling: 2, fanIn: 1, fanOut: 0 } },
+            { id: `${pkg}.ctx`, name: "ctx.py", type: "module", metrics: { loc: 210, complexity: 8, coupling: 4, fanIn: 1, fanOut: 2 } }
+        ];
+        v1Edges = [
+            { source: `${pkg}.app`, target: `${pkg}.config`, type: "imports" },
+            { source: `${pkg}.app`, target: `${pkg}.ctx`, type: "imports" },
+            { source: `${pkg}.app`, target: `${pkg}.helpers`, type: "imports" },
+            { source: `${pkg}.blueprints`, target: `${pkg}.app`, type: "imports" },
+            { source: `${pkg}.ctx`, target: `${pkg}.sessions`, type: "imports" }
+        ];
+        v2Nodes = [
+            ...v1Nodes.map(n => ({ ...n, metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.05) } })),
+            { id: `${pkg}.cli`, name: "cli.py", type: "module", metrics: { loc: 280, complexity: 10, coupling: 4, fanIn: 1, fanOut: 2 } },
+            { id: `${pkg}.views`, name: "views.py", type: "module", metrics: { loc: 190, complexity: 6, coupling: 3, fanIn: 1, fanOut: 2 } }
+        ];
+        v2Edges = [
+            ...v1Edges,
+            { source: `${pkg}.app`, target: `${pkg}.cli`, type: "imports" },
+            { source: `${pkg}.cli`, target: `${pkg}.app`, type: "imports" }, // Cycle: app.py <-> cli.py
+            { source: `${pkg}.app`, target: `${pkg}.views`, type: "imports" },
+            { source: `${pkg}.views`, target: `${pkg}.helpers`, type: "imports" }
+        ];
+        averageCoupling1 = 1.9;
+        averageCoupling2 = 2.2;
+        language = "Python";
+    } else if (lowerName.includes("gleam")) {
+        const pkg = "src/gleam";
+        v1Nodes = [
+            { id: `${pkg}/io.gleam`, name: "io.gleam", type: "file", metrics: { loc: 120, complexity: 4, coupling: 2, fanIn: 1, fanOut: 2 } },
+            { id: `${pkg}/string.gleam`, name: "string.gleam", type: "file", metrics: { loc: 310, complexity: 10, coupling: 3, fanIn: 2, fanOut: 1 } },
+            { id: `${pkg}/list.gleam`, name: "list.gleam", type: "file", metrics: { loc: 450, complexity: 15, coupling: 4, fanIn: 2, fanOut: 2 } },
+            { id: `${pkg}/result.gleam`, name: "result.gleam", type: "file", metrics: { loc: 180, complexity: 5, coupling: 2, fanIn: 2, fanOut: 0 } }
+        ];
+        v1Edges = [
+            { source: `${pkg}/io.gleam`, target: `${pkg}/string.gleam`, type: "imports" },
+            { source: `${pkg}/list.gleam`, target: `${pkg}/result.gleam`, type: "imports" }
+        ];
+        v2Nodes = [
+            ...v1Nodes.map(n => ({ ...n, metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.05) } })),
+            { id: `${pkg}/http.gleam`, name: "http.gleam", type: "file", metrics: { loc: 250, complexity: 8, coupling: 3, fanIn: 0, fanOut: 2 } }
+        ];
+        v2Edges = [
+            ...v1Edges,
+            { source: `${pkg}/http.gleam`, target: `${pkg}/io.gleam`, type: "imports" },
+            { source: `${pkg}/io.gleam`, target: `${pkg}/list.gleam`, type: "imports" },
+            { source: `${pkg}/list.gleam`, target: `${pkg}/io.gleam`, type: "imports" } // Cycle: io.gleam <-> list.gleam
+        ];
+        averageCoupling1 = 1.2;
+        averageCoupling2 = 1.6;
+        language = "Gleam";
     } else if (lowerName.includes("guava")) {
         const pkg = "com.google.common";
         v1Nodes = [
@@ -365,6 +377,7 @@ function generateRepositoryGraph(repoName) {
         ];
         averageCoupling1 = 1.8;
         averageCoupling2 = 2.1;
+        language = "Java";
     } else if (lowerName.includes("petclinic")) {
         const pkg = "org.springframework.samples.petclinic";
         v1Nodes = [
@@ -400,6 +413,7 @@ function generateRepositoryGraph(repoName) {
         ];
         averageCoupling1 = 2.0;
         averageCoupling2 = 2.4;
+        language = "Java";
     } else {
         // General fallback graph custom to repoName
         const pkg = `org.${lowerName}`;
@@ -425,12 +439,14 @@ function generateRepositoryGraph(repoName) {
         ];
         averageCoupling1 = 1.5;
         averageCoupling2 = 1.8;
+        language = "Java";
     }
 
     return {
         v1: {
             version: "1.0.0",
             projectName: cleanName,
+            language: language,
             systemMetrics: {
                 totalClasses: v1Nodes.length,
                 totalLinesOfCode: v1Nodes.reduce((acc, n) => acc + n.metrics.loc, 0),
@@ -442,6 +458,7 @@ function generateRepositoryGraph(repoName) {
         v2: {
             version: "2.0.0",
             projectName: cleanName,
+            language: language,
             systemMetrics: {
                 totalClasses: v2Nodes.length,
                 totalLinesOfCode: v2Nodes.reduce((acc, n) => acc + n.metrics.loc, 0),
@@ -473,36 +490,7 @@ triggerCrawlBtn.addEventListener("click", () => {
         
         setTimeout(() => {
             newJob.status = "crawled";
-            
-            // Dynamically load the crawled repo's architecture evolution graph
-            const cleanName = repo.split("/")[1] || repo;
-            const newGraphData = generateRepositoryGraph(repo);
-            newJob.graphs = newGraphData;
-            
-            baseGraph = newGraphData.v1;
-            currentGraph = newGraphData.v2;
-            activeRepoName = repo;
-            
-            // Update UI headers & selectors
-            const headerTitle = document.querySelector(".content-header h2");
-            if (headerTitle) {
-                headerTitle.innerText = `${repo} Architecture Evolution`;
-            }
-            
-            const baseVersionSelect = document.getElementById("base-version-select");
-            const targetVersionSelect = document.getElementById("target-version-select");
-            if (baseVersionSelect && targetVersionSelect) {
-                baseVersionSelect.innerHTML = `<option value="v1">v1.0.0 (${cleanName})</option>`;
-                targetVersionSelect.innerHTML = `<option value="v2">v2.0.0 (${cleanName})</option>`;
-            }
-            
-            // Re-initialize layout, metrics, diff, and swarm analysis
-            resetLayout();
-            updateKPIs();
-            renderDiffTable();
-            runAnalysis();
-            
-            renderCrawlerQueue();
+            switchToRepo(newJob);
             addAgentMessage("System", `Successfully crawled ${repo}. Schema metrics validated via SHACL. Conformance report generated.`, "system");
         }, 4000);
     }
@@ -980,13 +968,39 @@ function runAnalysis() {
     agentChatContainer.innerHTML = "";
     addAgentMessage("System", "Initializing IMPACT Multi-Agent Evolution Swarm...", "system");
 
+    const lang = currentGraph.language || "Java";
+    let unitSingular = "class";
+    let unitPlural = "classes";
+    let cycleTerm = "cycle loops";
+    let depTerm = "edges";
+    let isFallback = false;
+    
+    if (lang === "Python") {
+        unitSingular = "module";
+        unitPlural = "modules";
+        cycleTerm = "circular imports";
+        depTerm = "dependencies";
+    } else if (lang === "Gleam") {
+        unitSingular = "file";
+        unitPlural = "files";
+        cycleTerm = "dependency cycles";
+        depTerm = "imports";
+        isFallback = true;
+    }
+
+    if (isFallback) {
+        setTimeout(() => {
+            addAgentMessage("System", `⚠️ WARNING: Gleam support is not implemented. Dashboard running in File-Dependency Fallback Mode.`, "system");
+        }, 200);
+    }
+
     setTimeout(() => {
-        addAgentMessage("GraphAgent", `Loaded Version ${currentGraph.version} of ${currentGraph.projectName} (${currentGraph.systemMetrics.totalClasses} classes, ${currentGraph.systemMetrics.totalLinesOfCode} LOC).`, "coordinator");
+        addAgentMessage("GraphAgent", `Loaded Version ${currentGraph.version} of ${currentGraph.projectName} (${currentGraph.systemMetrics.totalClasses} ${unitPlural}, ${currentGraph.systemMetrics.totalLinesOfCode} LOC). [Language: ${lang}]`, "coordinator");
     }, 400);
 
     setTimeout(() => {
         const diff = computeDiff();
-        addAgentMessage("DiffAgent", `Identified structural changes: added ${diff.addedNodes.length} classes, added ${diff.addedEdges.length} edges. Detected ${diff.newCycles.length} new cycle loops.`, "coordinator");
+        addAgentMessage("DiffAgent", `Identified structural changes: added ${diff.addedNodes.length} ${unitPlural}, added ${diff.addedEdges.length} ${depTerm}. Detected ${diff.newCycles.length} new ${cycleTerm}.`, "coordinator");
     }, 800);
 
     setTimeout(() => {
@@ -1001,7 +1015,7 @@ function runAnalysis() {
         intents.forEach(intent => {
             if (intent.type === "no-cycles") {
                 if (diff.newCycles.length > 0) {
-                    violations.push(`New cyclic dependencies detected (${diff.newCycles.length} cycles). Breaches 'Avoid cyclic dependencies'.`);
+                    violations.push(`New ${cycleTerm} detected (${diff.newCycles.length} cycles). Breaches 'Avoid ${cycleTerm}'.`);
                 }
             } else if (intent.type === "max-coupling") {
                 const limit = intent.limit;
@@ -1021,13 +1035,13 @@ function runAnalysis() {
         let report = `Architectural Evolution Report (Version ${baseGraph.version} -> ${currentGraph.version})
 ===========================================================
 1. Structural Changes:
-   * Added Nodes: ${diff.addedNodes.length}
-   * Added Dependencies (Edges): ${diff.addedEdges.length}
-   * Removed Nodes: ${diff.removedNodes.length}
-   * Removed Dependencies (Edges): ${diff.removedEdges.length}
+   * Added ${unitPlural.charAt(0).toUpperCase() + unitPlural.slice(1)}: ${diff.addedNodes.length}
+   * Added Dependencies (${depTerm}): ${diff.addedEdges.length}
+   * Removed ${unitPlural.charAt(0).toUpperCase() + unitPlural.slice(1)}: ${diff.removedNodes.length}
+   * Removed Dependencies (${depTerm}): ${diff.removedEdges.length}
 
 2. Dependency Cycles:
-   * New Cycles Detected: ${diff.newCycles.length}
+   * New ${cycleTerm.charAt(0).toUpperCase() + cycleTerm.slice(1)} Detected: ${diff.newCycles.length}
    * Broken Cycles: 0
 
 3. Coupling & Complexity Hubs:
@@ -1056,6 +1070,25 @@ function runAnalysis() {
 
         addAgentMessage("LLMAgent", report, "ll");
     }, 1600);
+}
+
+// Dynamic UI labeling based on ecosystem language
+function updateUILabels() {
+    const lang = currentGraph.language || "Java";
+    const classesLabel = document.getElementById("metric-classes-label");
+    const fqcnHeader = document.getElementById("diff-table-fqcn-header");
+    
+    if (lang === "Python") {
+        if (classesLabel) classesLabel.innerText = "Total Modules";
+        if (fqcnHeader) fqcnHeader.innerText = "Module Path";
+    } else if (lang === "Gleam") {
+        if (classesLabel) classesLabel.innerText = "Total Files (Fallback)";
+        if (fqcnHeader) fqcnHeader.innerText = "File Path (Fallback)";
+    } else {
+        // Java
+        if (classesLabel) classesLabel.innerText = "Total Classes";
+        if (fqcnHeader) fqcnHeader.innerText = "Class (FQCN)";
+    }
 }
 
 function addAgentMessage(agent, text, type) {
@@ -1105,6 +1138,7 @@ function init() {
     addQueueStyles();
     resetLayout();
     updateKPIs();
+    updateUILabels();
     renderDiffTable();
     runAnalysis();
     animate();
