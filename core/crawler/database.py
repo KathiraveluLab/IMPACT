@@ -38,11 +38,12 @@ def setup_db(db_path=None):
                 processed_at VARCHAR(100),
                 worker_id VARCHAR(255),
                 claimed_at VARCHAR(100),
+                language VARCHAR(50) DEFAULT 'java',
                 UNIQUE(owner, repo)
             )
         """)
         # Migrate existing databases that lack the new columns
-        for col, typedef in [("worker_id", "VARCHAR(255)"), ("claimed_at", "VARCHAR(100)")]:
+        for col, typedef in [("worker_id", "VARCHAR(255)"), ("claimed_at", "VARCHAR(100)"), ("language", "VARCHAR(50) DEFAULT 'java'")]:
             cursor.execute(f"""
                 ALTER TABLE queue ADD COLUMN IF NOT EXISTS {col} {typedef}
             """)
@@ -82,14 +83,15 @@ def setup_db(db_path=None):
                 processed_at TEXT,
                 worker_id TEXT,
                 claimed_at TEXT,
+                language TEXT DEFAULT 'java',
                 UNIQUE(owner, repo)
             )
         """)
         # Migrate existing databases that lack the new columns
         existing = {row[1] for row in cursor.execute("PRAGMA table_info(queue)")}
-        for col in ["worker_id", "claimed_at"]:
+        for col, typedef in [("worker_id", "TEXT"), ("claimed_at", "TEXT"), ("language", "TEXT DEFAULT 'java'")]:
             if col not in existing:
-                cursor.execute(f"ALTER TABLE queue ADD COLUMN {col} TEXT")
+                cursor.execute(f"ALTER TABLE queue ADD COLUMN {col} {typedef}")
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS transition_history (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,

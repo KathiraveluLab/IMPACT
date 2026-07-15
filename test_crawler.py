@@ -324,5 +324,53 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
         self.assertIsNotNone(claimed)
         self.assertEqual(claimed[0], repo_id)
 
+    @patch("core.crawler.network.make_github_request")
+    def test_partitioned_repository_discovery(self, mock_request):
+        """Test partitioned repository discovery with custom language and star slicing."""
+        fake_api_response = {
+            "items": [
+                {"full_name": "python/cpython", "stargazers_count": 60000}
+            ]
+        }
+        mock_request.return_value = (bytes(json.dumps(fake_api_response), "utf-8"), None)
+        
+        self.crawler.discover_repos(language="python", min_stars=50000, max_pages=1, partition_search=True)
+
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT owner, repo, stars, language FROM queue WHERE language='python'")
+        rows = cursor.fetchall()
+        conn.close()
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0], ("python", "cpython", 60000, "python"))
+
+    @patch("urllib.request.urlopen")
+    def test_retry_after_rate_limiting(self, mock_urlopen):
+        """Test that crawler respects the Retry-After header for secondary rate limits."""
+        from urllib.error import HTTPError
+        from io import BytesIO
+
+        mock_headers = MagicMock()
+        mock_headers.get.side_effect = lambda key: {
+            "Retry-After": "4"
+        }.get(key)
+
+        fake_error = HTTPError("url", 429, "Too Many Requests", mock_headers, BytesIO(b"{}"))
+        
+        mock_response = MagicMock()
+        mock_response.__enter__.return_value.read.return_value = b'{"ok": true}'
+        mock_response.__enter__.return_value.info.return_value = {}
+
+        mock_urlopen.side_effect = [fake_error, mock_response]
+
+        with patch("time.sleep") as mock_sleep:
+            content, _ = self.crawler.make_github_request("https://api.github.com/test")
+            self.assertEqual(content, b'{"ok": true}')
+            mock_sleep.assert_called_once()
+            # Assert slept for the Retry-After duration + 2s buffer
+            slept_duration = mock_sleep.call_args[0][0]
+            self.assertEqual(slept_duration, 6)
+
 if __name__ == "__main__":
     unittest.main()

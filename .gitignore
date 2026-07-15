@@ -50,3 +50,9 @@ dist/
 *.egg-info/
 # Copy k8s/secret.yaml.example -> k8s/secret.yaml and fill in values locally
 k8s/secret.yaml
+
+# SQLite databases and sidecar files
+*.db
+*.db-journal
+*.db-wal
+*.db-shm

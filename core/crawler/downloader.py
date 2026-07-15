@@ -4,21 +4,18 @@ import shutil
 import urllib.request
 import urllib.error
 
+from core.crawler.network import make_github_request
+
 def download_zip(owner, repo, tag, dest_root, github_token=None):
     """Downloads repository archive for a specific tag and extracts it."""
     zip_url = f"https://api.github.com/repos/{owner}/{repo}/zipball/{tag}"
     os.makedirs(dest_root, exist_ok=True)
     zip_path = os.path.join(dest_root, f"{tag}.zip")
 
-    req = urllib.request.Request(zip_url)
-    req.add_header("User-Agent", "IMPACT-Ecosystem-Crawler")
-    if github_token:
-        req.add_header("Authorization", f"token {github_token}")
-
     try:
-        with urllib.request.urlopen(req) as response:
-            with open(zip_path, "wb") as f:
-                f.write(response.read())
+        content, _ = make_github_request(zip_url, github_token)
+        with open(zip_path, "wb") as f:
+            f.write(content)
 
         # Extract zip file
         extract_dir = os.path.join(dest_root, f"src_{tag}")

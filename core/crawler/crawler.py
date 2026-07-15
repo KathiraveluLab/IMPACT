@@ -18,8 +18,13 @@ class GitHubEcosystemCrawler:
         from core.crawler.network import make_github_request
         return make_github_request(url, self.github_token)
 
+    def discover_repos(self, language="java", min_stars=500, max_pages=10, partition_search=True):
+        from core.crawler.discovery import discover_repos
+        discover_repos(self.github_token, self.db_path, language, min_stars, max_pages, partition_search)
+
     def discover_java_repos(self, min_stars=500, max_pages=3):
-        discover_java_repos(self.github_token, self.db_path, min_stars, max_pages)
+        # Backward-compatible wrapper
+        self.discover_repos("java", min_stars, max_pages, partition_search=False)
 
     def process_repo(self, repo_id, owner, repo):
         process_repo(repo_id, owner, repo, self.github_token, self.db_path)

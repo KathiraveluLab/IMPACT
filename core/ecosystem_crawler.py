@@ -19,11 +19,13 @@ def main():
     )
     subparsers = parser.add_subparsers(dest="command", help="Subcommand to execute")
 
-    discover_parser = subparsers.add_parser("discover", help="Discover Java repositories on GitHub")
+    discover_parser = subparsers.add_parser("discover", help="Discover repositories on GitHub")
+    discover_parser.add_argument("--language", "-l", type=str, default="java", help="Selected programming language for repository discovery")
     discover_parser.add_argument("--min-stars", type=int, default=500, help="Minimum number of stars for repository discovery")
-    discover_parser.add_argument("--pages", type=int, default=3, help="Number of search API pages to retrieve")
+    discover_parser.add_argument("--pages", type=int, default=10, help="Number of search API pages to retrieve per range (max 10)")
+    discover_parser.add_argument("--no-partition", action="store_false", dest="partition", help="Disable star range partitioning (query all stars at once)")
 
-    run_parser = subparsers.add_parser("run", help="Run evolution analysis crawler execution loop")
+    run_parser = subparsers.add_parser("run", aliases=["crawl"], help="Run evolution analysis crawler execution loop")
     run_parser.add_argument("--limit", type=int, default=5, help="Maximum number of repositories to crawl in this run")
 
     subparsers.add_parser("status", help="Print crawler database queue stats")
@@ -37,8 +39,13 @@ def main():
     crawler = GitHubEcosystemCrawler()
 
     if args.command == "discover":
-        crawler.discover_java_repos(min_stars=args.min_stars, max_pages=args.pages)
-    elif args.command == "run":
+        crawler.discover_repos(
+            language=args.language,
+            min_stars=args.min_stars,
+            max_pages=args.pages,
+            partition_search=args.partition
+        )
+    elif args.command in ("run", "crawl"):
         crawler.crawl(limit=args.limit)
     elif args.command == "status":
         conn = sqlite3.connect(DB_PATH)

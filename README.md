@@ -185,15 +185,20 @@ python3 core/shacl_validator.py <graphJsonPath>
 
 ## Distributed Ecosystem Crawler
 
-IMPACT ships a GitHub ecosystem crawler that discovers, downloads, and analyses large numbers of open-source Java projects at scale. It can run as a single local process (backed by SQLite) or as a distributed multi-node cluster (backed by PostgreSQL).
+IMPACT ships a GitHub ecosystem crawler that discovers, downloads, and analyses large numbers of open-source projects at scale. It can run as a single local process (backed by SQLite) or as a distributed multi-node cluster (backed by PostgreSQL).
+
+### Key Features
+* **Multi-Language Support:** The discovery command can filter for any repository language (e.g., `--language java` or `--language rust`).
+* **Query Partitioning:** To bypass GitHub's search query limit (max 1,000 results per search), the crawler automatically slices queries into sliding star intervals (e.g. `500..550`, `551..600`, etc., up to `>50000`). This allows building a much larger queue of repositories. Disable via `--no-partition`.
+* **Robust Rate-Limit & Backoff:** The crawler dynamically intercepts GitHub's rate-limiting mechanisms. It respects `Retry-After` headers (for secondary/abuse limits), sleeps for primary rate-limit resets (`X-RateLimit-Reset`), and falls back to exponential backoff (2s up to 60s) on HTTP 403/429 codes if headers are missing.
 
 ### Running Locally (SQLite, single process)
 
 ```bash
-# 1. Populate the queue with the most-starred Java repositories
-python3 -m core.ecosystem_crawler discover --min-stars 1000
+# 1. Populate the queue (e.g., with Java repos >= 1000 stars using star partitioning)
+python3 -m core.ecosystem_crawler discover --language java --min-stars 1000
 
-# 2. Process queued repositories
+# 2. Process queued repositories (runs the crawl execution loop, command alias 'crawl' or 'run')
 python3 -m core.ecosystem_crawler crawl --limit 50
 
 # 3. Check queue status and recent transitions
@@ -215,7 +220,7 @@ Run discovery then crawl with a local SQLite database:
 ```bash
 docker run --rm \
   -v "$(pwd)/test_projects:/app/test_projects" \
-  impact-crawler:latest discover --min-stars 1000
+  impact-crawler:latest discover --language java --min-stars 1000
 
 docker run --rm \
   -v "$(pwd)/test_projects:/app/test_projects" \
@@ -228,7 +233,7 @@ To use a GitHub token (recommended to avoid rate limits):
 docker run --rm \
   -e GITHUB_TOKEN=ghp_yourtoken \
   -v "$(pwd)/test_projects:/app/test_projects" \
-  impact-crawler:latest discover --min-stars 1000
+  impact-crawler:latest discover --language java --min-stars 1000
 ```
 
 ---

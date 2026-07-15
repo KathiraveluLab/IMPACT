@@ -44,7 +44,26 @@ def process_repo(repo_id, owner, repo, github_token, db_path):
     conn.commit()
     conn.close()
 
+    # Retrieve language from DB
     language = "java"
+    if db_path.startswith("postgresql://") or db_path.startswith("postgres://"):
+        import psycopg2
+        conn = psycopg2.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT language FROM queue WHERE id = %s", (repo_id,))
+        row = cursor.fetchone()
+        if row and row[0]:
+            language = row[0]
+        conn.close()
+    else:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT language FROM queue WHERE id = ?", (repo_id,))
+        row = cursor.fetchone()
+        if row and row[0]:
+            language = row[0]
+        conn.close()
+
     benchmark_root = os.path.join("test_projects/github_benchmarks", language)
     repo_dir = os.path.join(benchmark_root, f"{owner}_{repo}")
     
@@ -67,12 +86,15 @@ def process_repo(repo_id, owner, repo, github_token, db_path):
 
     try:
         # Extract dependencies
-        print(f"Extracting dependency graphs for {tag1} and {tag2}...")
-        ext1 = JavaExtractor(repo, tag1)
-        ext1.extract(path1, graph_v1)
+        if language == "java":
+            print(f"Extracting dependency graphs for {tag1} and {tag2}...")
+            ext1 = JavaExtractor(repo, tag1)
+            ext1.extract(path1, graph_v1)
 
-        ext2 = JavaExtractor(repo, tag2)
-        ext2.extract(path2, graph_v2)
+            ext2 = JavaExtractor(repo, tag2)
+            ext2.extract(path2, graph_v2)
+        else:
+            raise NotImplementedError(f"Language adapter for '{language}' is not yet implemented.")
 
         # Validate SHACL
         validator = SHACLValidator()
