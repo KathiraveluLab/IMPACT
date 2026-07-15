@@ -194,24 +194,63 @@ function renderCrawlerQueue() {
 }
 
 // Switch visualization context to a different crawled repository
-function switchToRepo(job) {
+async function switchToRepo(job) {
     if (job.status !== "crawled") return;
     
     activeRepoName = job.repo;
     
+    // Attempt dynamic language detection from GitHub API if it's a new crawl without explicit override
+    if (!job.detectedLanguage && !job.repo.includes(":") && !job.graphs) {
+        let displayRepo = job.repo;
+        try {
+            // Fetch language breakdown from GitHub API to find the dominant language
+            const res = await fetch(`https://api.github.com/repos/${displayRepo}/languages`);
+            if (res.ok) {
+                const data = await res.json();
+                if (data && Object.keys(data).length > 0) {
+                    let maxLang = null;
+                    let maxBytes = -1;
+                    for (const [lang, bytes] of Object.entries(data)) {
+                        // Skip shell scripts or config markup if other languages exist
+                        if (Object.keys(data).length > 1 && ["Shell", "HTML", "CSS", "Dockerfile"].includes(lang)) {
+                            continue;
+                        }
+                        if (bytes > maxBytes) {
+                            maxBytes = bytes;
+                            maxLang = lang;
+                        }
+                    }
+                    if (maxLang) {
+                        job.detectedLanguage = maxLang;
+                        console.log(`[Dashboard] Dynamically detected major language: ${maxLang}`);
+                    }
+                }
+            }
+        } catch (e) {
+            console.log("[Dashboard] GitHub API request failed:", e);
+        }
+    }
+    
     // If the job does not have graphs yet, generate them dynamically
     if (!job.graphs) {
-        job.graphs = generateRepositoryGraph(job.repo);
+        job.graphs = generateRepositoryGraph(job.repo, job.detectedLanguage);
     }
     
     baseGraph = job.graphs.v1;
     currentGraph = job.graphs.v2;
     
     // Update UI headers & selectors
-    const cleanName = job.repo.split("/")[1] || job.repo;
+    let displayRepoName = job.repo;
+    let cleanName = job.repo.split("/")[1] || job.repo;
+    if (job.repo.includes(":")) {
+        const parts = job.repo.split(":");
+        displayRepoName = parts[0].trim();
+        cleanName = displayRepoName.split("/")[1] || displayRepoName;
+    }
+    
     const headerTitle = document.querySelector(".content-header h2");
     if (headerTitle) {
-        headerTitle.innerText = `${job.repo} Architecture Evolution`;
+        headerTitle.innerText = `${displayRepoName} Architecture Evolution`;
     }
     
     const baseVersionSelect = document.getElementById("base-version-select");
@@ -244,8 +283,15 @@ function addQueueStyles() {
 }
 
 // Generate dynamic graph for crawled repository to visualize its evolution
-function generateRepositoryGraph(repoName) {
-    const cleanName = repoName.split("/")[1] || repoName;
+function generateRepositoryGraph(repoName, detectedLanguage) {
+    let rawRepoName = repoName;
+    let suffixLang = null;
+    if (repoName.includes(":")) {
+        const parts = repoName.split(":");
+        rawRepoName = parts[0].trim();
+        suffixLang = parts[1].trim();
+    }
+    const cleanName = rawRepoName.split("/")[1] || rawRepoName;
     const lowerName = cleanName.toLowerCase();
     
     let v1Nodes = [];
@@ -254,7 +300,39 @@ function generateRepositoryGraph(repoName) {
     let v2Edges = [];
     let averageCoupling1 = 1.5;
     let averageCoupling2 = 1.8;
-    let language = "Java";
+    let language = "Unsupported";
+
+    // Language identification heuristic
+    if (suffixLang) {
+        const lowerSuffix = suffixLang.toLowerCase();
+        if (lowerSuffix === "java") language = "Java";
+        else if (lowerSuffix === "python" || lowerSuffix === "py") language = "Python";
+        else if (lowerSuffix === "erlang" || lowerSuffix === "erl") language = "Erlang";
+        else if (lowerSuffix === "gleam") language = "Gleam";
+        else language = suffixLang.charAt(0).toUpperCase() + suffixLang.slice(1);
+    } else if (detectedLanguage) {
+        const lowerDet = detectedLanguage.toLowerCase();
+        if (lowerDet === "java") language = "Java";
+        else if (lowerDet === "python") language = "Python";
+        else if (lowerDet === "erlang") language = "Erlang";
+        else if (lowerDet === "gleam") language = "Gleam";
+        else language = detectedLanguage.charAt(0).toUpperCase() + detectedLanguage.slice(1);
+    } else {
+        const nameMatch = repoName.toLowerCase();
+        if (nameMatch.includes("jsoup") || nameMatch.includes("guava") || nameMatch.includes("petclinic") || nameMatch.includes("java")) {
+            language = "Java";
+        } else if (nameMatch.includes("flask") || nameMatch.includes("python") || nameMatch.includes("django")) {
+            language = "Python";
+        } else if (nameMatch.includes("gleam")) {
+            language = "Gleam";
+        } else if (nameMatch.includes("iguana") || nameMatch.includes("erlang") || nameMatch.includes("otp")) {
+            language = "Erlang";
+        } else if (nameMatch.includes("lagos")) {
+            language = "Gleam";
+        } else {
+            language = "Unsupported";
+        }
+    }
     
     if (lowerName.includes("jsoup")) {
         const pkg = "org.jsoup";
@@ -415,31 +493,83 @@ function generateRepositoryGraph(repoName) {
         averageCoupling2 = 2.4;
         language = "Java";
     } else {
-        // General fallback graph custom to repoName
-        const pkg = `org.${lowerName}`;
-        v1Nodes = [
-            { id: `${pkg}.Core`, name: `${cleanName}Core`, type: "class", metrics: { loc: 300, complexity: 10, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 1 } },
-            { id: `${pkg}.Client`, name: `${cleanName}Client`, type: "class", metrics: { loc: 150, complexity: 5, coupling: 3, fanIn: 0, fanOut: 3, inheritanceDepth: 0 } },
-            { id: `${pkg}.Service`, name: `${cleanName}Service`, type: "class", metrics: { loc: 250, complexity: 8, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 1 } },
-            { id: `${pkg}.Database`, name: `${cleanName}Db`, type: "class", metrics: { loc: 120, complexity: 4, coupling: 2, fanIn: 2, fanOut: 0, inheritanceDepth: 0 } }
-        ];
-        v1Edges = [
-            { source: `${pkg}.Client`, target: `${pkg}.Core`, type: "calls" },
-            { source: `${pkg}.Core`, target: `${pkg}.Service`, type: "calls" },
-            { source: `${pkg}.Service`, target: `${pkg}.Database`, type: "queries" }
-        ];
-        v2Nodes = [
-            ...v1Nodes.map(n => ({ ...n, metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.1) } })),
-            { id: `${pkg}.Helper`, name: `${cleanName}Helper`, type: "class", metrics: { loc: 90, complexity: 3, coupling: 2, fanIn: 1, fanOut: 1, inheritanceDepth: 0 } }
-        ];
-        v2Edges = [
-            ...v1Edges,
-            { source: `${pkg}.Core`, target: `${pkg}.Helper`, type: "uses" },
-            { source: `${pkg}.Helper`, target: `${pkg}.Core`, type: "calls" } // Cycle: Core <-> Helper
-        ];
+        // Fallback nodes generation based on determined language
+        if (language === "Java") {
+            const pkg = `org.${lowerName}`;
+            v1Nodes = [
+                { id: `${pkg}.Core`, name: `${cleanName}Core`, type: "class", metrics: { loc: 300, complexity: 10, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 1 } },
+                { id: `${pkg}.Client`, name: `${cleanName}Client`, type: "class", metrics: { loc: 150, complexity: 5, coupling: 3, fanIn: 0, fanOut: 3, inheritanceDepth: 0 } },
+                { id: `${pkg}.Service`, name: `${cleanName}Service`, type: "class", metrics: { loc: 250, complexity: 8, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 1 } },
+                { id: `${pkg}.Database`, name: `${cleanName}Db`, type: "class", metrics: { loc: 120, complexity: 4, coupling: 2, fanIn: 2, fanOut: 0, inheritanceDepth: 0 } }
+            ];
+            v1Edges = [
+                { source: `${pkg}.Client`, target: `${pkg}.Core`, type: "calls" },
+                { source: `${pkg}.Core`, target: `${pkg}.Service`, type: "calls" },
+                { source: `${pkg}.Service`, target: `${pkg}.Database`, type: "queries" }
+            ];
+            v2Nodes = [
+                ...v1Nodes.map(n => ({ ...n, metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.1) } })),
+                { id: `${pkg}.Helper`, name: `${cleanName}Helper`, type: "class", metrics: { loc: 90, complexity: 3, coupling: 2, fanIn: 1, fanOut: 1, inheritanceDepth: 0 } }
+            ];
+            v2Edges = [
+                ...v1Edges,
+                { source: `${pkg}.Core`, target: `${pkg}.Helper`, type: "uses" },
+                { source: `${pkg}.Helper`, target: `${pkg}.Core`, type: "calls" } // Cycle
+            ];
+        } else if (language === "Python") {
+            const pkg = lowerName.replace(/[^a-z0-9]/g, "_");
+            v1Nodes = [
+                { id: `${pkg}.core`, name: `core.py`, type: "module", metrics: { loc: 300, complexity: 10, coupling: 4, fanIn: 2, fanOut: 2 } },
+                { id: `${pkg}.client`, name: `client.py`, type: "module", metrics: { loc: 150, complexity: 5, coupling: 3, fanIn: 0, fanOut: 3 } },
+                { id: `${pkg}.server`, name: `server.py`, type: "module", metrics: { loc: 250, complexity: 8, coupling: 4, fanIn: 2, fanOut: 2 } },
+                { id: `${pkg}.db`, name: `db.py`, type: "module", metrics: { loc: 120, complexity: 4, coupling: 2, fanIn: 2, fanOut: 0 } }
+            ];
+            v1Edges = [
+                { source: `${pkg}.client`, target: `${pkg}.core`, type: "imports" },
+                { source: `${pkg}.core`, target: `${pkg}.server`, type: "imports" },
+                { source: `${pkg}.server`, target: `${pkg}.db`, type: "imports" }
+            ];
+            v2Nodes = [
+                ...v1Nodes.map(n => ({ ...n, metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.1) } })),
+                { id: `${pkg}.helper`, name: `helper.py`, type: "module", metrics: { loc: 90, complexity: 3, coupling: 2, fanIn: 1, fanOut: 1 } }
+            ];
+            v2Edges = [
+                ...v1Edges,
+                { source: `${pkg}.core`, target: `${pkg}.helper`, type: "imports" },
+                { source: `${pkg}.helper`, target: `${pkg}.core`, type: "imports" } // Cycle
+            ];
+        } else {
+            // General file fallback (Erlang, Gleam, Go, Rust, Unsupported, etc.)
+            let ext = ".src";
+            if (language === "Erlang") ext = ".erl";
+            else if (language === "Gleam") ext = ".gleam";
+            else if (language === "Go") ext = ".go";
+            else if (language === "Rust") ext = ".rs";
+            
+            const pkg = "src/";
+            v1Nodes = [
+                { id: `${pkg}core${ext}`, name: `core${ext}`, type: "file", metrics: { loc: 300, complexity: 10, coupling: 4, fanIn: 2, fanOut: 2 } },
+                { id: `${pkg}client${ext}`, name: `client${ext}`, type: "file", metrics: { loc: 150, complexity: 5, coupling: 3, fanIn: 0, fanOut: 3 } },
+                { id: `${pkg}server${ext}`, name: `server${ext}`, type: "file", metrics: { loc: 250, complexity: 8, coupling: 4, fanIn: 2, fanOut: 2 } },
+                { id: `${pkg}db${ext}`, name: `db${ext}`, type: "file", metrics: { loc: 120, complexity: 4, coupling: 2, fanIn: 2, fanOut: 0 } }
+            ];
+            v1Edges = [
+                { source: `${pkg}client${ext}`, target: `${pkg}core${ext}`, type: "imports" },
+                { source: `${pkg}core${ext}`, target: `${pkg}server${ext}`, type: "imports" },
+                { source: `${pkg}server${ext}`, target: `${pkg}db${ext}`, type: "imports" }
+            ];
+            v2Nodes = [
+                ...v1Nodes.map(n => ({ ...n, metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.1) } })),
+                { id: `${pkg}helper${ext}`, name: `helper${ext}`, type: "file", metrics: { loc: 90, complexity: 3, coupling: 2, fanIn: 1, fanOut: 1 } }
+            ];
+            v2Edges = [
+                ...v1Edges,
+                { source: `${pkg}core${ext}`, target: `${pkg}helper${ext}`, type: "imports" },
+                { source: `${pkg}helper${ext}`, target: `${pkg}core${ext}`, type: "imports" } // Cycle: core <-> helper
+            ];
+        }
         averageCoupling1 = 1.5;
         averageCoupling2 = 1.8;
-        language = "Java";
     }
 
     return {
@@ -474,12 +604,45 @@ triggerCrawlBtn.addEventListener("click", () => {
     const repo = crawlerRepoInput.value.trim();
     if (repo) {
         // Enqueue new repo (Task 8b)
-        const newJob = { repo, status: "pending", graphs: null };
+        const newJob = { repo, status: "pending", graphs: null, detectedLanguage: null };
         crawlerQueue.push(newJob);
         crawlerRepoInput.value = "";
         renderCrawlerQueue();
         
         addAgentMessage("System", `Enqueued repository for ecosystem crawl: ${repo}`, "system");
+        
+        // Fetch metadata from GitHub API in the background to detect language
+        let displayRepo = repo;
+        if (repo.includes(":")) {
+            displayRepo = repo.split(":")[0].trim();
+        }
+        fetch(`https://api.github.com/repos/${displayRepo}/languages`)
+            .then(res => {
+                if (res.ok) return res.json();
+                throw new Error("GitHub API rate limit or error");
+            })
+            .then(data => {
+                if (data && Object.keys(data).length > 0) {
+                    let maxLang = null;
+                    let maxBytes = -1;
+                    for (const [lang, bytes] of Object.entries(data)) {
+                        if (Object.keys(data).length > 1 && ["Shell", "HTML", "CSS", "Dockerfile"].includes(lang)) {
+                            continue;
+                        }
+                        if (bytes > maxBytes) {
+                            maxBytes = bytes;
+                            maxLang = lang;
+                        }
+                    }
+                    if (maxLang) {
+                        newJob.detectedLanguage = maxLang;
+                        console.log(`[Dashboard] Pre-fetched major language: ${maxLang} for ${repo}`);
+                    }
+                }
+            })
+            .catch(err => {
+                console.log("[Dashboard] Background language pre-fetch failed:", err);
+            });
         
         // Simulate background worker processing
         setTimeout(() => {
@@ -980,7 +1143,7 @@ function runAnalysis() {
         unitPlural = "modules";
         cycleTerm = "circular imports";
         depTerm = "dependencies";
-    } else if (lang === "Gleam") {
+    } else if (lang !== "Java") {
         unitSingular = "file";
         unitPlural = "files";
         cycleTerm = "dependency cycles";
@@ -990,7 +1153,10 @@ function runAnalysis() {
 
     if (isFallback) {
         setTimeout(() => {
-            addAgentMessage("System", `⚠️ WARNING: Gleam support is not implemented. Dashboard running in File-Dependency Fallback Mode.`, "system");
+            const warningMsg = lang === "Unsupported"
+                ? "⚠️ NOTE: Unknown repository language. Dashboard running in File-Dependency Fallback Mode."
+                : `⚠️ NOTE: Full AST structure analysis for ${lang} is not implemented. Running in File-Dependency Fallback Mode.`;
+            addAgentMessage("System", warningMsg, "system");
         }, 200);
     }
 
@@ -1081,8 +1247,10 @@ function updateUILabels() {
     if (lang === "Python") {
         if (classesLabel) classesLabel.innerText = "Total Modules";
         if (fqcnHeader) fqcnHeader.innerText = "Module Path";
-    } else if (lang === "Gleam") {
-        if (classesLabel) classesLabel.innerText = "Total Files (Fallback)";
+    } else if (lang !== "Java") {
+        // Gleam, Erlang, or other fallback languages
+        const suffix = lang === "Unsupported" ? "" : `: ${lang}`;
+        if (classesLabel) classesLabel.innerText = `Total Files (Fallback${suffix})`;
         if (fqcnHeader) fqcnHeader.innerText = "File Path (Fallback)";
     } else {
         // Java
