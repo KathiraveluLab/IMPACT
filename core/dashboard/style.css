@@ -594,3 +594,29 @@ tr:hover td {
     border-color: var(--accent-blue);
     box-shadow: 0 0 10px rgba(2, 132, 199, 0.1);
 }
+
+.btn-export-ecosystem {
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+    border: none;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    align-self: stretch;
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
+    text-align: center;
+}
+
+.btn-export-ecosystem:hover {
+    background: linear-gradient(135deg, #0f766e, #115e59);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(13, 148, 136, 0.3);
+}
+
+.btn-export-ecosystem:active {
+    transform: translateY(0);
+}

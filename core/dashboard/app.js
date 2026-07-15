@@ -1705,6 +1705,10 @@ function showReportModal(repoName, lang) {
         document.getElementById("modal-llm-spinner").style.display = "none";
         document.getElementById("modal-llm-content").innerText = data.report;
         document.getElementById("modal-llm-content").style.display = "block";
+        const job = crawlerQueue.find(j => j.repo === repoName || (j.isDemo && repoName.includes("TelemetryService")));
+        if (job) {
+            job.llmReport = data.report;
+        }
     })
     .catch(() => {
         // API server not running — show informative fallback in the tab
@@ -1782,6 +1786,158 @@ async function loadGraphs() {
 runAnalysisBtn.addEventListener("click", () => {
     runAnalysis();
 });
+
+function escapeCSV(val) {
+    if (val === undefined || val === null) return "";
+    const str = String(val);
+    if (str.includes(",") || str.includes('"') || str.includes("\n") || str.includes("\r")) {
+        return `"${str.replace(/"/g, '""')}"`;
+    }
+    return str;
+}
+
+function computeDiffForGraphs(v1, v2) {
+    const addedNodes = v2.nodes.filter(n => !v1.nodes.some(bn => bn.id === n.id));
+    const removedNodes = v1.nodes.filter(bn => !v2.nodes.some(n => n.id === bn.id));
+    const addedEdges = v2.edges.filter(e => !v1.edges.some(be => be.source === e.source && be.target === e.target));
+    const removedEdges = v1.edges.filter(be => !v2.edges.some(e => e.source === be.source && e.target === be.target));
+
+    const cyclesBase = findSimpleCycles(v1);
+    const cyclesCurrent = findSimpleCycles(v2);
+
+    const newCycles = cyclesCurrent.filter(c => {
+        const cStr = c.join("->");
+        return !cyclesBase.some(bc => bc.join("->") === cStr);
+    });
+
+    return {
+        addedNodes,
+        removedNodes,
+        addedEdges,
+        removedEdges,
+        newCycles,
+        cyclesCurrent
+    };
+}
+
+function getEcosystemReport(job, v1, v2, diff) {
+    if (job.llmReport) {
+        return job.llmReport;
+    }
+    // Fallback to a detailed conformance analysis
+    const lang = job.detectedLanguage || "Java";
+    const hasCycleIntent = intents.some(i => i.type === "no-cycles");
+    let conformanceStatus = "CONFORMANT";
+    let violations = [];
+    if (hasCycleIntent && diff.newCycles.length > 0) {
+        conformanceStatus = "NON-CONFORMANT";
+        violations.push(`Detected ${diff.newCycles.length} new cyclic dependency paths.`);
+    }
+    const couplingIntent = intents.find(i => i.type === "max-coupling");
+    if (couplingIntent) {
+        const threshold = couplingIntent.val || couplingIntent.limit || 5;
+        const overloaded = v2.nodes.filter(n => n.metrics.coupling > threshold);
+        if (overloaded.length > 0) {
+            conformanceStatus = "NON-CONFORMANT";
+            violations.push(`${overloaded.length} node(s) exceed maximum coupling threshold of ${threshold}.`);
+        }
+    }
+    let recommendation = conformanceStatus === "NON-CONFORMANT" 
+        ? "Action required: refactor dependencies to break cycle loops and decouple high-coupling hubs."
+        : "Architecture remains stable. Maintain current modular boundaries.";
+        
+    return `[Rule-based LLM Fallback] Status: ${conformanceStatus}. Violations: ${violations.join("; ") || "None"}. Recommendation: ${recommendation}`;
+}
+
+function exportEcosystemToCSV() {
+    // Filter to crawled or demo repositories
+    const crawledJobs = crawlerQueue.filter(j => j.status === "crawled" || j.isDemo);
+    
+    if (crawledJobs.length === 0) {
+        alert("No repositories have been crawled successfully yet.");
+        return;
+    }
+
+    let csvContent = "";
+    
+    // Title/Header
+    csvContent += "IMPACT Ecosystem Architectural Evolution Export\n";
+    csvContent += `Exported At,${escapeCSV(new Date().toLocaleString())}\n\n`;
+    
+    // Section 1: Repository Level Summaries
+    csvContent += "Ecosystem Summary Table\n";
+    csvContent += "Repository,Status,Language,Base Version,Target Version,Total Classes,Lines of Code,Average Coupling,Cycles Detected,Conformance Status,LLM Analysis & Recommendations\n";
+    
+    crawledJobs.forEach(job => {
+        // Ensure graphs are populated
+        const graphs = job.graphs || generateRepositoryGraph(job.repo, job.detectedLanguage);
+        const v1 = graphs.v1;
+        const v2 = graphs.v2;
+        const diff = computeDiffForGraphs(v1, v2);
+        
+        const lang = job.detectedLanguage || v2.language || "Java";
+        const hasCycleIntent = intents.some(i => i.type === "no-cycles");
+        let conformanceStatus = "CONFORMANT";
+        
+        if (hasCycleIntent && diff.newCycles.length > 0) {
+            conformanceStatus = "NON-CONFORMANT";
+        }
+        const couplingIntent = intents.find(i => i.type === "max-coupling");
+        if (couplingIntent) {
+            const threshold = couplingIntent.val || couplingIntent.limit || 5;
+            const overloaded = v2.nodes.filter(n => n.metrics.coupling > threshold);
+            if (overloaded.length > 0) {
+                conformanceStatus = "NON-CONFORMANT";
+            }
+        }
+        
+        const reportText = getEcosystemReport(job, v1, v2, diff);
+        
+        csvContent += `${escapeCSV(job.repo)},${escapeCSV(job.status)},${escapeCSV(lang)},${escapeCSV(v1.version || "v1")},${escapeCSV(v2.version || "v2")},${escapeCSV(v2.systemMetrics.totalClasses)},${escapeCSV(v2.systemMetrics.totalLinesOfCode)},${escapeCSV(v2.systemMetrics.averageCoupling.toFixed(2))},${escapeCSV(diff.newCycles.length)},${escapeCSV(conformanceStatus)},${escapeCSV(reportText)}\n`;
+    });
+    
+    csvContent += "\n\n";
+    
+    // Section 2: Detailed Class-Level Diff Table
+    csvContent += "Detailed Class-Level Diff Table\n";
+    csvContent += "Repository,Class (FQCN),Change Status,LOC,Complexity,Coupling,Type\n";
+    
+    crawledJobs.forEach(job => {
+        const graphs = job.graphs || generateRepositoryGraph(job.repo, job.detectedLanguage);
+        const v1 = graphs.v1;
+        const v2 = graphs.v2;
+        
+        v2.nodes.forEach(n => {
+            const isAdded = !v1.nodes.some(bn => bn.id === n.id);
+            const status = isAdded ? "ADDED" : "UNCHANGED";
+            csvContent += `${escapeCSV(job.repo)},${escapeCSV(n.id)},${escapeCSV(status)},${escapeCSV(n.metrics.loc)},${escapeCSV(n.metrics.complexity)},${escapeCSV(n.metrics.coupling)},${escapeCSV(n.type)}\n`;
+        });
+    });
+
+    const defaultFilename = "impact_ecosystem_evolution_report.csv";
+    const filename = prompt("Enter a name for the exported CSV file:", defaultFilename);
+    if (!filename) return; // User canceled the dialog
+    
+    let finalFilename = filename.trim();
+    if (!finalFilename.endsWith(".csv")) {
+        finalFilename += ".csv";
+    }
+    
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", finalFilename);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+const exportEcosystemBtn = document.getElementById("export-ecosystem-btn");
+if (exportEcosystemBtn) {
+    exportEcosystemBtn.addEventListener("click", exportEcosystemToCSV);
+}
 
 document.addEventListener("DOMContentLoaded", loadGraphs);
 
