@@ -51,6 +51,7 @@ let intents = [
 
 // Crawler Queue State (Task 8b/13b)
 let crawlerQueue = [
+    { repo: "KathiraveluLab/TelemetryService", status: "crawled", graphs: null },
     { repo: "KathiraveluLab/IMPACT", status: "crawled", graphs: null },
     { repo: "jhy/jsoup", status: "crawled" },
     { repo: "pallets/flask", status: "crawled" },
@@ -58,7 +59,7 @@ let crawlerQueue = [
     { repo: "spring-projects/spring-petclinic", status: "pending" },
     { repo: "google/guava", status: "processing" }
 ];
-let activeRepoName = "KathiraveluLab/IMPACT";
+let activeRepoName = "KathiraveluLab/TelemetryService";
 
 // App State
 let currentGraph = GRAPH_DATA_V2;
