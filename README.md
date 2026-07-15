@@ -139,6 +139,23 @@ This starts a local development server and automatically opens the dashboard int
 
 ![IMPACT Architect Dashboard UI](docs/dashboard_screenshot.png)
 
+### Dashboard LLM Analysis API Server
+
+The architect dashboard includes a **double-click conformance report** feature on every crawl success message. The **📊 Metrics tab** (instant, local) is always available. The **🤖 LLM Analysis tab** is powered by the IMPACT API server, which **starts automatically** alongside the dashboard — no separate command needed.
+
+When you run `impact-dashboard` (or `python3 -m core.run_dashboard`) you will see:
+
+```
+Starting IMPACT Architect Dashboard...
+[LLM API]   Serving on http://localhost:7842/api/llm-analysis
+[Dashboard] Serving on http://localhost:8080/index.html
+[Browser]   Opening http://localhost:8080/index.html
+```
+
+Both servers stop together when you press **Ctrl+C**.
+
+The server uses whichever LLM backend is configured via environment variable (see [LLM / AI Configuration](#llm--ai-configuration) below). Without any key set, it falls back to the built-in rule-based `LLMAgent` analyser — useful offline.
+
 
 ### Running Unit Tests
 
@@ -188,6 +205,41 @@ python3 core/shacl_validator.py <graphJsonPath>
 3.  **Graph Analysis**: The Graph agent loads the JSON-LD files, and the Metrics agent calculates network centralities to identify coupling hubs.
 4.  **Version Comparison**: The Diff agent compares adjacent versions to discover added, removed, or modified nodes and edges, as well as newly introduced cycles.
 5.  **Intent Conformance**: The LLM agent evaluates the diff metrics against the user-specified architectural intents, outputting a compliance report and refactoring recommendations.
+
+---
+
+## LLM / AI Configuration
+
+The `LLMAgent` (used by both the CLI coordinator and the dashboard API server) supports three LLM backends, selected automatically based on which environment variables are present. Priority order:
+
+| Priority | Variable | Backend |
+|----------|----------|---------|
+| 1 | `LLM_API_URL` + (optionally) `OPENAI_API_KEY` | Any OpenAI-compatible endpoint (Ollama, vLLM, LM Studio, Azure OpenAI, …) |
+| 2 | `OPENAI_API_KEY` | OpenAI API (`gpt-4o-mini` by default, override with `LLM_MODEL`) |
+| 3 | `GEMINI_API_KEY` | Google Gemini Developer API (`gemini-1.5-flash`) |
+| — | *(none set)* | Built-in rule-based fallback — no external calls, works offline |
+
+### Quick setup
+
+```bash
+# Option A — Google Gemini (free tier available)
+export GEMINI_API_KEY="AIza..."
+
+# Option B — OpenAI
+export OPENAI_API_KEY="sk-..."
+export LLM_MODEL="gpt-4o"          # optional, default: gpt-4o-mini
+
+# Option C — Local model via Ollama (or any OpenAI-compatible server)
+export LLM_API_URL="http://localhost:11434/v1/chat/completions"
+export LLM_MODEL="llama3"
+
+# Then simply start the dashboard (the API server launches automatically)
+impact-dashboard
+```
+
+To make the variables permanent, add them to your shell profile (`~/.bashrc`, `~/.zshrc`) or a `.env` file (already in `.gitignore`).
+
+> **Security note:** Never commit API keys to version control. The `.gitignore` already excludes `.env`.
 
 ---
 

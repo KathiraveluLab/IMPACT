@@ -178,7 +178,6 @@ function renderCrawlerQueue() {
                 setTimeout(() => {
                     job.status = "crawled";
                     switchToRepo(job);
-                    addAgentMessage("System", `Successfully crawled ${job.repo}. Conformance report generated.`, "system");
                 }, 2500);
             } else if (job.status === "processing") {
                 // Force transition to crawled immediately
@@ -186,7 +185,6 @@ function renderCrawlerQueue() {
                 setTimeout(() => {
                     job.status = "crawled";
                     switchToRepo(job);
-                    addAgentMessage("System", `Successfully crawled ${job.repo}. Conformance report generated.`, "system");
                 }, 1500);
             }
         });
@@ -398,6 +396,46 @@ function addQueueStyles() {
         }
         .modal-btn-close:hover {
             background: #0ea5e9;
+        }
+
+        /* Modal tab strip */
+        .modal-tabs {
+            display: flex;
+            gap: 0;
+            background: #0a0f1e;
+            border-bottom: 1px solid #1e293b;
+        }
+        .modal-tab {
+            flex: 1;
+            padding: 10px 0;
+            background: transparent;
+            color: #64748b;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .modal-tab:hover { color: #94a3b8; }
+        .modal-tab.active { color: #38bdf8; border-bottom-color: #38bdf8; }
+
+        /* Tab content */
+        .modal-tab-content { display: none; }
+        .modal-tab-content.active { display: block; }
+
+        /* LLM spinner */
+        .modal-spinner {
+            padding: 40px 20px;
+            text-align: center;
+            color: #38bdf8;
+            font-size: 14px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
     `;
     document.head.appendChild(style);
@@ -771,11 +809,9 @@ triggerCrawlBtn.addEventListener("click", () => {
             renderCrawlerQueue();
             addAgentMessage("System", `Crawler claimed ${repo}, starting AST dependency analysis...`, "system");
         }, 1500);
-        
         setTimeout(() => {
             newJob.status = "crawled";
             switchToRepo(newJob);
-            addAgentMessage("System", `Successfully crawled ${repo}. Schema metrics validated via SHACL. Conformance report generated.`, "system");
         }, 4000);
     }
 });
@@ -1361,6 +1397,11 @@ function runAnalysis() {
 
         addAgentMessage("LLMAgent", report, "ll");
     }, 1600));
+
+    // Final message — always appears last, stable and double-clickable
+    analysisTimeouts.push(setTimeout(() => {
+        addAgentMessage("System", `Successfully crawled ${activeRepoName}. Conformance report generated.`, "system");
+    }, 2000));
 }
 
 // Dynamic UI labeling based on ecosystem language
@@ -1470,8 +1511,11 @@ ${violations.join("\n")}
 `;
 }
 
-// Render and show the conformance report modal dynamically
+// Render and show the conformance report modal with two tabs:
+// Tab 1 — local rule-based metrics summary (instant)
+// Tab 2 — LLM/RAG narrative (async, fetches /api/llm-analysis, falls back gracefully)
 function showReportModal(repoName, lang) {
+    // Build or retrieve modal
     let modal = document.getElementById("conformance-report-modal");
     if (!modal) {
         modal = document.createElement("div");
@@ -1480,11 +1524,19 @@ function showReportModal(repoName, lang) {
         modal.innerHTML = `
             <div class="modal-box">
                 <div class="modal-header">
-                    <h3>Architectural Conformance Report</h3>
+                    <h3 id="modal-title">Architectural Conformance Report</h3>
                     <span class="modal-close">&times;</span>
                 </div>
+                <div class="modal-tabs">
+                    <button class="modal-tab active" data-tab="metrics">📊 Metrics</button>
+                    <button class="modal-tab" data-tab="llm">🤖 LLM Analysis</button>
+                </div>
                 <div class="modal-body">
-                    <pre id="modal-report-content"></pre>
+                    <pre id="modal-tab-metrics" class="modal-tab-content active"></pre>
+                    <div id="modal-tab-llm" class="modal-tab-content">
+                        <div id="modal-llm-spinner" class="modal-spinner">⏳ Requesting LLM analysis…</div>
+                        <pre id="modal-llm-content" style="display:none"></pre>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="modal-btn-close">Close Report</button>
@@ -1492,17 +1544,96 @@ function showReportModal(repoName, lang) {
             </div>
         `;
         document.body.appendChild(modal);
-        
+
+        // Tab switching
+        modal.querySelectorAll(".modal-tab").forEach(btn => {
+            btn.addEventListener("click", () => {
+                modal.querySelectorAll(".modal-tab").forEach(b => b.classList.remove("active"));
+                modal.querySelectorAll(".modal-tab-content").forEach(c => c.classList.remove("active"));
+                btn.classList.add("active");
+                document.getElementById(`modal-tab-${btn.dataset.tab}`).classList.add("active");
+            });
+        });
+
         modal.querySelector(".modal-close").addEventListener("click", () => modal.classList.remove("active"));
         modal.querySelector(".modal-btn-close").addEventListener("click", () => modal.classList.remove("active"));
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) modal.classList.remove("active");
-        });
+        modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.remove("active"); });
     }
-    
-    const reportText = generateReportText(repoName, lang);
-    document.getElementById("modal-report-content").innerText = reportText;
+
+    // Always reset to Metrics tab when opening
+    modal.querySelectorAll(".modal-tab").forEach(b => b.classList.remove("active"));
+    modal.querySelectorAll(".modal-tab-content").forEach(c => c.classList.remove("active"));
+    modal.querySelector('[data-tab="metrics"]').classList.add("active");
+    document.getElementById("modal-tab-metrics").classList.add("active");
+
+    // Populate title
+    document.getElementById("modal-title").innerText = `${repoName} — Conformance Report`;
+
+    // Tab 1: instant local metrics
+    document.getElementById("modal-tab-metrics").innerText = generateReportText(repoName, lang);
+
+    // Tab 2: reset to spinner state
+    document.getElementById("modal-llm-spinner").style.display = "block";
+    document.getElementById("modal-llm-content").style.display = "none";
+    document.getElementById("modal-llm-content").innerText = "";
+
     modal.classList.add("active");
+
+    // Async: call the LLM API server
+    const diff = computeDiff();
+    const payload = {
+        repo: repoName,
+        lang,
+        intents: intents.map(i => {
+            if (i.type === "no-cycles") return "avoid cyclic dependencies";
+            if (i.type === "max-coupling") return `max coupling threshold: ${i.val}`;
+            if (i.type === "max-inheritance") return `max inheritance depth: ${i.val}`;
+            return i.type;
+        }),
+        diff: {
+            version_old: baseGraph.version || "v1",
+            version_new: currentGraph.version || "v2",
+            addedNodes: diff.addedNodes.length,
+            removedNodes: diff.removedNodes.length,
+            addedEdges: diff.addedEdges.length,
+            removedEdges: diff.removedEdges.length,
+            newCycles: diff.newCycles.length,
+            brokenCycles: 0,
+            addedNodeIds: diff.addedNodes.map(n => n.id || n.name || ""),
+            removedNodeIds: diff.removedNodes.map(n => n.id || n.name || ""),
+            addedEdgeIds: [],
+            newCycleIds: diff.newCycles,
+        },
+        metrics: {
+            topHubs: currentGraph.nodes.slice(0, 5).map(n => n.id || n.name),
+            couplingAnomalies: [],
+        }
+    };
+
+    fetch("http://localhost:7842/api/llm-analysis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(15000)
+    })
+    .then(r => r.ok ? r.json() : Promise.reject(`HTTP ${r.status}`))
+    .then(data => {
+        document.getElementById("modal-llm-spinner").style.display = "none";
+        document.getElementById("modal-llm-content").innerText = data.report;
+        document.getElementById("modal-llm-content").style.display = "block";
+    })
+    .catch(() => {
+        // API server not running — show informative fallback in the tab
+        document.getElementById("modal-llm-spinner").style.display = "none";
+        document.getElementById("modal-llm-content").style.display = "block";
+        document.getElementById("modal-llm-content").innerText =
+            "ℹ️  LLM Analysis requires the IMPACT API server.\n\n" +
+            "Start it with:\n" +
+            "  python -m core.dashboard.api_server\n\n" +
+            "Set GEMINI_API_KEY, OPENAI_API_KEY, or LLM_API_URL in your environment\n" +
+            "to enable live LLM/RAG-powered architectural narrative.\n\n" +
+            "Without an LLM key, the server will use a built-in rule-based analyser.";
+    });
 }
 
 // Populate stats KPIs
