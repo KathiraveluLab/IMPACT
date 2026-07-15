@@ -84,7 +84,7 @@ pip install impact-core[all]
 git tag v1.x.y && git push origin v1.x.y   # GitHub Actions does the rest
 ```
 
-See [DEPLOY.md](DEPLOY.md) for the full release workflow, one-time PyPI Trusted
+See [DEPLOY.md](docs/DEPLOY.md) for the full release workflow, one-time PyPI Trusted
 Publisher setup, Docker, and Kubernetes deployment instructions.
 
 ### Console scripts
