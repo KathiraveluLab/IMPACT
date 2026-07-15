@@ -133,7 +133,28 @@ def start_api_server():
         print(f"[LLM API]   Could not start API server: {e}")
 
 
+def load_dotenv():
+    """Load variables from .env file in the project root if it exists."""
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    dotenv_path = os.path.join(root_dir, ".env")
+    if os.path.exists(dotenv_path):
+        try:
+            with open(dotenv_path, "r") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    if "=" in line:
+                        key, val = line.split("=", 1)
+                        key = key.strip()
+                        val = val.strip().strip("'").strip('"')
+                        os.environ[key] = val
+        except Exception as e:
+            print(f"Warning: Could not load .env file: {e}")
+
+
 def main():
+    load_dotenv()
     global DASHBOARD_PORT, API_PORT
     print("Starting IMPACT Architect Dashboard...")
 

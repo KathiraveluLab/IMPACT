@@ -120,6 +120,16 @@ docker run --rm \
 The SQLite queue database is written inside the mounted volume at
 `test_projects/github_benchmarks/crawler_queue.db`.
 
+### GitHub Personal Access Token (Rate Limits)
+Both the crawler and the dashboard require a GitHub Personal Access Token to lift the unauthenticated rate limits (which are limited to 60 requests/hour). 
+
+* **To obtain a token:** Go to your GitHub account -> **Settings -> Developer settings -> Personal access tokens** -> **Tokens (classic)** or **Fine-grained tokens**. Generate a token. No scopes are needed for public repositories.
+* **For local/native runs:** Copy `.env.example` to `.env` in the project root and fill in your token:
+  ```env
+  GITHUB_TOKEN=ghp_yourpersonaltoken
+  ```
+* **For Docker runs:** Pass the token via the `-e GITHUB_TOKEN=...` flag when running the containers (as shown in the discovery step above).
+
 ---
 
 ## 3. Kubernetes (multi-node distributed crawler)

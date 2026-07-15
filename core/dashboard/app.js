@@ -52,7 +52,7 @@ let intents = [
 // Crawler Queue State (Task 8b/13b)
 let crawlerQueue = [
     { repo: "demo/TelemetryService", status: "crawled", graphs: null, isDemo: true },
-    { repo: "KathiraveluLab/IMPACT", status: "crawled", graphs: null },
+    { repo: "KathiraveluLab/IMPACT", status: "crawled", graphs: null, detectedLanguage: "Python" },
     { repo: "jhy/jsoup", status: "crawled" },
     { repo: "pallets/flask", status: "crawled" },
     { repo: "gleam-lang/gleam", status: "crawled" },
@@ -563,7 +563,7 @@ function generateRepositoryGraph(repoName, detectedLanguage) {
         const nameMatch = repoName.toLowerCase();
         if (nameMatch.includes("jsoup") || nameMatch.includes("guava") || nameMatch.includes("petclinic") || nameMatch.includes("java")) {
             language = "Java";
-        } else if (nameMatch.includes("flask") || nameMatch.includes("python") || nameMatch.includes("django")) {
+        } else if (nameMatch.includes("flask") || nameMatch.includes("python") || nameMatch.includes("django") || nameMatch.includes("impact")) {
             language = "Python";
         } else if (nameMatch.includes("gleam")) {
             language = "Gleam";

@@ -154,6 +154,19 @@ Starting IMPACT Architect Dashboard...
 
 Both servers stop together when you press **Ctrl+C**.
 
+#### Configuring GitHub API Rate Limits
+To crawl public GitHub repositories live via the dashboard queue, unauthenticated API requests are capped at 60 requests per hour. To raise this limit to 5,000 requests per hour, you can configure a GitHub Personal Access Token:
+1. **Generate a Token:** Go to GitHub -> **Settings -> Developer settings -> Personal access tokens** (classic or fine-grained). No special scopes are needed for reading public repositories.
+2. **Configure Local Environment:** Create a `.env` file in the project root:
+   ```bash
+   cp .env.example .env
+   ```
+3. **Add the Token:** Edit the `.env` file and set your token:
+   ```env
+   GITHUB_TOKEN=ghp_yourTokenHere
+   ```
+The dashboard and crawler servers automatically load this `.env` file on startup and use the token to authenticate outgoing API requests.
+
 The server uses whichever LLM backend is configured via environment variable (see [LLM / AI Configuration](#llm--ai-configuration) below). Without any key set, it falls back to the built-in rule-based `LLMAgent` analyser — useful offline.
 
 

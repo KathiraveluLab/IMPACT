@@ -61,3 +61,4 @@ k8s/secret.yaml
 # Dynamic runtime configuration for the dashboard
 core/dashboard/config.js
 core/dashboard/test_projects/
+.env
