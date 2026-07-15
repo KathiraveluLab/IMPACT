@@ -12,6 +12,8 @@ The repository is organized as follows:
     *   `schema/`: Standardized JSON schema for software dependency graphs.
     *   `agents/`: Specialized agent implementations including the Coordinator, Graph, Diff, Metrics, and LLM agents.
     *   `graph_utils.py`: Utility functions for loading graphs and computing structural diffs.
+    *   `run_demo.py`: Execution script to run the multi-agent evolution tracker.
+    *   `run_dashboard.py`: Launch script for the architect dashboard.
 *   **`adapters/`**: Pluggable source code extraction layers:
     *   `java/`: Python-based parser that walks Java project directories, extracts FQCNs, resolves dependency call-graphs, and exports JSON graphs.
 *   **`test_projects/`**: Datasets and source folders simulating software evolution:
@@ -19,7 +21,6 @@ The repository is organized as follows:
     *   `telemetry_service_v2/`: Version 2.0.0 Java source code of TelemetryService.
     *   `v1_graph.json`: Extracted dependency graph for Version 1.0.0.
     *   `v2_graph.json`: Extracted dependency graph for Version 2.0.0.
-*   **`run_demo.py`**: Execution script to run the multi-agent evolution tracker.
 *   **`test_impact.py`**: Automated unit test suite to verify graph loading, diff calculations, and coordinator orchestration.
 
 ## Installation & Setup
@@ -119,7 +120,7 @@ impact-extract TelemetryService 2.0.0 test_projects/telemetry_service_v2/src tes
 impact-demo
 
 # Or directly
-python3 run_demo.py
+python3 -m core.run_demo
 ```
 
 This runs the Coordinator agent, orchestrates the swarm, evaluates intents against the graph diffs, and generates the compliance report.
@@ -131,10 +132,10 @@ This runs the Coordinator agent, orchestrates the swarm, evaluates intents again
 impact-dashboard
 
 # Or directly
-python3 run_dashboard.py
+python3 -m core.run_dashboard
 ```
 
-This starts a local development server and automatically opens the dashboard interface at `http://localhost:8080/dashboard/index.html`. In the dashboard, you can visually explore the dependency graphs (with cycles highlighted in red), add new intents, trigger evolution analyses, and view tabular diff metrics.
+This starts a local development server and automatically opens the dashboard interface at `http://localhost:8080/index.html`. In the dashboard, you can visually explore the dependency graphs (with cycles highlighted in red), add new intents, trigger evolution analyses, and view tabular diff metrics.
 
 ![IMPACT Architect Dashboard UI](docs/dashboard_screenshot.png)
 
