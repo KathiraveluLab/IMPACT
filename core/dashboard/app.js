@@ -250,14 +250,13 @@ async function switchToRepo(job) {
                 throw new Error(data.error || "Unknown crawling error");
             }
         } catch (e) {
-            console.error("[Dashboard] Crawl failed:", e);
-            addAgentMessage("System", `❌ [Crawl Error] Failed to crawl and extract actual dependency graphs for ${job.repo}. Error: ${e.message}`, "system");
+            console.warn("[Dashboard] Live crawl failed, falling back to simulated graph:", e);
+            addAgentMessage("System", `⚠️ [Crawl Fallback] Failed to extract live graphs for ${job.repo} (${e.message}). Loading simulated repository evolution.`, "system");
             if (loader) {
                 loader.remove();
             }
-            job.status = "pending";
+            job.status = "crawled";
             renderCrawlerQueue();
-            return;
         }
     }
     
