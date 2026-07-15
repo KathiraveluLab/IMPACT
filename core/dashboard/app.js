@@ -137,7 +137,7 @@ function renderIntents() {
     });
 }
 
-// // Render Crawler Queue (Task 13b)
+// Render Crawler Queue (Task 13b)
 function renderCrawlerQueue() {
     crawlerQueueList.innerHTML = "";
     crawlerQueue.forEach((job) => {
@@ -152,16 +152,90 @@ function renderCrawlerQueue() {
             li.className += " active";
         }
         
+        let tooltipText = "";
+        if (job.status === "pending") tooltipText = " title=\"Click to start crawl\"";
+        if (job.status === "processing") tooltipText = " title=\"Click to force/expedite crawl\"";
+        if (job.status === "crawled") tooltipText = " title=\"Click to view graph\"";
+        
         li.innerHTML = `
-            <span>${job.repo}</span>
+            <span${tooltipText}>${job.repo}</span>
             <span class="badge ${badgeClass}" style="padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">${job.status}</span>
         `;
         
-        if (job.status === "crawled") {
-            li.addEventListener("click", () => {
+        li.addEventListener("click", () => {
+            if (job.status === "crawled") {
                 switchToRepo(job);
-            });
-        }
+            } else if (job.status === "pending") {
+                // Force transition to processing
+                job.status = "processing";
+                renderCrawlerQueue();
+                addAgentMessage("System", `Manually triggered crawl for ${job.repo}. Starting AST dependency analysis...`, "system");
+                
+                setTimeout(() => {
+                    job.status = "crawled";
+                    const cleanName = job.repo.split("/")[1] || job.repo;
+                    const newGraphData = generateRepositoryGraph(job.repo);
+                    job.graphs = newGraphData;
+                    
+                    baseGraph = newGraphData.v1;
+                    currentGraph = newGraphData.v2;
+                    activeRepoName = job.repo;
+                    
+                    const headerTitle = document.querySelector(".content-header h2");
+                    if (headerTitle) {
+                        headerTitle.innerText = `${job.repo} Architecture Evolution`;
+                    }
+                    
+                    const baseVersionSelect = document.getElementById("base-version-select");
+                    const targetVersionSelect = document.getElementById("target-version-select");
+                    if (baseVersionSelect && targetVersionSelect) {
+                        baseVersionSelect.innerHTML = `<option value="v1">v1.0.0 (${cleanName})</option>`;
+                        targetVersionSelect.innerHTML = `<option value="v2">v2.0.0 (${cleanName})</option>`;
+                    }
+                    
+                    resetLayout();
+                    updateKPIs();
+                    renderDiffTable();
+                    runAnalysis();
+                    
+                    renderCrawlerQueue();
+                    addAgentMessage("System", `Successfully crawled ${job.repo}. Conformance report generated.`, "system");
+                }, 2500);
+            } else if (job.status === "processing") {
+                // Force transition to crawled immediately
+                addAgentMessage("System", `Expediting active crawl for ${job.repo}...`, "system");
+                setTimeout(() => {
+                    job.status = "crawled";
+                    const cleanName = job.repo.split("/")[1] || job.repo;
+                    const newGraphData = generateRepositoryGraph(job.repo);
+                    job.graphs = newGraphData;
+                    
+                    baseGraph = newGraphData.v1;
+                    currentGraph = newGraphData.v2;
+                    activeRepoName = job.repo;
+                    
+                    const headerTitle = document.querySelector(".content-header h2");
+                    if (headerTitle) {
+                        headerTitle.innerText = `${job.repo} Architecture Evolution`;
+                    }
+                    
+                    const baseVersionSelect = document.getElementById("base-version-select");
+                    const targetVersionSelect = document.getElementById("target-version-select");
+                    if (baseVersionSelect && targetVersionSelect) {
+                        baseVersionSelect.innerHTML = `<option value="v1">v1.0.0 (${cleanName})</option>`;
+                        targetVersionSelect.innerHTML = `<option value="v2">v2.0.0 (${cleanName})</option>`;
+                    }
+                    
+                    resetLayout();
+                    updateKPIs();
+                    renderDiffTable();
+                    runAnalysis();
+                    
+                    renderCrawlerQueue();
+                    addAgentMessage("System", `Successfully crawled ${job.repo}. Conformance report generated.`, "system");
+                }, 1500);
+            }
+        });
         
         crawlerQueueList.appendChild(li);
     });
@@ -219,43 +293,139 @@ function addQueueStyles() {
 // Generate dynamic graph for crawled repository to visualize its evolution
 function generateRepositoryGraph(repoName) {
     const cleanName = repoName.split("/")[1] || repoName;
-    const pkg = `org.${cleanName.toLowerCase()}`;
+    const lowerName = cleanName.toLowerCase();
     
-    const v1Nodes = [
-        { id: `${pkg}.Core`, name: "Core", metrics: { loc: 420, complexity: 15, coupling: 5, fanIn: 3, fanOut: 2, inheritanceDepth: 1 } },
-        { id: `${pkg}.Parser`, name: "Parser", metrics: { loc: 280, complexity: 8, coupling: 3, fanIn: 1, fanOut: 2, inheritanceDepth: 0 } },
-        { id: `${pkg}.Engine`, name: "Engine", metrics: { loc: 350, complexity: 10, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 1 } },
-        { id: `${pkg}.Utils`, name: "Utils", metrics: { loc: 150, complexity: 3, coupling: 4, fanIn: 4, fanOut: 0, inheritanceDepth: 0 } },
-        { id: `${pkg}.Client`, name: "Client", metrics: { loc: 210, complexity: 6, coupling: 3, fanIn: 0, fanOut: 3, inheritanceDepth: 1 } },
-        { id: `${pkg}.Config`, name: "Config", metrics: { loc: 110, complexity: 2, coupling: 2, fanIn: 2, fanOut: 0, inheritanceDepth: 0 } }
-    ];
+    let v1Nodes = [];
+    let v1Edges = [];
+    let v2Nodes = [];
+    let v2Edges = [];
+    let averageCoupling1 = 1.5;
+    let averageCoupling2 = 1.8;
     
-    const v1Edges = [
-        { source: `${pkg}.Core`, target: `${pkg}.Engine`, type: "uses" },
-        { source: `${pkg}.Core`, target: `${pkg}.Config`, type: "uses" },
-        { source: `${pkg}.Engine`, target: `${pkg}.Parser`, type: "uses" },
-        { source: `${pkg}.Parser`, target: `${pkg}.Utils`, type: "uses" },
-        { source: `${pkg}.Client`, target: `${pkg}.Core`, type: "uses" },
-        { source: `${pkg}.Client`, target: `${pkg}.Utils`, type: "uses" }
-    ];
-
-    const v2Nodes = [
-        ...v1Nodes.map(n => ({
-            ...n,
-            metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.1) }
-        })),
-        { id: `${pkg}.Security`, name: "Security", metrics: { loc: 180, complexity: 7, coupling: 3, fanIn: 1, fanOut: 2, inheritanceDepth: 2 } },
-        { id: `${pkg}.Optimizer`, name: "Optimizer", metrics: { loc: 240, complexity: 9, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 1 } }
-    ];
-
-    const v2Edges = [
-        ...v1Edges,
-        { source: `${pkg}.Engine`, target: `${pkg}.Optimizer`, type: "uses" },
-        { source: `${pkg}.Optimizer`, target: `${pkg}.Parser`, type: "uses" },
-        { source: `${pkg}.Core`, target: `${pkg}.Security`, type: "uses" },
-        { source: `${pkg}.Security`, target: `${pkg}.Utils`, type: "uses" },
-        { source: `${pkg}.Parser`, target: `${pkg}.Engine`, type: "calls" } // Cycle: Engine <-> Parser
-    ];
+    if (lowerName.includes("jsoup")) {
+        const pkg = "org.jsoup";
+        v1Nodes = [
+            { id: `${pkg}.Jsoup`, name: "Jsoup", type: "class", metrics: { loc: 520, complexity: 18, coupling: 6, fanIn: 2, fanOut: 4, inheritanceDepth: 1 } },
+            { id: `${pkg}.parser.Parser`, name: "Parser", type: "class", metrics: { loc: 410, complexity: 12, coupling: 5, fanIn: 3, fanOut: 2, inheritanceDepth: 0 } },
+            { id: `${pkg}.parser.HtmlTreeBuilder`, name: "HtmlTreeBuilder", type: "class", metrics: { loc: 630, complexity: 22, coupling: 7, fanIn: 2, fanOut: 5, inheritanceDepth: 1 } },
+            { id: `${pkg}.parser.Tokeniser`, name: "Tokeniser", type: "class", metrics: { loc: 340, complexity: 9, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 0 } },
+            { id: `${pkg}.nodes.Document`, name: "Document", type: "class", metrics: { loc: 290, complexity: 7, coupling: 4, fanIn: 3, fanOut: 1, inheritanceDepth: 1 } },
+            { id: `${pkg}.nodes.Element`, name: "Element", type: "class", metrics: { loc: 460, complexity: 14, coupling: 5, fanIn: 2, fanOut: 3, inheritanceDepth: 1 } },
+            { id: `${pkg}.nodes.Node`, name: "Node", type: "class", metrics: { loc: 190, complexity: 4, coupling: 3, fanIn: 3, fanOut: 0, inheritanceDepth: 0 } }
+        ];
+        v1Edges = [
+            { source: `${pkg}.Jsoup`, target: `${pkg}.parser.Parser`, type: "calls" },
+            { source: `${pkg}.parser.Parser`, target: `${pkg}.parser.HtmlTreeBuilder`, type: "uses" },
+            { source: `${pkg}.parser.HtmlTreeBuilder`, target: `${pkg}.parser.Tokeniser`, type: "uses" },
+            { source: `${pkg}.parser.Parser`, target: `${pkg}.nodes.Document`, type: "creates" },
+            { source: `${pkg}.nodes.Document`, target: `${pkg}.nodes.Element`, type: "extends" },
+            { source: `${pkg}.nodes.Element`, target: `${pkg}.nodes.Node`, type: "extends" }
+        ];
+        v2Nodes = [
+            ...v1Nodes.map(n => ({ ...n, metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.05) } })),
+            { id: `${pkg}.safety.Cleaner`, name: "Cleaner", type: "class", metrics: { loc: 240, complexity: 8, coupling: 4, fanIn: 1, fanOut: 3, inheritanceDepth: 0 } },
+            { id: `${pkg}.helper.HttpConnection`, name: "HttpConnection", type: "class", metrics: { loc: 310, complexity: 11, coupling: 4, fanIn: 1, fanOut: 3, inheritanceDepth: 1 } }
+        ];
+        v2Edges = [
+            ...v1Edges,
+            { source: `${pkg}.Jsoup`, target: `${pkg}.helper.HttpConnection`, type: "calls" },
+            { source: `${pkg}.parser.HtmlTreeBuilder`, target: `${pkg}.safety.Cleaner`, type: "uses" },
+            { source: `${pkg}.safety.Cleaner`, target: `${pkg}.nodes.Document`, type: "uses" },
+            { source: `${pkg}.parser.Tokeniser`, target: `${pkg}.parser.Parser`, type: "calls" } // Cycle: Parser -> HtmlTreeBuilder -> Tokeniser -> Parser
+        ];
+        averageCoupling1 = 2.4;
+        averageCoupling2 = 2.8;
+    } else if (lowerName.includes("guava")) {
+        const pkg = "com.google.common";
+        v1Nodes = [
+            { id: `${pkg}.base.Preconditions`, name: "Preconditions", type: "class", metrics: { loc: 160, complexity: 5, coupling: 8, fanIn: 8, fanOut: 0, inheritanceDepth: 0 } },
+            { id: `${pkg}.collect.Lists`, name: "Lists", type: "class", metrics: { loc: 210, complexity: 6, coupling: 4, fanIn: 1, fanOut: 3, inheritanceDepth: 0 } },
+            { id: `${pkg}.collect.Maps`, name: "Maps", type: "class", metrics: { loc: 260, complexity: 8, coupling: 4, fanIn: 1, fanOut: 3, inheritanceDepth: 0 } },
+            { id: `${pkg}.collect.Sets`, name: "Sets", type: "class", metrics: { loc: 190, complexity: 5, coupling: 3, fanIn: 1, fanOut: 2, inheritanceDepth: 0 } },
+            { id: `${pkg}.collect.ImmutableList`, name: "ImmutableList", type: "class", metrics: { loc: 410, complexity: 13, coupling: 5, fanIn: 4, fanOut: 1, inheritanceDepth: 1 } },
+            { id: `${pkg}.collect.ImmutableMap`, name: "ImmutableMap", type: "class", metrics: { loc: 470, complexity: 15, coupling: 5, fanIn: 4, fanOut: 1, inheritanceDepth: 1 } }
+        ];
+        v1Edges = [
+            { source: `${pkg}.collect.ImmutableList`, target: `${pkg}.base.Preconditions`, type: "checks" },
+            { source: `${pkg}.collect.ImmutableMap`, target: `${pkg}.base.Preconditions`, type: "checks" },
+            { source: `${pkg}.collect.Lists`, target: `${pkg}.collect.ImmutableList`, type: "creates" },
+            { source: `${pkg}.collect.Maps`, target: `${pkg}.collect.ImmutableMap`, type: "creates" },
+            { source: `${pkg}.collect.Sets`, target: `${pkg}.base.Preconditions`, type: "checks" }
+        ];
+        v2Nodes = [
+            ...v1Nodes.map(n => ({ ...n, metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.08) } })),
+            { id: `${pkg}.cache.CacheBuilder`, name: "CacheBuilder", type: "class", metrics: { loc: 510, complexity: 16, coupling: 5, fanIn: 1, fanOut: 4, inheritanceDepth: 0 } },
+            { id: `${pkg}.cache.LocalCache`, name: "LocalCache", type: "class", metrics: { loc: 890, complexity: 32, coupling: 7, fanIn: 4, fanOut: 3, inheritanceDepth: 1 } }
+        ];
+        v2Edges = [
+            ...v1Edges,
+            { source: `${pkg}.cache.CacheBuilder`, target: `${pkg}.cache.LocalCache`, type: "creates" },
+            { source: `${pkg}.cache.LocalCache`, target: `${pkg}.cache.CacheBuilder`, type: "references" }, // Cycle: CacheBuilder <-> LocalCache
+            { source: `${pkg}.cache.LocalCache`, target: `${pkg}.base.Preconditions`, type: "checks" }
+        ];
+        averageCoupling1 = 1.8;
+        averageCoupling2 = 2.1;
+    } else if (lowerName.includes("petclinic")) {
+        const pkg = "org.springframework.samples.petclinic";
+        v1Nodes = [
+            { id: `${pkg}.PetClinicApplication`, name: "PetClinicApp", type: "class", metrics: { loc: 110, complexity: 2, coupling: 4, fanIn: 0, fanOut: 4, inheritanceDepth: 0 } },
+            { id: `${pkg}.owner.OwnerController`, name: "OwnerController", type: "class", metrics: { loc: 310, complexity: 11, coupling: 5, fanIn: 1, fanOut: 4, inheritanceDepth: 0 } },
+            { id: `${pkg}.owner.OwnerRepository`, name: "OwnerRepository", type: "class", metrics: { loc: 140, complexity: 4, coupling: 3, fanIn: 2, fanOut: 1, inheritanceDepth: 1 } },
+            { id: `${pkg}.owner.Owner`, name: "Owner", type: "class", metrics: { loc: 240, complexity: 6, coupling: 4, fanIn: 3, fanOut: 1, inheritanceDepth: 0 } },
+            { id: `${pkg}.vet.VetController`, name: "VetController", type: "class", metrics: { loc: 270, complexity: 9, coupling: 5, fanIn: 1, fanOut: 4, inheritanceDepth: 0 } },
+            { id: `${pkg}.vet.VetRepository`, name: "VetRepository", type: "class", metrics: { loc: 110, complexity: 3, coupling: 3, fanIn: 2, fanOut: 1, inheritanceDepth: 1 } },
+            { id: `${pkg}.vet.Vet`, name: "Vet", type: "class", metrics: { loc: 170, complexity: 4, coupling: 4, fanIn: 3, fanOut: 1, inheritanceDepth: 0 } }
+        ];
+        v1Edges = [
+            { source: `${pkg}.PetClinicApplication`, target: `${pkg}.owner.OwnerController`, type: "routes" },
+            { source: `${pkg}.PetClinicApplication`, target: `${pkg}.vet.VetController`, type: "routes" },
+            { source: `${pkg}.owner.OwnerController`, target: `${pkg}.owner.OwnerRepository`, type: "queries" },
+            { source: `${pkg}.owner.OwnerController`, target: `${pkg}.owner.Owner`, type: "binds" },
+            { source: `${pkg}.vet.VetController`, target: `${pkg}.vet.VetRepository`, type: "queries" },
+            { source: `${pkg}.vet.VetController`, target: `${pkg}.vet.Vet`, type: "binds" }
+        ];
+        v2Nodes = [
+            ...v1Nodes.map(n => ({ ...n, metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.05) } })),
+            { id: `${pkg}.visit.VisitController`, name: "VisitController", type: "class", metrics: { loc: 290, complexity: 10, coupling: 5, fanIn: 1, fanOut: 4, inheritanceDepth: 0 } },
+            { id: `${pkg}.visit.VisitRepository`, name: "VisitRepository", type: "class", metrics: { loc: 100, complexity: 3, coupling: 3, fanIn: 2, fanOut: 1, inheritanceDepth: 1 } },
+            { id: `${pkg}.visit.Visit`, name: "Visit", type: "class", metrics: { loc: 150, complexity: 4, coupling: 4, fanIn: 3, fanOut: 1, inheritanceDepth: 0 } }
+        ];
+        v2Edges = [
+            ...v1Edges,
+            { source: `${pkg}.PetClinicApplication`, target: `${pkg}.visit.VisitController`, type: "routes" },
+            { source: `${pkg}.visit.VisitController`, target: `${pkg}.visit.VisitRepository`, type: "queries" },
+            { source: `${pkg}.visit.VisitController`, target: `${pkg}.visit.Visit`, type: "binds" },
+            { source: `${pkg}.owner.Owner`, target: `${pkg}.visit.Visit`, type: "has" },
+            { source: `${pkg}.visit.Visit`, target: `${pkg}.owner.Owner`, type: "belongsTo" } // Cycle: Owner <-> Visit
+        ];
+        averageCoupling1 = 2.0;
+        averageCoupling2 = 2.4;
+    } else {
+        // General fallback graph custom to repoName
+        const pkg = `org.${lowerName}`;
+        v1Nodes = [
+            { id: `${pkg}.Core`, name: `${cleanName}Core`, type: "class", metrics: { loc: 300, complexity: 10, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 1 } },
+            { id: `${pkg}.Client`, name: `${cleanName}Client`, type: "class", metrics: { loc: 150, complexity: 5, coupling: 3, fanIn: 0, fanOut: 3, inheritanceDepth: 0 } },
+            { id: `${pkg}.Service`, name: `${cleanName}Service`, type: "class", metrics: { loc: 250, complexity: 8, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 1 } },
+            { id: `${pkg}.Database`, name: `${cleanName}Db`, type: "class", metrics: { loc: 120, complexity: 4, coupling: 2, fanIn: 2, fanOut: 0, inheritanceDepth: 0 } }
+        ];
+        v1Edges = [
+            { source: `${pkg}.Client`, target: `${pkg}.Core`, type: "calls" },
+            { source: `${pkg}.Core`, target: `${pkg}.Service`, type: "calls" },
+            { source: `${pkg}.Service`, target: `${pkg}.Database`, type: "queries" }
+        ];
+        v2Nodes = [
+            ...v1Nodes.map(n => ({ ...n, metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.1) } })),
+            { id: `${pkg}.Helper`, name: `${cleanName}Helper`, type: "class", metrics: { loc: 90, complexity: 3, coupling: 2, fanIn: 1, fanOut: 1, inheritanceDepth: 0 } }
+        ];
+        v2Edges = [
+            ...v1Edges,
+            { source: `${pkg}.Core`, target: `${pkg}.Helper`, type: "uses" },
+            { source: `${pkg}.Helper`, target: `${pkg}.Core`, type: "calls" } // Cycle: Core <-> Helper
+        ];
+        averageCoupling1 = 1.5;
+        averageCoupling2 = 1.8;
+    }
 
     return {
         v1: {
@@ -264,7 +434,7 @@ function generateRepositoryGraph(repoName) {
             systemMetrics: {
                 totalClasses: v1Nodes.length,
                 totalLinesOfCode: v1Nodes.reduce((acc, n) => acc + n.metrics.loc, 0),
-                averageComplexity: 7.3
+                averageCoupling: averageCoupling1
             },
             nodes: v1Nodes,
             edges: v1Edges
@@ -275,7 +445,7 @@ function generateRepositoryGraph(repoName) {
             systemMetrics: {
                 totalClasses: v2Nodes.length,
                 totalLinesOfCode: v2Nodes.reduce((acc, n) => acc + n.metrics.loc, 0),
-                averageComplexity: 7.8
+                averageCoupling: averageCoupling2
             },
             nodes: v2Nodes,
             edges: v2Edges
