@@ -24,9 +24,7 @@ The repository is organized as follows:
 
 ## Installation & Setup
 
-IMPACT targets Python 3.8 or higher. The package (`impact-core`) will be published to PyPI — for now, install from source.
-
-> **PyPI status:** automated publishing is configured via GitHub Actions (see `.github/workflows/publish.yml`) and will trigger on the first version tag push. Until then, use the source install below.
+IMPACT targets Python 3.8 or higher. The package (`impact-core`) is published to PyPI. You can install it directly or from source (recommended during active development).
 
 ### Install from source (recommended while in active development)
 
@@ -46,7 +44,7 @@ pip install -e ".[crawler-distributed]" # + PostgreSQL distributed crawler
 pip install -e ".[all]"               # everything
 ```
 
-### Install from PyPI (once published)
+### Install from PyPI
 
 ```bash
 # Core only — graph loading, diff, coordinator, SHACL validator
