@@ -5,8 +5,10 @@ def main():
     print("Initializing IMPACT Multi-Agent Evolution Tracker...")
     coordinator = CoordinatorAgent()
     
-    file_v1 = "test_projects/v1_graph.json"
-    file_v2 = "test_projects/v2_graph.json"
+    import os
+    package_dir = os.path.dirname(os.path.abspath(__file__))
+    file_v1 = os.path.join(package_dir, "schema", "v1_graph.json")
+    file_v2 = os.path.join(package_dir, "schema", "v2_graph.json")
     
     intents = [
         "avoid cyclic dependencies",

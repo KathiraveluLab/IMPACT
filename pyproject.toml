@@ -89,8 +89,8 @@ dev = [
 [project.scripts]
 impact-crawl     = "core.ecosystem_crawler:main"
 impact-extract   = "adapters.java.extractor:main"
-impact-demo      = "run_demo:main"
-impact-dashboard = "run_dashboard:main"
+impact-demo      = "core.run_demo:main"
+impact-dashboard = "core.run_dashboard:main"
 
 # ---------------------------------------------------------------------------
 # URLs shown on PyPI
@@ -108,5 +108,5 @@ include = ["core*", "adapters*"]
 
 # Include non-Python files shipped inside the packages
 [tool.setuptools.package-data]
-"core"    = ["schema/*.json"]
+"core"    = ["schema/*.json", "dashboard/*"]
 "adapters" = ["java/*.py"]

@@ -37,6 +37,7 @@ _bmad
 .gemini
 
 # Python compiled files
+.venv/
 __pycache__/
 *.py[cod]
 *$py.class

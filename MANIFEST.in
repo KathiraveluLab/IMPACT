@@ -16,3 +16,4 @@ recursive-include k8s *.yaml *.example
 # Test datasets (small, deterministic fixtures — not the large benchmark cache)
 recursive-include test_projects *.json *.java
 prune test_projects/github_benchmarks
+recursive-include core/dashboard *

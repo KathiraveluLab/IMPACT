@@ -23,6 +23,11 @@ def start_server():
 def main():
     print("Starting IMPACT Architect Dashboard...")
     
+    import os
+    package_dir = os.path.dirname(os.path.abspath(__file__))
+    dashboard_dir = os.path.join(package_dir, "dashboard")
+    os.chdir(dashboard_dir)
+    
     # Start web server in background thread
     server_thread = threading.Thread(target=start_server, daemon=True)
     server_thread.start()
@@ -31,7 +36,7 @@ def main():
     time.sleep(0.5)
     
     # Open dashboard in browser
-    url = f"http://localhost:{PORT}/dashboard/index.html"
+    url = f"http://localhost:{PORT}/index.html"
     print(f"Opening browser at: {url}")
     webbrowser.open(url)
     
