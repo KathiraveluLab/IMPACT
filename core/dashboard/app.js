@@ -51,7 +51,7 @@ let intents = [
 
 // Crawler Queue State (Task 8b/13b)
 let crawlerQueue = [
-    { repo: "KathiraveluLab/TelemetryService", status: "crawled", graphs: null },
+    { repo: "demo/TelemetryService", status: "crawled", graphs: null, isDemo: true },
     { repo: "KathiraveluLab/IMPACT", status: "crawled", graphs: null },
     { repo: "jhy/jsoup", status: "crawled" },
     { repo: "pallets/flask", status: "crawled" },
@@ -59,7 +59,7 @@ let crawlerQueue = [
     { repo: "spring-projects/spring-petclinic", status: "pending" },
     { repo: "google/guava", status: "processing" }
 ];
-let activeRepoName = "KathiraveluLab/TelemetryService";
+let activeRepoName = "demo/TelemetryService";
 
 // App State
 let currentGraph = GRAPH_DATA_V2;
@@ -148,22 +148,30 @@ function renderCrawlerQueue() {
         const li = document.createElement("li");
         
         let badgeClass = "badge-pending";
-        if (job.status === "crawled") badgeClass = "badge-crawled";
-        if (job.status === "processing") badgeClass = "badge-processing";
+        let badgeLabel = job.status;
+        if (job.isDemo) {
+            badgeClass = "badge-demo";
+            badgeLabel = "demo";
+        } else if (job.status === "crawled") {
+            badgeClass = "badge-crawled";
+        } else if (job.status === "processing") {
+            badgeClass = "badge-processing";
+        }
         
         li.className = `crawler-job-item ${job.status}`;
         if (job.repo === activeRepoName) {
             li.className += " active";
         }
         
+        let displayName = job.isDemo ? "TelemetryService (Demo)" : job.repo;
         let tooltipText = "";
         if (job.status === "pending") tooltipText = " title=\"Click to start crawl\"";
         if (job.status === "processing") tooltipText = " title=\"Click to force/expedite crawl\"";
-        if (job.status === "crawled") tooltipText = " title=\"Click to view graph\"";
+        if (job.status === "crawled" || job.isDemo) tooltipText = " title=\"Click to view graph\"";
         
         li.innerHTML = `
-            <span${tooltipText}>${job.repo}</span>
-            <span class="badge ${badgeClass}" style="padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">${job.status}</span>
+            <span${tooltipText}>${displayName}</span>
+            <span class="badge ${badgeClass}" style="padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">${badgeLabel}</span>
         `;
         
         li.addEventListener("click", () => {
@@ -195,12 +203,13 @@ function renderCrawlerQueue() {
 
 // Switch visualization context to a different crawled repository
 async function switchToRepo(job) {
-    if (job.status !== "crawled") return;
+    if (job.status !== "crawled" && !job.isDemo) return;
     
     activeRepoName = job.repo;
     
     // Attempt dynamic language detection from GitHub API if it's a new crawl without explicit override
-    if (!job.detectedLanguage && !job.repo.includes(":") && !job.graphs) {
+    // Skip demo repos — they don't exist on GitHub
+    if (!job.detectedLanguage && !job.repo.includes(":") && !job.graphs && !job.isDemo) {
         let displayRepo = job.repo;
         try {
             // Fetch language breakdown from GitHub API to find the dominant language
@@ -242,7 +251,9 @@ async function switchToRepo(job) {
     // Update UI headers & selectors
     let displayRepoName = job.repo;
     let cleanName = job.repo.split("/")[1] || job.repo;
-    if (job.repo.includes(":")) {
+    if (job.isDemo) {
+        displayRepoName = `${cleanName} (Demo)`;
+    } else if (job.repo.includes(":")) {
         const parts = job.repo.split(":");
         displayRepoName = parts[0].trim();
         cleanName = displayRepoName.split("/")[1] || displayRepoName;
@@ -279,6 +290,7 @@ function addQueueStyles() {
         .badge.badge-pending { background-color: rgba(217, 119, 6, 0.15); color: #f59e0b; border: 1px solid rgba(217, 119, 6, 0.3); }
         .badge.badge-crawled { background-color: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
         .badge.badge-processing { background-color: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.3); }
+        .badge.badge-demo { background-color: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); }
         
         /* Interactive Report Bubble styles */
         .agent-bubble.interactive-report-bubble {
