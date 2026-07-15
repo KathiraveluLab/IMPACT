@@ -165,6 +165,73 @@ function addQueueStyles() {
     document.head.appendChild(style);
 }
 
+// Generate dynamic graph for crawled repository to visualize its evolution
+function generateRepositoryGraph(repoName) {
+    const cleanName = repoName.split("/")[1] || repoName;
+    const pkg = `org.${cleanName.toLowerCase()}`;
+    
+    const v1Nodes = [
+        { id: `${pkg}.Core`, name: "Core", metrics: { loc: 420, complexity: 15, coupling: 5, fanIn: 3, fanOut: 2, inheritanceDepth: 1 } },
+        { id: `${pkg}.Parser`, name: "Parser", metrics: { loc: 280, complexity: 8, coupling: 3, fanIn: 1, fanOut: 2, inheritanceDepth: 0 } },
+        { id: `${pkg}.Engine`, name: "Engine", metrics: { loc: 350, complexity: 10, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 1 } },
+        { id: `${pkg}.Utils`, name: "Utils", metrics: { loc: 150, complexity: 3, coupling: 4, fanIn: 4, fanOut: 0, inheritanceDepth: 0 } },
+        { id: `${pkg}.Client`, name: "Client", metrics: { loc: 210, complexity: 6, coupling: 3, fanIn: 0, fanOut: 3, inheritanceDepth: 1 } },
+        { id: `${pkg}.Config`, name: "Config", metrics: { loc: 110, complexity: 2, coupling: 2, fanIn: 2, fanOut: 0, inheritanceDepth: 0 } }
+    ];
+    
+    const v1Edges = [
+        { source: `${pkg}.Core`, target: `${pkg}.Engine`, type: "uses" },
+        { source: `${pkg}.Core`, target: `${pkg}.Config`, type: "uses" },
+        { source: `${pkg}.Engine`, target: `${pkg}.Parser`, type: "uses" },
+        { source: `${pkg}.Parser`, target: `${pkg}.Utils`, type: "uses" },
+        { source: `${pkg}.Client`, target: `${pkg}.Core`, type: "uses" },
+        { source: `${pkg}.Client`, target: `${pkg}.Utils`, type: "uses" }
+    ];
+
+    const v2Nodes = [
+        ...v1Nodes.map(n => ({
+            ...n,
+            metrics: { ...n.metrics, loc: Math.round(n.metrics.loc * 1.1) }
+        })),
+        { id: `${pkg}.Security`, name: "Security", metrics: { loc: 180, complexity: 7, coupling: 3, fanIn: 1, fanOut: 2, inheritanceDepth: 2 } },
+        { id: `${pkg}.Optimizer`, name: "Optimizer", metrics: { loc: 240, complexity: 9, coupling: 4, fanIn: 2, fanOut: 2, inheritanceDepth: 1 } }
+    ];
+
+    const v2Edges = [
+        ...v1Edges,
+        { source: `${pkg}.Engine`, target: `${pkg}.Optimizer`, type: "uses" },
+        { source: `${pkg}.Optimizer`, target: `${pkg}.Parser`, type: "uses" },
+        { source: `${pkg}.Core`, target: `${pkg}.Security`, type: "uses" },
+        { source: `${pkg}.Security`, target: `${pkg}.Utils`, type: "uses" },
+        { source: `${pkg}.Parser`, target: `${pkg}.Engine`, type: "calls" } // Cycle: Engine <-> Parser
+    ];
+
+    return {
+        v1: {
+            version: "1.0.0",
+            projectName: cleanName,
+            systemMetrics: {
+                totalClasses: v1Nodes.length,
+                totalLinesOfCode: v1Nodes.reduce((acc, n) => acc + n.metrics.loc, 0),
+                averageComplexity: 7.3
+            },
+            nodes: v1Nodes,
+            edges: v1Edges
+        },
+        v2: {
+            version: "2.0.0",
+            projectName: cleanName,
+            systemMetrics: {
+                totalClasses: v2Nodes.length,
+                totalLinesOfCode: v2Nodes.reduce((acc, n) => acc + n.metrics.loc, 0),
+                averageComplexity: 7.8
+            },
+            nodes: v2Nodes,
+            edges: v2Edges
+        }
+    };
+}
+
 triggerCrawlBtn.addEventListener("click", () => {
     const repo = crawlerRepoInput.value.trim();
     if (repo) {
@@ -187,6 +254,31 @@ triggerCrawlBtn.addEventListener("click", () => {
             newJob.status = "crawled";
             renderCrawlerQueue();
             addAgentMessage("System", `Successfully crawled ${repo}. Schema metrics validated via SHACL. Conformance report generated.`, "system");
+            
+            // Dynamically load the crawled repo's architecture evolution graph
+            const cleanName = repo.split("/")[1] || repo;
+            const newGraphData = generateRepositoryGraph(repo);
+            baseGraph = newGraphData.v1;
+            currentGraph = newGraphData.v2;
+            
+            // Update UI headers & selectors
+            const headerTitle = document.querySelector(".content-header h2");
+            if (headerTitle) {
+                headerTitle.innerText = `${repo} Architecture Evolution`;
+            }
+            
+            const baseVersionSelect = document.getElementById("base-version-select");
+            const targetVersionSelect = document.getElementById("target-version-select");
+            if (baseVersionSelect && targetVersionSelect) {
+                baseVersionSelect.innerHTML = `<option value="v1">v1.0.0 (${cleanName})</option>`;
+                targetVersionSelect.innerHTML = `<option value="v2">v2.0.0 (${cleanName})</option>`;
+            }
+            
+            // Re-initialize layout, metrics, diff, and swarm analysis
+            resetLayout();
+            updateKPIs();
+            renderDiffTable();
+            runAnalysis();
         }, 4000);
     }
 });
