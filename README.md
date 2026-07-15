@@ -24,14 +24,23 @@ The repository is organized as follows:
 
 ## Installation & Setup
 
-IMPACT targets Python 3.8 or higher. The package (`impact-core`) is published to PyPI. You can install it directly or from source (recommended during active development).
+IMPACT targets Python 3.8 or higher. The package (`impact-core`) is published to PyPI. You can install it directly or from source.
 
 ### Install from source (recommended while in active development)
 
+On modern Linux/macOS distributions (under PEP 668), Python environments are externally managed. It is recommended to install the package inside a virtual environment:
+
 ```bash
+# 1. Clone the repository
 git clone https://github.com/IMPACT-Project/IMPACT.git
 cd IMPACT
-pip install -e ".[dev]"   # editable install with all deps + build/test tools
+
+# 2. Create and activate a virtual environment
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows, run: .venv\Scripts\activate
+
+# 3. Install in editable mode with development dependencies
+pip install -e ".[dev]"
 ```
 
 Or install only what you need:
