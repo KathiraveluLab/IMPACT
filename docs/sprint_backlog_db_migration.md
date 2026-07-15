@@ -51,4 +51,4 @@ erDiagram
 3. **Execution Script**:
    * SQLite: Execute `ALTER TABLE crawler_queue ADD COLUMN worker_id TEXT;` and `ALTER TABLE crawler_queue ADD COLUMN updated_at TIMESTAMP;`
    * PostgreSQL: Run custom DDL migration schema.
-4. **Validation Test**: Execute `python3 core/test_db_migration.py` to confirm schema updates are safe.
+4. **Validation Test**: Execute `python3 tests/test_db_migration.py` to confirm schema updates are safe.

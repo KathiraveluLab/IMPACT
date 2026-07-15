@@ -41,11 +41,11 @@ jobs:
 
       - name: Run Database Migration Verification Tests
         run: |
-          python3 core/test_db_migration.py
+          python3 tests/test_db_migration.py
 
       - name: Run Architectural Regression Testing Suite
         run: |
-          python3 test_regression.py
+          python3 tests/test_regression.py
 
       - name: Run Schema Validator Checks on Samples
         run: |

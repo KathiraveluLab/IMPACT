@@ -21,7 +21,12 @@ The repository is organized as follows:
     *   `telemetry_service_v2/`: Version 2.0.0 Java source code of TelemetryService.
     *   `v1_graph.json`: Extracted dependency graph for Version 1.0.0.
     *   `v2_graph.json`: Extracted dependency graph for Version 2.0.0.
-*   **`test_impact.py`**: Automated unit test suite to verify graph loading, diff calculations, and coordinator orchestration.
+*   **`tests/`**: Automated test suite containing unit tests, crawler verifications, and architectural regression checks:
+    *   `test_crawler.py`: Verifies crawler functionality, rate-limiting, and SQLite queue transitions.
+    *   `test_db_migration.py`: Simulates database schema migrations.
+    *   `test_extractor.py`: Unit tests for Java AST extraction and regex fallback parser.
+    *   `test_impact.py`: Verifies graph loading, diff calculations, and coordinator orchestration.
+    *   `test_regression.py`: Verifies end-to-end extraction, cycle detection, and SHACL schema validation logic.
 
 ## Installation & Setup
 
@@ -173,7 +178,7 @@ The server uses whichever LLM backend is configured via environment variable (se
 ### Running Unit Tests
 
 ```bash
-python3 -m unittest discover -p "test_*.py"
+python3 -m unittest discover -s tests -p "test_*.py"
 ```
 
 
