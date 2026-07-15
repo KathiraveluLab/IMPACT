@@ -64,6 +64,7 @@ let activeRepoName = "KathiraveluLab/TelemetryService";
 // App State
 let currentGraph = GRAPH_DATA_V2;
 let baseGraph = GRAPH_DATA_V1;
+let analysisTimeouts = []; // Track pending analysis setTimeout IDs to prevent duplicate messages
 
 // Physics layout variables
 let nodes = [];
@@ -273,12 +274,131 @@ async function switchToRepo(job) {
 }
 
 // Add custom queue styles inline dynamically
+// Add custom queue styles inline dynamically
 function addQueueStyles() {
     const style = document.createElement('style');
     style.innerHTML = `
         .badge.badge-pending { background-color: rgba(217, 119, 6, 0.15); color: #f59e0b; border: 1px solid rgba(217, 119, 6, 0.3); }
         .badge.badge-crawled { background-color: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
         .badge.badge-processing { background-color: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.3); }
+        
+        /* Interactive Report Bubble styles */
+        .agent-bubble.interactive-report-bubble {
+            cursor: pointer;
+            border: 1px dashed rgba(16, 185, 129, 0.4) !important;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .agent-bubble.interactive-report-bubble:hover {
+            background: rgba(16, 185, 129, 0.08) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .agent-bubble.interactive-report-bubble::after {
+            content: "🖱️ Dbl-click to view";
+            position: absolute;
+            bottom: 4px;
+            right: 8px;
+            font-size: 9px;
+            color: #10b981;
+            opacity: 0.7;
+        }
+
+        /* Modal Overlay styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 650px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5), 0 10px 10px -5px rgba(0,0,0,0.4);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+        .modal-header {
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #1e1b4b, #0f172a);
+            border-bottom: 1px solid #1e293b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+        .modal-close {
+            font-size: 24px;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-close:hover {
+            color: #ef4444;
+        }
+        .modal-body {
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: #020617;
+        }
+        .modal-body pre {
+            margin: 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+        .modal-footer {
+            padding: 12px 20px;
+            background: #0f172a;
+            border-top: 1px solid #1e293b;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .modal-btn-close {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .modal-btn-close:hover {
+            background: #0ea5e9;
+        }
     `;
     document.head.appendChild(style);
 }
@@ -1129,6 +1249,10 @@ canvas.addEventListener("wheel", (e) => {
 
 // Run Evolution analysis and render compliance logs
 function runAnalysis() {
+    // Cancel any still-pending timeouts from a previous analysis run
+    analysisTimeouts.forEach(id => clearTimeout(id));
+    analysisTimeouts = [];
+
     agentChatContainer.innerHTML = "";
     addAgentMessage("System", "Initializing IMPACT Multi-Agent Evolution Swarm...", "system");
 
@@ -1153,29 +1277,29 @@ function runAnalysis() {
     }
 
     if (isFallback) {
-        setTimeout(() => {
+        analysisTimeouts.push(setTimeout(() => {
             const warningMsg = lang === "Unsupported"
                 ? "⚠️ NOTE: Unknown repository language. Dashboard running in File-Dependency Fallback Mode."
                 : `⚠️ NOTE: Full AST structure analysis for ${lang} is not implemented. Running in File-Dependency Fallback Mode.`;
             addAgentMessage("System", warningMsg, "system");
-        }, 200);
+        }, 200));
     }
 
-    setTimeout(() => {
+    analysisTimeouts.push(setTimeout(() => {
         addAgentMessage("GraphAgent", `Loaded Version ${currentGraph.version} of ${currentGraph.projectName} (${currentGraph.systemMetrics.totalClasses} ${unitPlural}, ${currentGraph.systemMetrics.totalLinesOfCode} LOC). [Language: ${lang}]`, "coordinator");
-    }, 400);
+    }, 400));
 
-    setTimeout(() => {
+    analysisTimeouts.push(setTimeout(() => {
         const diff = computeDiff();
         addAgentMessage("DiffAgent", `Identified structural changes: added ${diff.addedNodes.length} ${unitPlural}, added ${diff.addedEdges.length} ${depTerm}. Detected ${diff.newCycles.length} new ${cycleTerm}.`, "coordinator");
-    }, 800);
+    }, 800));
 
-    setTimeout(() => {
+    analysisTimeouts.push(setTimeout(() => {
         const topHubs = currentGraph.nodes.map(n => n.id);
         addAgentMessage("MetricsAgent", `Calculated network metrics. Most central coupling hubs: ${topHubs.slice(0, 3).join(", ")}.`, "coordinator");
-    }, 1200);
+    }, 1200));
 
-    setTimeout(() => {
+    analysisTimeouts.push(setTimeout(() => {
         const diff = computeDiff();
         let violations = [];
 
@@ -1236,7 +1360,7 @@ function runAnalysis() {
         }
 
         addAgentMessage("LLMAgent", report, "ll");
-    }, 1600);
+    }, 1600));
 }
 
 // Dynamic UI labeling based on ecosystem language
@@ -1263,12 +1387,122 @@ function updateUILabels() {
 function addAgentMessage(agent, text, type) {
     const bubble = document.createElement("div");
     bubble.className = `agent-bubble ${type}`;
+    
+    // Check if the message contains crawl success or analysis completion to make it double-clickable
+    if (text.includes("Conformance report generated") || text.includes("Successfully crawled")) {
+        bubble.classList.add("interactive-report-bubble");
+        bubble.title = "Double-click to open the Conformance Report";
+        bubble.addEventListener("dblclick", () => {
+            showReportModal(activeRepoName, currentGraph.language || "Unsupported");
+        });
+    }
+    
     bubble.innerHTML = `
         <div class="agent-title">${agent}</div>
         <div class="agent-text">${text}</div>
     `;
     agentChatContainer.appendChild(bubble);
     agentChatContainer.scrollTop = agentChatContainer.scrollHeight;
+}
+
+// Generate dynamically structured conformance report text matching the active intents
+function generateReportText(repoName, lang) {
+    const cleanName = repoName.includes(":") ? repoName.split(":")[0].trim() : repoName;
+    const project = cleanName.split("/")[1] || cleanName;
+    const diff = computeDiff();
+    const isFallback = lang !== "Java" && lang !== "Python";
+    const unit = isFallback ? (lang === "Unsupported" ? "files" : `${lang} files`) : (lang === "Java" ? "classes" : "modules");
+    
+    let conformanceStatus = "CONFORMANT";
+    let violations = [];
+    
+    // Check cyclic dependency intent
+    const hasCycleIntent = intents.some(i => i.type === "no-cycles");
+    if (hasCycleIntent && diff.newCycles.length > 0) {
+        conformanceStatus = "NON-CONFORMANT";
+        violations.push(`   * VIOLATION: Detected ${diff.newCycles.length} new cyclic dependency paths. This breaches the active intent 'No Cyclic Dependencies'.`);
+    }
+    
+    // Check coupling threshold intent
+    const couplingIntent = intents.find(i => i.type === "max-coupling");
+    if (couplingIntent) {
+        const threshold = couplingIntent.val;
+        const overloaded = currentGraph.nodes.filter(n => n.metrics.coupling > threshold);
+        if (overloaded.length > 0) {
+            conformanceStatus = "NON-CONFORMANT";
+            violations.push(`   * VIOLATION: ${overloaded.length} node(s) exceed the maximum coupling threshold of ${threshold} (e.g. ${overloaded.slice(0, 3).map(n => n.name).join(", ")}).`);
+        }
+    }
+
+    if (violations.length === 0) {
+        violations.push("   * Status: CONFORMANT. No structural or dependency violations detected against active intents.");
+    }
+    
+    let recommendation = "";
+    if (conformanceStatus === "NON-CONFORMANT") {
+        recommendation = "Action required: refactor dependencies to break cycle loops and decouple high-coupling hubs.";
+    } else {
+        recommendation = "Architecture remains stable. Maintain current modular boundaries and dependency guidelines.";
+    }
+
+    return `Architectural Evolution Report for ${repoName} (${lang})
+===========================================================
+1. Structural Changes:
+   * Total Nodes in current version: ${currentGraph.nodes.length} ${unit}
+   * Added Nodes: ${diff.addedNodes.length}
+   * Added Dependencies: ${diff.addedEdges.length}
+   * Removed Nodes: ${diff.removedNodes.length}
+   * Removed Dependencies: ${diff.removedEdges.length}
+
+2. Dependency Cycles:
+   * Total Cycles: ${diff.newCycles.length}
+
+3. Codebase Metrics Summary:
+   * Total Lines of Code (LOC): ${currentGraph.systemMetrics.totalLinesOfCode}
+   * Average Coupling: ${currentGraph.systemMetrics.averageCoupling.toFixed(2)}
+
+4. Intent Conformance Evaluation:
+   * Status: ${conformanceStatus}
+${violations.join("\n")}
+
+5. Recommendations:
+   * ${recommendation}
+`;
+}
+
+// Render and show the conformance report modal dynamically
+function showReportModal(repoName, lang) {
+    let modal = document.getElementById("conformance-report-modal");
+    if (!modal) {
+        modal = document.createElement("div");
+        modal.id = "conformance-report-modal";
+        modal.className = "modal-overlay";
+        modal.innerHTML = `
+            <div class="modal-box">
+                <div class="modal-header">
+                    <h3>Architectural Conformance Report</h3>
+                    <span class="modal-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <pre id="modal-report-content"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn-close">Close Report</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        modal.querySelector(".modal-close").addEventListener("click", () => modal.classList.remove("active"));
+        modal.querySelector(".modal-btn-close").addEventListener("click", () => modal.classList.remove("active"));
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) modal.classList.remove("active");
+        });
+    }
+    
+    const reportText = generateReportText(repoName, lang);
+    document.getElementById("modal-report-content").innerText = reportText;
+    modal.classList.add("active");
 }
 
 // Populate stats KPIs
