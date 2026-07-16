@@ -94,8 +94,9 @@ After installation the following commands are available on your `PATH`:
 | Command | Description |
 |---------|-------------|
 | `impact-crawl` | GitHub ecosystem crawler CLI |
-| `impact-export` | Export crawled repositories from queue to CSV |
-| `impact-extract` | Java AST dependency graph extractor |
+| `impact-export` | Export crawled repositories from queue to CSV (or `.graph` files via `-g`) |
+| `impact-export-graphs` | Bulk-export crawled JSON graphs from queue to human-readable `.graph` files |
+| `impact-extract` | Java AST dependency graph extractor (generates both `.json` and `.graph`) |
 | `impact-demo` | Run the built-in TelemetryService evolution demo |
 | `impact-dashboard` | Launch the interactive architect dashboard |
 
@@ -103,6 +104,12 @@ After installation the following commands are available on your `PATH`:
 ## Running the Project
 
 ### Running Graph Extraction (Java Adapter)
+
+To support both computational and publishing needs, IMPACT exports graphs in two formats:
+*   **`.json`**: The primary computational representation, containing rich metadata, class-level metrics (LOC, complexity, fan-in, fan-out, coupling, depth), and ontology context. Used for SHACL validation and agent-based reasoning.
+*   **`.graph`**: A clean, human-readable topological software network file containing class/module node types and dependency edges (calls, inheritance, imports), matching the paper's description.
+
+Direct extraction automatically generates both formats (writing a `.graph` file alongside the target `.json` file):
 
 ```bash
 # Via installed console script (after pip install impact-core[java])
@@ -118,6 +125,8 @@ For example, to extract graphs for the mock `TelemetryService` project:
 impact-extract TelemetryService 1.0.0 test_projects/telemetry_service_v1/src test_projects/v1_graph.json
 impact-extract TelemetryService 2.0.0 test_projects/telemetry_service_v2/src test_projects/v2_graph.json
 ```
+
+This generates the JSON files (`v1_graph.json`, `v2_graph.json`) along with their human-readable counterparts (`v1_graph.graph`, `v2_graph.graph`).
 
 ### Running the Demo
 
@@ -282,17 +291,27 @@ The crawler operates as a two-step producer-consumer workflow:
 ```bash
 # 1. Discover and populate the queue (run this ONCE first)
 python3 -m core.ecosystem_crawler discover --language java --min-stars 1000
+# Or: impact-crawl discover --language java --min-stars 1000
 
 # 2. Process the queued repositories (runs the analysis loop; defaults to unlimited)
+# (Automatically extracts and saves graphs in both .json and .graph formats)
 python3 -m core.ecosystem_crawler crawl
+# Or: impact-crawl crawl
 
 # 3. Check the queue status and progress
 python3 -m core.ecosystem_crawler status
+# Or: impact-crawl status
 
 # 4. Export completed crawled repositories to CSV (can be run in parallel)
 python3 -m core.export_crawled --output crawled_repos.csv
+# Or: impact-export --output crawled_repos.csv
 
-This command automatically ensures the database schema is up-to-date, retroactively harvests any missing metrics, paths, and reports for already-completed crawls on disk, and exports the following enriched details for each repository:
+# 5. Bulk-export/regenerate human-readable .graph files for all crawled repositories
+python3 -m core.export_crawled --graphs
+# Or: impact-export-graphs (or: impact-export --graphs)
+```
+
+The CSV export command (`python3 -m core.export_crawled`) automatically ensures the database schema is up-to-date, retroactively harvests any missing metrics, paths, and reports for already-completed crawls on disk, and exports the following enriched details for each repository:
 *   **Basic info:** Owner, repo name, star count, and language.
 *   **Git release tags:** Evolution endpoints (`tag1` -> `tag2`).
 *   **Timestamps:** Processed timestamp and precise extraction start and end/completion timestamps.
@@ -305,7 +324,6 @@ This command automatically ensures the database schema is up-to-date, retroactiv
     *   `intent_status`: Overall classification ("CONFORMING" or "VIOLATION").
     *   `report_content`: The full natural-language architectural evolution report.
 *   **Local file paths:** Relative paths to `graph_v1_path`, `graph_v2_path`, and `report_path`.
-```
 
 ---
 

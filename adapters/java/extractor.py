@@ -399,13 +399,61 @@ class JavaExtractor:
                     if len(candidates) == 1:
                         dependencies.add(list(candidates)[0])
 
-            # Register resolved dependency edges
+            # Register resolved dependency edges (calls)
             for target_fqcn in dependencies:
                 self.edges.append({
                     "source": fqcn,
                     "target": target_fqcn,
                     "type": "calls"
                 })
+
+            # Register inheritance edge if parent in project
+            parent_name = details.get("extends")
+            if parent_name:
+                parent_fqcn = None
+                # Check explicit imports
+                for imp in details.get("imports", []):
+                    if imp.endswith(f".{parent_name}"):
+                        if imp in project_classes:
+                            parent_fqcn = imp
+                            break
+                # Check same package
+                if not parent_fqcn:
+                    candidate = f"{details['package']}.{parent_name}" if details['package'] else parent_name
+                    if candidate in project_classes:
+                        parent_fqcn = candidate
+                # Check wildcard imports
+                if not parent_fqcn:
+                    for imp in details.get("imports", []):
+                        if imp.endswith(".*"):
+                            candidate = f"{imp[:-2]}.{parent_name}"
+                            if candidate in project_classes:
+                                parent_fqcn = candidate
+                                break
+                # Global fallback
+                if not parent_fqcn and parent_name in class_name_to_fqcn:
+                    candidates = class_name_to_fqcn[parent_name]
+                    if len(candidates) == 1:
+                        parent_fqcn = list(candidates)[0]
+
+                if parent_fqcn and parent_fqcn in project_classes:
+                    self.edges.append({
+                        "source": fqcn,
+                        "target": parent_fqcn,
+                        "type": "inheritance"
+                    })
+
+            # Register explicit import edges
+            for imp in details.get("imports", []):
+                if imp in project_classes and imp != fqcn:
+                    # Avoid duplicates
+                    exists = any(e["source"] == fqcn and e["target"] == imp and e["type"] in ("calls", "inheritance", "imports") for e in self.edges)
+                    if not exists:
+                        self.edges.append({
+                            "source": fqcn,
+                            "target": imp,
+                            "type": "imports"
+                        })
 
             self.nodes[fqcn] = {
                 "id": fqcn,
@@ -415,21 +463,26 @@ class JavaExtractor:
                 "metrics": {
                     "loc": details["loc"],
                     "complexity": details["complexity"],
-                    "fanOut": len(dependencies),
+                    "fanOut": 0,
                     "inheritanceDepth": inheritance_depths.get(fqcn, 0)
                 }
             }
 
-        # Update fanIn metrics
-        for edge in self.edges:
-            target = edge["target"]
-            if target in self.nodes:
-                self.nodes[target]["metrics"]["fanIn"] = self.nodes[target]["metrics"].get("fanIn", 0) + 1
-
-        # Fill default values for fanIn/fanOut
+        # Update fanIn and fanOut metrics based on all edges
         for node in self.nodes.values():
-            if "fanIn" not in node["metrics"]:
-                node["metrics"]["fanIn"] = 0
+            node["metrics"]["fanIn"] = 0
+            node["metrics"]["fanOut"] = 0
+
+        for edge in self.edges:
+            source = edge["source"]
+            target = edge["target"]
+            if source in self.nodes:
+                self.nodes[source]["metrics"]["fanOut"] += 1
+            if target in self.nodes:
+                self.nodes[target]["metrics"]["fanIn"] += 1
+
+        # Fill default values and compute coupling
+        for node in self.nodes.values():
             node["metrics"]["coupling"] = node["metrics"]["fanIn"] + node["metrics"]["fanOut"]
 
         # Calculate system-wide metrics
@@ -476,6 +529,22 @@ class JavaExtractor:
             json.dump(output_data, f, indent=2)
 
         print(f"[JavaExtractor] Extracted graph via {'AST' if HAS_JAVALANG else 'Regex'} for {self.project_name} v{self.version} to {output_file}")
+
+        # Write to .graph format (dual approach)
+        if output_file.endswith(".json"):
+            graph_file = output_file[:-5] + ".graph"
+        else:
+            graph_file = output_file + ".graph"
+        try:
+            import sys
+            project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+            if project_root not in sys.path:
+                sys.path.insert(0, project_root)
+            from core.graph_utils import export_graph_file
+            export_graph_file(output_file, graph_file)
+            print(f"[JavaExtractor] Exported human-readable graph to {graph_file}")
+        except Exception as e:
+            print(f"[JavaExtractor] Warning: Could not export .graph file: {e}")
 
 if __name__ == "__main__":
     import sys

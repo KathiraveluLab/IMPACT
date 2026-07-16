@@ -1,0 +1,12 @@
+# Project: TelemetryService
+# Version: 1.0.0
+# Language: Java
+
+# Nodes: classes and modules
+node: com.telemetry.Service [class]
+node: com.telemetry.Database [class]
+node: com.telemetry.DataCollector [class]
+
+# Edges: dependencies (calls, inheritance, imports)
+edge: com.telemetry.Service -> com.telemetry.DataCollector [calls]
+edge: com.telemetry.DataCollector -> com.telemetry.Database [calls]

@@ -135,6 +135,15 @@ def process_repo(repo_id, owner, repo, github_token, db_path):
         with open(report_path, "w", encoding="utf-8") as f:
             f.write(report)
 
+        # Export as .graph files
+        from core.graph_utils import export_graph_file
+        try:
+            export_graph_file(graph_v1, graph_v1.replace(".json", ".graph"))
+            export_graph_file(graph_v2, graph_v2.replace(".json", ".graph"))
+            print(f"Exported .graph files for {repo} {tag1} and {tag2}")
+        except Exception as e:
+            print(f"Warning: Failed to export .graph files: {e}")
+
         # Extract and record system metrics, SHACL validation, structural diff, and artifact paths
         try:
             with open(graph_v1, "r", encoding="utf-8") as f:

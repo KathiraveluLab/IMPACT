@@ -92,6 +92,7 @@ impact-extract   = "adapters.java.extractor:main"
 impact-demo      = "core.run_demo:main"
 impact-dashboard = "core.run_dashboard:main"
 impact-export    = "core.export_crawled:main"
+impact-export-graphs = "core.export_crawled:export_graphs_cli"
 
 # ---------------------------------------------------------------------------
 # URLs shown on PyPI

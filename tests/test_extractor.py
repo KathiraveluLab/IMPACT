@@ -41,6 +41,8 @@ public class ClassB {
         extractor.extract(self.test_dir, self.output_file)
 
         self.assertTrue(os.path.exists(self.output_file))
+        # Verify the .graph file is also created (dual approach)
+        self.assertTrue(os.path.exists(self.output_file.replace(".json", ".graph")))
         with open(self.output_file, "r") as f:
             data = json.load(f)
 
@@ -266,5 +268,77 @@ public record PaymentProcessor(Circle circle, AuditLogger logger) {}
         finally:
             adapters.java.extractor.HAS_JAVALANG = original_has_javalang
 
+
+class TestExportGraphs(unittest.TestCase):
+
+    def setUp(self):
+        self.test_dir = tempfile.mkdtemp()
+        self.db_path = os.path.join(self.test_dir, "test_queue.db")
+
+    def tearDown(self):
+        shutil.rmtree(self.test_dir)
+
+    def test_export_graphs_from_db(self):
+        import sqlite3
+        from core.export_crawled import export_graphs
+        # Create dummy database and table
+        conn = sqlite3.connect(self.db_path)
+        c = conn.cursor()
+        c.execute("""
+            CREATE TABLE queue (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                owner TEXT,
+                repo TEXT,
+                status TEXT,
+                graph_v1_path TEXT,
+                graph_v2_path TEXT
+            )
+        """)
+        
+        # Create dummy JSON graph files
+        json_path_v1 = os.path.join(self.test_dir, "v1.json")
+        json_path_v2 = os.path.join(self.test_dir, "v2.json")
+        
+        dummy_graph = {
+            "projectName": "TestDBExport",
+            "version": "1.0",
+            "language": "Java",
+            "systemMetrics": {
+                "totalLinesOfCode": 100,
+                "totalClasses": 1,
+                "averageCoupling": 1.0
+            },
+            "nodes": [
+                {"id": "com.example.App", "name": "App", "type": "class", "filePath": "App.java", "metrics": {"loc": 100, "complexity": 1, "fanIn": 0, "fanOut": 0, "coupling": 0, "inheritanceDepth": 0}}
+            ],
+            "edges": []
+        }
+        
+        with open(json_path_v1, "w") as f:
+            json.dump(dummy_graph, f)
+        with open(json_path_v2, "w") as f:
+            json.dump(dummy_graph, f)
+            
+        c.execute(
+            "INSERT INTO queue (owner, repo, status, graph_v1_path, graph_v2_path) VALUES (?, ?, ?, ?, ?)",
+            ("testowner", "testrepo", "crawled", json_path_v1, json_path_v2)
+        )
+        conn.commit()
+        conn.close()
+        
+        # Export graphs
+        export_graphs(self.db_path, all_repos=False)
+        
+        # Check that .graph files were created
+        self.assertTrue(os.path.exists(json_path_v1.replace(".json", ".graph")))
+        self.assertTrue(os.path.exists(json_path_v2.replace(".json", ".graph")))
+        
+        # Verify the .graph file content
+        with open(json_path_v1.replace(".json", ".graph"), "r") as f:
+            content = f.read()
+            self.assertIn("Project: TestDBExport", content)
+            self.assertIn("node: com.example.App", content)
+
 if __name__ == "__main__":
+    import sqlite3
     unittest.main()

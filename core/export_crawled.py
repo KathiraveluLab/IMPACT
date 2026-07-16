@@ -170,6 +170,7 @@ def main():
     parser = argparse.ArgumentParser(description="Export crawled repositories from the IMPACT queue database.")
     parser.add_argument("--output", "-o", default="crawled_repos.csv", help="Path to output CSV file (default: crawled_repos.csv)")
     parser.add_argument("--all", action="store_true", help="Export all repositories, not just completed ('crawled') ones")
+    parser.add_argument("--graphs", "-g", action="store_true", help="Export crawled repository graphs to .graph files instead of CSV")
     args = parser.parse_args()
 
     db_path = core.crawler.DB_PATH
@@ -178,6 +179,10 @@ def main():
     # Set up database (creates table/applies migrations if needed)
     from core.crawler.database import setup_db
     setup_db(db_path)
+
+    if args.graphs:
+        export_graphs(db_path, args.all)
+        return
 
     # Harvest metrics retroactively if needed
     harvest_missing_metrics(db_path)
@@ -227,5 +232,73 @@ def main():
         print(f"Error exporting data: {e}", file=sys.stderr)
         sys.exit(1)
 
+def export_graphs(db_path, all_repos=False):
+    """Queries the database and exports the JSON graphs of crawled repositories to .graph files."""
+    query = "SELECT id, owner, repo, graph_v1_path, graph_v2_path FROM queue"
+    if not all_repos:
+        query += " WHERE status = 'crawled'"
+
+    try:
+        if is_pg(db_path):
+            import psycopg2
+            conn = psycopg2.connect(db_path)
+            cursor = conn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            conn.close()
+        else:
+            if not os.path.exists(db_path):
+                print(f"Database file not found: {db_path}", file=sys.stderr)
+                return
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            conn.close()
+
+        from core.graph_utils import export_graph_file
+        exported_count = 0
+
+        for r_id, owner, repo, g1_path, g2_path in rows:
+            for g_path in (g1_path, g2_path):
+                if g_path and os.path.exists(g_path):
+                    graph_path = g_path.replace(".json", ".graph")
+                    try:
+                        export_graph_file(g_path, graph_path)
+                        exported_count += 1
+                    except Exception as e:
+                        print(f"Failed to export {g_path}: {e}", file=sys.stderr)
+
+        print(f"Successfully exported {exported_count} .graph files based on database entries.")
+
+    except Exception as e:
+        print(f"Error exporting graphs: {e}", file=sys.stderr)
+
+def export_graphs_cli():
+    parser = argparse.ArgumentParser(description="Export crawled repository JSON graphs to human-readable .graph files.")
+    parser.add_argument("--all", action="store_true", help="Process all repositories, not just completed ('crawled') ones")
+    args = parser.parse_args()
+
+    db_path = core.crawler.DB_PATH
+    print(f"Connecting to database: {db_path}")
+
+    from core.crawler.database import setup_db
+    setup_db(db_path)
+
+    export_graphs(db_path, args.all)
+
 if __name__ == "__main__":
-    main()
+    # Check if --graphs or -g is passed to the main tool
+    if "--graphs" in sys.argv or "-g" in sys.argv:
+        # Intercept and run export graphs instead
+        parser = argparse.ArgumentParser(description="Export crawled repositories/graphs from the IMPACT queue database.")
+        parser.add_argument("--graphs", "-g", action="store_true", help="Export graphs to .graph files")
+        parser.add_argument("--all", action="store_true", help="Export all repositories, not just completed ('crawled') ones")
+        args, _ = parser.parse_known_args()
+        
+        db_path = core.crawler.DB_PATH
+        from core.crawler.database import setup_db
+        setup_db(db_path)
+        export_graphs(db_path, args.all)
+    else:
+        main()

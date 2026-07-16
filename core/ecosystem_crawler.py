@@ -29,6 +29,7 @@ def main():
     run_parser.add_argument("--limit", type=int, default=-1, help="Maximum number of repositories to crawl in this run (default: unlimited)")
 
     subparsers.add_parser("status", help="Print crawler database queue stats")
+    subparsers.add_parser("export-graphs", help="Export crawled repository graphs as .graph files")
 
     args = parser.parse_args()
 
@@ -47,6 +48,23 @@ def main():
         )
     elif args.command in ("run", "crawl"):
         crawler.crawl(limit=args.limit)
+    elif args.command == "export-graphs":
+        import os
+        from core.graph_utils import export_graph_file
+        print("Searching for crawled JSON graph files to export...")
+        exported_count = 0
+        for root, dirs, files in os.walk("test_projects/github_benchmarks"):
+            for file in files:
+                if file.endswith("_graph.json"):
+                    json_path = os.path.join(root, file)
+                    graph_path = json_path.replace(".json", ".graph")
+                    try:
+                        export_graph_file(json_path, graph_path)
+                        print(f"Exported: {graph_path}")
+                        exported_count += 1
+                    except Exception as e:
+                        print(f"Failed to export {json_path}: {e}", file=sys.stderr)
+        print(f"Successfully exported {exported_count} .graph files.")
     elif args.command == "status":
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()

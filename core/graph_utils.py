@@ -55,3 +55,30 @@ def compare_graphs(g1: nx.DiGraph, g2: nx.DiGraph) -> dict:
         "new_cycles": new_cycles,
         "broken_cycles": broken_cycles
     }
+
+def export_graph_file(json_path: str, graph_path: str):
+    """Exports nodes and edges from a standardized IMPACT JSON graph to a human-readable .graph file."""
+    with open(json_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+        
+    with open(graph_path, 'w', encoding='utf-8') as f:
+        f.write(f"# Project: {data.get('projectName')}\n")
+        f.write(f"# Version: {data.get('version')}\n")
+        f.write(f"# Language: {data.get('language')}\n")
+        f.write("\n# Nodes: classes and modules\n")
+        
+        # Write nodes
+        for node in data.get("nodes", []):
+            node_id = node.get("id")
+            node_type = node.get("type", "class")
+            f.write(f"node: {node_id} [{node_type}]\n")
+            
+        f.write("\n# Edges: dependencies (calls, inheritance, imports)\n")
+        
+        # Write edges
+        for edge in data.get("edges", []):
+            source = edge.get("source")
+            target = edge.get("target")
+            edge_type = edge.get("type", "calls")
+            f.write(f"edge: {source} -> {target} [{edge_type}]\n")
+

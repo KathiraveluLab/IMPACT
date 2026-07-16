@@ -5,6 +5,8 @@
     "version": "versionString",
     "language": "language",
     "extractedAt": "extractedAt",
+    "extractionStart": "extractionStart",
+    "extractionEnd": "extractionEnd",
     "systemMetrics": "systemMetrics",
     "nodes": "hasEntity",
     "edges": "hasDependency",
@@ -16,7 +18,9 @@
   "projectName": "TelemetryService",
   "version": "1.0.0",
   "language": "Java",
-  "extractedAt": "2026-07-09T10:02:49.967959Z",
+  "extractedAt": "2026-07-16T10:58:39.066678Z",
+  "extractionStart": "2026-07-16T10:58:39.038759Z",
+  "extractionEnd": "2026-07-16T10:58:39.066678Z",
   "systemMetrics": {
     "totalLinesOfCode": 23,
     "totalClasses": 3,
@@ -32,9 +36,9 @@
         "loc": 7,
         "complexity": 1,
         "fanOut": 1,
+        "inheritanceDepth": 0,
         "fanIn": 0,
-        "coupling": 1,
-        "inheritanceDepth": 0
+        "coupling": 1
       }
     },
     {
@@ -46,9 +50,9 @@
         "loc": 6,
         "complexity": 1,
         "fanOut": 0,
+        "inheritanceDepth": 0,
         "fanIn": 1,
-        "coupling": 1,
-        "inheritanceDepth": 0
+        "coupling": 1
       }
     },
     {
@@ -60,9 +64,9 @@
         "loc": 10,
         "complexity": 1,
         "fanOut": 1,
+        "inheritanceDepth": 0,
         "fanIn": 1,
-        "coupling": 2,
-        "inheritanceDepth": 0
+        "coupling": 2
       }
     }
   ],
