@@ -48,6 +48,9 @@ class JavaExtractor:
             parsed_ast = False
             if HAS_JAVALANG:
                 try:
+                    if len(content) > 40000 or len(lines) > 1000:
+                        print(f"[JavaExtractor] Skipping AST parsing for large file: {os.path.basename(filepath)} ({len(content)} bytes, {len(lines)} lines). Using regex fallback.", flush=True)
+                        raise ValueError("File too large for AST parsing")
                     tree = javalang.parse.parse(content)
                     package_name = tree.package.name if tree.package else ""
                     
