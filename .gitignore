@@ -45,6 +45,10 @@ __pycache__/
 # Ignore extracted GitHub source folders in benchmarks
 test_projects/github_benchmarks/*/*/*/
 
+# Large benchmark datasets exceeding GitHub's file size limit (100MB)
+test_projects/github_benchmarks/java/spring-projects_spring-boot/
+test_projects/github_benchmarks/java/elastic_elasticsearch/
+
 # Python packaging build artifacts — never commit
 build/
 dist/

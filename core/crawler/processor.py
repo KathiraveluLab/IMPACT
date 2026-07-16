@@ -135,6 +135,111 @@ def process_repo(repo_id, owner, repo, github_token, db_path):
         with open(report_path, "w", encoding="utf-8") as f:
             f.write(report)
 
+        # Extract and record system metrics, SHACL validation, structural diff, and artifact paths
+        try:
+            with open(graph_v1, "r", encoding="utf-8") as f:
+                g1_data = json.load(f)
+            with open(graph_v2, "r", encoding="utf-8") as f:
+                g2_data = json.load(f)
+                
+            m1 = g1_data.get("systemMetrics", {})
+            m2 = g2_data.get("systemMetrics", {})
+            
+            loc_v1 = m1.get("totalLinesOfCode", 0)
+            loc_v2 = m2.get("totalLinesOfCode", 0)
+            classes_v1 = m1.get("totalClasses", 0)
+            classes_v2 = m2.get("totalClasses", 0)
+            coupling_v1 = m1.get("averageCoupling", 0.0)
+            coupling_v2 = m2.get("averageCoupling", 0.0)
+            
+            conforms_v1 = 1 if val1.get("conforms", False) else 0
+            conforms_v2 = 1 if val2.get("conforms", False) else 0
+            
+            from core.agents.diff_agent import DiffAgent
+            diff_agent = DiffAgent()
+            diff_report = diff_agent.execute(graph_v1, graph_v2)
+            added_nodes = diff_report.get("added_nodes_count", 0)
+            removed_nodes = diff_report.get("removed_nodes_count", 0)
+            added_edges = diff_report.get("added_edges_count", 0)
+            removed_edges = diff_report.get("removed_edges_count", 0)
+            new_cycles = diff_report.get("new_cycles_count", 0)
+            broken_cycles = diff_report.get("broken_cycles_count", 0)
+            
+            from core.agents.metrics_agent import MetricsAgent
+            metrics_agent = MetricsAgent()
+            metrics_report = metrics_agent.execute(graph_v2)
+            
+            hubs_list = [h["id"] for h in metrics_report.get("top_hubs", [])]
+            top_hubs = ", ".join(hubs_list)
+            
+            anoms_list = [f"{a['id']} (coupling: {a['coupling']}, z-score: {a['z_score']})" for a in metrics_report.get("coupling_anomalies", [])]
+            coupling_anomalies = ", ".join(anoms_list)
+            
+            intent_status = "VIOLATION" if "VIOLATION" in report else "CONFORMING"
+            
+            # Paths relative to the working directory
+            g1_rel = os.path.relpath(graph_v1, start=os.getcwd())
+            g2_rel = os.path.relpath(graph_v2, start=os.getcwd())
+            rep_rel = os.path.relpath(report_path, start=os.getcwd())
+            
+            if db_path.startswith("postgresql://") or db_path.startswith("postgres://"):
+                import psycopg2
+                conn = psycopg2.connect(db_path)
+                cursor = conn.cursor()
+                cursor.execute("""
+                    UPDATE queue SET
+                        loc_v1 = %s, loc_v2 = %s,
+                        classes_v1 = %s, classes_v2 = %s,
+                        coupling_v1 = %s, coupling_v2 = %s,
+                        conforms_v1 = %s, conforms_v2 = %s,
+                        added_nodes = %s, removed_nodes = %s,
+                        added_edges = %s, removed_edges = %s,
+                        new_cycles = %s, broken_cycles = %s,
+                        intent_status = %s,
+                        top_hubs = %s, coupling_anomalies = %s,
+                        report_content = %s,
+                        graph_v1_path = %s, graph_v2_path = %s,
+                        report_path = %s
+                    WHERE id = %s
+                """, (
+                    loc_v1, loc_v2, classes_v1, classes_v2,
+                    coupling_v1, coupling_v2, bool(conforms_v1), bool(conforms_v2),
+                    added_nodes, removed_nodes, added_edges, removed_edges,
+                    new_cycles, broken_cycles, intent_status,
+                    top_hubs, coupling_anomalies, report,
+                    g1_rel, g2_rel, rep_rel, repo_id
+                ))
+            else:
+                conn = sqlite3.connect(db_path)
+                cursor = conn.cursor()
+                cursor.execute("""
+                    UPDATE queue SET
+                        loc_v1 = ?, loc_v2 = ?,
+                        classes_v1 = ?, classes_v2 = ?,
+                        coupling_v1 = ?, coupling_v2 = ?,
+                        conforms_v1 = ?, conforms_v2 = ?,
+                        added_nodes = ?, removed_nodes = ?,
+                        added_edges = ?, removed_edges = ?,
+                        new_cycles = ?, broken_cycles = ?,
+                        intent_status = ?,
+                        top_hubs = ?, coupling_anomalies = ?,
+                        report_content = ?,
+                        graph_v1_path = ?, graph_v2_path = ?,
+                        report_path = ?
+                    WHERE id = ?
+                """, (
+                    loc_v1, loc_v2, classes_v1, classes_v2,
+                    coupling_v1, coupling_v2, conforms_v1, conforms_v2,
+                    added_nodes, removed_nodes, added_edges, removed_edges,
+                    new_cycles, broken_cycles, intent_status,
+                    top_hubs, coupling_anomalies, report,
+                    g1_rel, g2_rel, rep_rel, repo_id
+                ))
+            conn.commit()
+            conn.close()
+        except Exception as ex:
+            print(f"Warning: failed to extract/save metrics/paths to DB: {ex}")
+
         print(f"Successfully evaluated {owner}/{repo}. Conforms: {val2['conforms']}")
         mark_status(repo_id, "crawled", db_path=db_path)
     except Exception as e:

@@ -291,6 +291,20 @@ python3 -m core.ecosystem_crawler status
 
 # 4. Export completed crawled repositories to CSV (can be run in parallel)
 python3 -m core.export_crawled --output crawled_repos.csv
+
+This command automatically ensures the database schema is up-to-date, retroactively harvests any missing metrics, paths, and reports for already-completed crawls on disk, and exports the following enriched details for each repository:
+*   **Basic info:** Owner, repo name, star count, and language.
+*   **Git release tags:** Evolution endpoints (`tag1` -> `tag2`).
+*   **Timestamps:** Processed timestamp and precise extraction start and end/completion timestamps.
+*   **Codebase sizes:** Total Lines of Code (LOC) and class count for both $V_1$ and $V_2$ versions.
+*   **SHACL validation flags:** Conformance checks (`conforms_v1` and `conforms_v2`).
+*   **Structural diff metrics:** Counts of added/removed classes (nodes), added/removed dependencies (edges), and newly introduced or broken dependency cycles.
+*   **LLM analysis & coupling metrics:**
+    *   `top_hubs`: Top coupled class/package hubs in $V_2$.
+    *   `coupling_anomalies`: Outlier coupling anomalies with corresponding Z-scores.
+    *   `intent_status`: Overall classification ("CONFORMING" or "VIOLATION").
+    *   `report_content`: The full natural-language architectural evolution report.
+*   **Local file paths:** Relative paths to `graph_v1_path`, `graph_v2_path`, and `report_path`.
 ```
 
 ---

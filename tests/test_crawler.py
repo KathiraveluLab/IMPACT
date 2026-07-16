@@ -426,6 +426,17 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
             self.assertEqual(rows[1][9], "2026-07-16T11:00:00Z")
             self.assertEqual(rows[1][10], "2026-07-16T11:01:00Z")
 
+            headers = rows[0]
+            self.assertIn("loc_v1", headers)
+            self.assertIn("loc_v2", headers)
+            self.assertIn("conforms_v1", headers)
+            self.assertIn("conforms_v2", headers)
+            self.assertIn("top_hubs", headers)
+            self.assertIn("coupling_anomalies", headers)
+            self.assertIn("report_content", headers)
+            self.assertIn("graph_v1_path", headers)
+            self.assertIn("report_path", headers)
+
         finally:
             if os.path.exists(temp_csv):
                 os.remove(temp_csv)
