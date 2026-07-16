@@ -1,63 +1,113 @@
 import json
 import os
+import rdflib
+from pyshacl import validate
 
 class SHACLValidator:
-    """Validator that checks IMPACT graphs against structural SHACL constraints."""
+    """Validator that checks IMPACT graphs against structural SHACL constraints using W3C SHACL."""
 
     def validate_graph(self, file_path: str) -> dict:
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"Graph file not found: {file_path}")
 
-        with open(file_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+        # Resolve ontology and shapes paths
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        shapes_path = os.path.join(base_dir, "schema", "shapes.ttl")
+        ontology_path = os.path.join(base_dir, "schema", "impact.ttl")
 
-        conforms = True
-        results = []
+        if not os.path.exists(shapes_path):
+            raise FileNotFoundError(f"SHACL shapes file not found: {shapes_path}")
+        if not os.path.exists(ontology_path):
+            raise FileNotFoundError(f"Ontology file not found: {ontology_path}")
 
-        # Validate nodes against ClassEntityShape
-        node_ids = set()
-        for node in data.get("nodes", []):
-            n_id = node.get("id")
-            if not n_id:
-                conforms = False
-                results.append("Violation: Node is missing a unique ID.")
-                continue
-            
-            node_ids.add(n_id)
-            metrics = node.get("metrics", {})
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
 
-            # Check sh:path impact:loc
-            if "loc" not in metrics:
-                conforms = False
-                results.append(f"Violation [{n_id}]: ClassEntity is missing a Lines of Code (loc) metric.")
+            # Ensure JSON-LD context has proper type mappings and coercion
+            ctx = data.setdefault("@context", {})
+            ctx.update({
+                "@vocab": "https://w3id.org/impact/ontology#",
+                "id": "@id",
+                "type": "@type",
+                "class": "https://w3id.org/impact/ontology#ClassEntity",
+                "interface": "https://w3id.org/impact/ontology#InterfaceEntity",
+                "module": "https://w3id.org/impact/ontology#ModuleEntity",
+                "package": "https://w3id.org/impact/ontology#ModuleEntity",
+                "file": "https://w3id.org/impact/ontology#ModuleEntity",
+                "function": "https://w3id.org/impact/ontology#FunctionEntity",
+                "calls": "https://w3id.org/impact/ontology#Dependency",
+                "inherits": "https://w3id.org/impact/ontology#Dependency",
+                "inheritance": "https://w3id.org/impact/ontology#Dependency",
+                "imports": "https://w3id.org/impact/ontology#Dependency",
+                "implements": "https://w3id.org/impact/ontology#Dependency",
+                "aggregates": "https://w3id.org/impact/ontology#Dependency",
+                "depends_on": "https://w3id.org/impact/ontology#Dependency",
+                "source": {
+                    "@id": "https://w3id.org/impact/ontology#source",
+                    "@type": "@id"
+                },
+                "target": {
+                    "@id": "https://w3id.org/impact/ontology#target",
+                    "@type": "@id"
+                }
+            })
 
-            # Check sh:path impact:complexity
-            if "complexity" not in metrics:
-                conforms = False
-                results.append(f"Violation [{n_id}]: ClassEntity is missing a cyclomatic complexity metric.")
+            # Load the data graph
+            data_graph = rdflib.Graph()
+            data_graph.parse(data=json.dumps(data), format="json-ld")
 
-            # Check sh:path impact:inheritanceDepth
-            if "inheritanceDepth" not in metrics:
-                conforms = False
-                results.append(f"Violation [{n_id}]: ClassEntity is missing an inheritance depth metric.")
+            # Flatten metrics properties directly onto the entity subject node
+            # so they match the ontology domains and SHACL shapes
+            metrics_uri = rdflib.URIRef("https://w3id.org/impact/ontology#metrics")
+            for s, p, o in data_graph.triples((None, metrics_uri, None)):
+                for ms, mp, mo in data_graph.triples((o, None, None)):
+                    data_graph.add((s, mp, mo))
 
-        # Validate edges against DependencyShape
-        for edge in data.get("edges", []):
-            source = edge.get("source")
-            target = edge.get("target")
+            # Load shapes and ontology
+            shapes_graph = rdflib.Graph()
+            shapes_graph.parse(shapes_path, format="turtle")
 
-            if not source or source not in node_ids:
-                conforms = False
-                results.append(f"Violation: Edge has invalid or missing source node ID: '{source}'.")
+            ont_graph = rdflib.Graph()
+            ont_graph.parse(ontology_path, format="turtle")
 
-            if not target or target not in node_ids:
-                conforms = False
-                results.append(f"Violation: Edge has invalid or missing target node ID: '{target}'.")
+            # Validate using W3C SHACL engine (pyshacl)
+            conforms, results_graph, results_text = validate(
+                data_graph,
+                shacl_graph=shapes_graph,
+                ont_graph=ont_graph,
+                inference='rdfs',
+                serialize_report_graph=False
+            )
 
-        return {
-            "conforms": conforms,
-            "results": results
-        }
+            # Extract detailed violations from the validation results graph
+            results = []
+            if not conforms:
+                sh = rdflib.Namespace("http://www.w3.org/ns/shacl#")
+                for result_uri in results_graph.subjects(rdflib.RDF.type, sh.ValidationResult):
+                    focus_node = next(results_graph.objects(result_uri, sh.focusNode), None)
+                    path = next(results_graph.objects(result_uri, sh.resultPath), None)
+                    msg = next(results_graph.objects(result_uri, sh.resultMessage), None)
+                    
+                    node_name = str(focus_node).split("/")[-1] if focus_node else "Unknown"
+                    prop_name = str(path).split("#")[-1] if path else ""
+                    
+                    if msg:
+                        msg_str = str(msg)
+                    else:
+                        msg_str = f"Violation [{node_name}]: Failed constraint check on path '{prop_name}'"
+                    results.append(msg_str)
+
+            return {
+                "conforms": conforms,
+                "results": results
+            }
+
+        except Exception as e:
+            return {
+                "conforms": False,
+                "results": [f"SHACL validation error: {e}"]
+            }
 
 if __name__ == "__main__":
     import sys

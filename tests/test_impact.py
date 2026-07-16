@@ -43,6 +43,48 @@ class TestImpactSwarm(unittest.TestCase):
         self.assertTrue(report1["conforms"])
         self.assertTrue(report2["conforms"])
 
+        # Test invalid graph validation
+        import tempfile
+        import json
+        with tempfile.NamedTemporaryFile(suffix=".json", mode="w", delete=False) as tmp:
+            invalid_data = {
+                "projectName": "InvalidProject",
+                "version": "1.0",
+                "language": "Java",
+                "nodes": [
+                    {
+                        "id": "com.invalid.ClassA",
+                        "name": "ClassA",
+                        "type": "class",
+                        "metrics": {
+                            # missing loc
+                            "complexity": 1,
+                            "inheritanceDepth": 0
+                        }
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "com.invalid.ClassA",
+                        "target": "com.invalid.NonExistent",
+                        "type": "calls"
+                    }
+                ]
+            }
+            json.dump(invalid_data, tmp)
+            tmp_path = tmp.name
+
+        try:
+            report_invalid = validator.validate_graph(tmp_path)
+            self.assertFalse(report_invalid["conforms"])
+            self.assertTrue(len(report_invalid["results"]) > 0)
+            
+            results_text = " ".join(report_invalid["results"])
+            self.assertTrue("loc" in results_text or "SoftwareEntity" in results_text or "constraint" in results_text)
+        finally:
+            import os
+            os.remove(tmp_path)
+
     @patch("sqlite3.connect")
     @patch("core.ecosystem_crawler.GitHubEcosystemCrawler")
     @patch("os.path.exists")

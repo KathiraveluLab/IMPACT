@@ -505,8 +505,27 @@ class JavaExtractor:
                 "edges": "hasDependency",
                 "id": "@id",
                 "type": "@type",
-                "source": "source",
-                "target": "target"
+                "source": {
+                    "@id": "https://w3id.org/impact/ontology#source",
+                    "@type": "@id"
+                },
+                "target": {
+                    "@id": "https://w3id.org/impact/ontology#target",
+                    "@type": "@id"
+                },
+                "class": "https://w3id.org/impact/ontology#ClassEntity",
+                "interface": "https://w3id.org/impact/ontology#InterfaceEntity",
+                "module": "https://w3id.org/impact/ontology#ModuleEntity",
+                "package": "https://w3id.org/impact/ontology#ModuleEntity",
+                "file": "https://w3id.org/impact/ontology#ModuleEntity",
+                "function": "https://w3id.org/impact/ontology#FunctionEntity",
+                "calls": "https://w3id.org/impact/ontology#Dependency",
+                "inherits": "https://w3id.org/impact/ontology#Dependency",
+                "inheritance": "https://w3id.org/impact/ontology#Dependency",
+                "imports": "https://w3id.org/impact/ontology#Dependency",
+                "implements": "https://w3id.org/impact/ontology#Dependency",
+                "aggregates": "https://w3id.org/impact/ontology#Dependency",
+                "depends_on": "https://w3id.org/impact/ontology#Dependency"
             },
             "projectName": self.project_name,
             "version": self.version,
