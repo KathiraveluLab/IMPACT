@@ -62,13 +62,13 @@ pip install -e ".[all]"               # everything
 ### Install from PyPI
 
 ```bash
-# Core only — graph loading, diff, coordinator, SHACL validator
+# Core stack — graph loading, diff, coordinator, W3C SHACL (rdflib + pyshacl) validator
 pip install impact-core
 
 # + Java AST extractor (recommended for local extraction)
 pip install impact-core[java]
 
-# + Full crawler stack (javalang, pyshacl, rdflib) — single-node SQLite
+# + Full crawler stack (javalang, SQLite queue)
 pip install impact-core[crawler]
 
 # + Distributed crawler (PostgreSQL backend)
