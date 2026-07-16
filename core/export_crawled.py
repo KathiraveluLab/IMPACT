@@ -18,7 +18,7 @@ def main():
     db_path = core.crawler.DB_PATH
     print(f"Connecting to database: {db_path}")
 
-    query = "SELECT id, owner, repo, stars, tag1, tag2, status, processed_at, language, error_msg FROM queue"
+    query = "SELECT id, owner, repo, stars, tag1, tag2, status, processed_at, language, extraction_start_at, extraction_end_at, error_msg FROM queue"
     if not args.all:
         query += " WHERE status = 'crawled'"
     query += " ORDER BY processed_at DESC"
