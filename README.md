@@ -265,6 +265,14 @@ IMPACT ships a GitHub ecosystem crawler that discovers, downloads, and analyses 
 * **Robust Rate-Limit & Backoff:** The crawler dynamically intercepts GitHub's rate-limiting mechanisms. It respects `Retry-After` headers (for secondary/abuse limits), sleeps for primary rate-limit resets (`X-RateLimit-Reset`), and falls back to exponential backoff (2s up to 60s) on HTTP 403/429 codes if headers are missing.
 * **Resumability & Fault Tolerance:** If a crawler run is interrupted or crashes, it can be resumed safely. Completed tasks are skipped, and any repository left in the `processing` state without a heartbeat update for more than 30 minutes is automatically reclaimed and reset to `pending` to be retried.
 
+### Database Configuration
+By default, the crawler queue is stored in a local SQLite database in the workspace at:
+`test_projects/github_benchmarks/crawler_queue.db`
+
+You can override this database path or switch to PostgreSQL for distributed environments by setting the `IMPACT_DB_PATH` environment variable:
+* **SQLite:** `export IMPACT_DB_PATH="/path/to/custom_queue.db"`
+* **PostgreSQL:** `export IMPACT_DB_PATH="postgresql://user:pass@host:port/dbname"`
+
 ### Running Locally (SQLite, single process)
 
 The crawler operates as a two-step producer-consumer workflow:
