@@ -42,12 +42,20 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Ignore extracted GitHub source folders in benchmarks
-test_projects/github_benchmarks/*/*/*/
+# Ignore all crawled benchmark repository folders by default to prevent committing large files
+test_projects/github_benchmarks/*/*/
 
-# Large benchmark datasets exceeding GitHub's file size limit (100MB)
-test_projects/github_benchmarks/java/spring-projects_spring-boot/
-test_projects/github_benchmarks/java/elastic_elasticsearch/
+# Whitelist only the small benchmark test baselines
+!test_projects/github_benchmarks/java/google_gson/
+!test_projects/github_benchmarks/java/iluwatar_java-design-patterns/
+!test_projects/github_benchmarks/java/jhy_jsoup/
+!test_projects/github_benchmarks/java/krahets_hello-algo/
+!test_projects/github_benchmarks/java/macrozheng_mall/
+!test_projects/github_benchmarks/java/reactive-streams_reactive-streams-jvm/
+!test_projects/github_benchmarks/java/square_javapoet/
+
+# Ignore extracted GitHub source folders in the whitelisted benchmarks
+test_projects/github_benchmarks/*/*/*/
 
 # Python packaging build artifacts — never commit
 build/
