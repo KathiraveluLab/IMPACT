@@ -19,6 +19,7 @@ class JavaExtractor:
         self.edges = []
 
     def extract(self, src_dir: str, output_file: str):
+        start_time = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         if not os.path.exists(src_dir):
             raise FileNotFoundError(f"Source directory does not exist: {src_dir}")
 
@@ -353,14 +354,15 @@ class JavaExtractor:
                             if nested_fqcn in project_classes:
                                 dependencies.add(nested_fqcn)
             else:
-                # 2. Regex fallback: search simple class name matches in the text content
+                # 2. Optimized Regex fallback: token-based set intersection
                 content = details["content"]
-                for other_fqcn, other_details in class_details.items():
-                    if fqcn == other_fqcn:
+                tokens = set(re.findall(r"\b\w+\b", content))
+                for simple_name in tokens:
+                    if simple_name == details["name"]:
                         continue
-                    pattern = rf"\b{other_details['name']}\b"
-                    if re.search(pattern, content):
-                        dependencies.add(other_fqcn)
+                    if simple_name in class_name_to_fqcn:
+                        for candidate_fqcn in class_name_to_fqcn[simple_name]:
+                            dependencies.add(candidate_fqcn)
 
             # Register resolved dependency edges
             for target_fqcn in dependencies:
@@ -400,6 +402,7 @@ class JavaExtractor:
         total_classes = len(self.nodes)
         avg_coupling = sum(n["metrics"]["coupling"] for n in self.nodes.values()) / max(1, total_classes)
 
+        end_time = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         output_data = {
             "@context": {
                 "@vocab": "https://w3id.org/impact/ontology#",
@@ -407,6 +410,8 @@ class JavaExtractor:
                 "version": "versionString",
                 "language": "language",
                 "extractedAt": "extractedAt",
+                "extractionStart": "extractionStart",
+                "extractionEnd": "extractionEnd",
                 "systemMetrics": "systemMetrics",
                 "nodes": "hasEntity",
                 "edges": "hasDependency",
@@ -418,7 +423,9 @@ class JavaExtractor:
             "projectName": self.project_name,
             "version": self.version,
             "language": "Java",
-            "extractedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "extractedAt": end_time,
+            "extractionStart": start_time,
+            "extractionEnd": end_time,
             "systemMetrics": {
                 "totalLinesOfCode": total_loc,
                 "totalClasses": total_classes,

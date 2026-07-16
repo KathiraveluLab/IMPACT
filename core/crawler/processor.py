@@ -84,6 +84,9 @@ def process_repo(repo_id, owner, repo, github_token, db_path):
     graph_v1 = os.path.join(repo_dir, f"{tag1}_graph.json")
     graph_v2 = os.path.join(repo_dir, f"{tag2}_graph.json")
 
+    from datetime import datetime, timezone
+    extraction_start = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
     try:
         # Extract dependencies
         if language == "java":
@@ -95,6 +98,27 @@ def process_repo(repo_id, owner, repo, github_token, db_path):
             ext2.extract(path2, graph_v2)
         else:
             raise NotImplementedError(f"Language adapter for '{language}' is not yet implemented.")
+
+        extraction_end = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+        # Save extraction timestamps to DB
+        if db_path.startswith("postgresql://") or db_path.startswith("postgres://"):
+            import psycopg2
+            conn = psycopg2.connect(db_path)
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE queue SET extraction_start_at = %s, extraction_end_at = %s WHERE id = %s",
+                (extraction_start, extraction_end, repo_id)
+            )
+        else:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE queue SET extraction_start_at = ?, extraction_end_at = ? WHERE id = ?",
+                (extraction_start, extraction_end, repo_id)
+            )
+        conn.commit()
+        conn.close()
 
         # Validate SHACL
         validator = SHACLValidator()

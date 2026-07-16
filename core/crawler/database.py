@@ -39,11 +39,19 @@ def setup_db(db_path=None):
                 worker_id VARCHAR(255),
                 claimed_at VARCHAR(100),
                 language VARCHAR(50) DEFAULT 'java',
+                extraction_start_at VARCHAR(100),
+                extraction_end_at VARCHAR(100),
                 UNIQUE(owner, repo)
             )
         """)
         # Migrate existing databases that lack the new columns
-        for col, typedef in [("worker_id", "VARCHAR(255)"), ("claimed_at", "VARCHAR(100)"), ("language", "VARCHAR(50) DEFAULT 'java'")]:
+        for col, typedef in [
+            ("worker_id", "VARCHAR(255)"),
+            ("claimed_at", "VARCHAR(100)"),
+            ("language", "VARCHAR(50) DEFAULT 'java'"),
+            ("extraction_start_at", "VARCHAR(100)"),
+            ("extraction_end_at", "VARCHAR(100)")
+        ]:
             cursor.execute(f"""
                 ALTER TABLE queue ADD COLUMN IF NOT EXISTS {col} {typedef}
             """)
@@ -84,12 +92,20 @@ def setup_db(db_path=None):
                 worker_id TEXT,
                 claimed_at TEXT,
                 language TEXT DEFAULT 'java',
+                extraction_start_at TEXT,
+                extraction_end_at TEXT,
                 UNIQUE(owner, repo)
             )
         """)
         # Migrate existing databases that lack the new columns
         existing = {row[1] for row in cursor.execute("PRAGMA table_info(queue)")}
-        for col, typedef in [("worker_id", "TEXT"), ("claimed_at", "TEXT"), ("language", "TEXT DEFAULT 'java'")]:
+        for col, typedef in [
+            ("worker_id", "TEXT"),
+            ("claimed_at", "TEXT"),
+            ("language", "TEXT DEFAULT 'java'"),
+            ("extraction_start_at", "TEXT"),
+            ("extraction_end_at", "TEXT")
+        ]:
             if col not in existing:
                 cursor.execute(f"ALTER TABLE queue ADD COLUMN {col} {typedef}")
         cursor.execute("""
