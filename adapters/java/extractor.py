@@ -142,6 +142,7 @@ class JavaExtractor:
                 # Regex Fallback with Java 17+ record / sealed class support
                 package_match = re.search(r"package\s+([\w\.]+);", content)
                 package_name = package_match.group(1) if package_match else ""
+                imports = [imp.group(1) for imp in re.finditer(r"^import\s+([\w\.\*]+);", content, re.MULTILINE)]
 
                 # 1. Look for Java 17+ record declarations
                 record_matches = re.finditer(r"\brecord\s+(\w+)\s*\((.*?)\)", content)
@@ -168,7 +169,7 @@ class JavaExtractor:
                         "loc": loc,
                         "complexity": complexity,
                         "content": content,
-                        "imports": [],
+                        "imports": imports,
                         "ast_references": list(references),
                         "use_ast": False,
                         "extends": None
@@ -201,7 +202,7 @@ class JavaExtractor:
                         "loc": loc,
                         "complexity": complexity,
                         "content": content,
-                        "imports": [],
+                        "imports": imports,
                         "ast_references": list(references),
                         "use_ast": False,
                         "extends": extends_val
@@ -354,15 +355,49 @@ class JavaExtractor:
                             if nested_fqcn in project_classes:
                                 dependencies.add(nested_fqcn)
             else:
-                # 2. Optimized Regex fallback: token-based set intersection
+                # 2. Optimized Regex fallback: token-based set intersection with semantic resolution
                 content = details["content"]
                 tokens = set(re.findall(r"\b\w+\b", content))
                 for simple_name in tokens:
                     if simple_name == details["name"]:
                         continue
-                    if simple_name in class_name_to_fqcn:
-                        for candidate_fqcn in class_name_to_fqcn[simple_name]:
-                            dependencies.add(candidate_fqcn)
+                    if simple_name not in class_name_to_fqcn:
+                        continue
+
+                    resolved = False
+                    # A. Check explicit imports
+                    for imp in details["imports"]:
+                        if imp.endswith(f".{simple_name}"):
+                            target_fqcn = imp
+                            if target_fqcn in project_classes:
+                                dependencies.add(target_fqcn)
+                                resolved = True
+                                break
+                    if resolved:
+                        continue
+
+                    # B. Check same package
+                    target_fqcn = f"{details['package']}.{simple_name}" if details['package'] else simple_name
+                    if target_fqcn in project_classes:
+                        dependencies.add(target_fqcn)
+                        continue
+
+                    # C. Check wildcard imports
+                    for imp in details["imports"]:
+                        if imp.endswith(".*"):
+                            wildcard_package = imp[:-2]
+                            target_fqcn = f"{wildcard_package}.{simple_name}"
+                            if target_fqcn in project_classes:
+                                dependencies.add(target_fqcn)
+                                resolved = True
+                                break
+                    if resolved:
+                        continue
+
+                    # D. Global fallback: Match simple name if unique in the project
+                    candidates = class_name_to_fqcn[simple_name]
+                    if len(candidates) == 1:
+                        dependencies.add(list(candidates)[0])
 
             # Register resolved dependency edges
             for target_fqcn in dependencies:

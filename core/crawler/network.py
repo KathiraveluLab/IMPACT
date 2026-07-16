@@ -13,7 +13,7 @@ def make_github_request(url, github_token=None):
     backoff = 2
     while True:
         try:
-            with urllib.request.urlopen(req) as response:
+            with urllib.request.urlopen(req, timeout=30) as response:
                 return response.read(), response.info()
         except urllib.error.HTTPError as e:
             if e.code in (403, 429):
