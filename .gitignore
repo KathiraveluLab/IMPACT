@@ -62,3 +62,7 @@ k8s/secret.yaml
 core/dashboard/config.js
 core/dashboard/test_projects/
 .env
+
+# Exported CSVs and spreadsheet viewer lockfiles
+*.csv
+.~lock.*.csv#
