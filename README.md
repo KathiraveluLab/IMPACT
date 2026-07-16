@@ -94,6 +94,7 @@ After installation the following commands are available on your `PATH`:
 | Command | Description |
 |---------|-------------|
 | `impact-crawl` | GitHub ecosystem crawler CLI |
+| `impact-export` | Export crawled repositories from queue to CSV |
 | `impact-extract` | Java AST dependency graph extractor |
 | `impact-demo` | Run the built-in TelemetryService evolution demo |
 | `impact-dashboard` | Launch the interactive architect dashboard |
@@ -262,18 +263,26 @@ IMPACT ships a GitHub ecosystem crawler that discovers, downloads, and analyses 
 * **Multi-Language Support:** The discovery command can filter for any repository language (e.g., `--language java` or `--language rust`).
 * **Query Partitioning:** To bypass GitHub's search query limit (max 1,000 results per search), the crawler automatically slices queries into sliding star intervals (e.g. `500..550`, `551..600`, etc., up to `>50000`). This allows building a much larger queue of repositories. Disable via `--no-partition`.
 * **Robust Rate-Limit & Backoff:** The crawler dynamically intercepts GitHub's rate-limiting mechanisms. It respects `Retry-After` headers (for secondary/abuse limits), sleeps for primary rate-limit resets (`X-RateLimit-Reset`), and falls back to exponential backoff (2s up to 60s) on HTTP 403/429 codes if headers are missing.
+* **Resumability & Fault Tolerance:** If a crawler run is interrupted or crashes, it can be resumed safely. Completed tasks are skipped, and any repository left in the `processing` state without a heartbeat update for more than 30 minutes is automatically reclaimed and reset to `pending` to be retried.
 
 ### Running Locally (SQLite, single process)
 
+The crawler operates as a two-step producer-consumer workflow:
+1. **Discovery (Producer):** Queries the GitHub search API once to find matching repositories and populate the local SQLite queue.
+2. **Crawl (Consumer):** Downloads, parses, and analyzes the queued repositories. By default, it runs in **unlimited mode** (processing all pending repositories in the queue). You can optionally pass a `--limit` (e.g., `--limit 50`) to cap the number of processed repositories. This stage can be run repeatedly or split across multiple parallel workers.
+
 ```bash
-# 1. Populate the queue (e.g., with Java repos >= 1000 stars using star partitioning)
+# 1. Discover and populate the queue (run this ONCE first)
 python3 -m core.ecosystem_crawler discover --language java --min-stars 1000
 
-# 2. Process queued repositories (runs the crawl execution loop, command alias 'crawl' or 'run')
-python3 -m core.ecosystem_crawler crawl --limit 50
+# 2. Process the queued repositories (runs the analysis loop; defaults to unlimited)
+python3 -m core.ecosystem_crawler crawl
 
-# 3. Check queue status and recent transitions
+# 3. Check the queue status and progress
 python3 -m core.ecosystem_crawler status
+
+# 4. Export completed crawled repositories to CSV (can be run in parallel)
+python3 -m core.export_crawled --output crawled_repos.csv
 ```
 
 ---

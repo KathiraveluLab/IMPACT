@@ -35,7 +35,7 @@ class GitHubEcosystemCrawler:
     def mark_status(self, repo_id, status, error_msg=None):
         mark_status(repo_id, status, error_msg, self.db_path)
 
-    def crawl(self, limit=10):
+    def crawl(self, limit=-1):
         from core.crawler.database import claim_next_pending
 
         # Recover any rows left stuck in 'processing' by previously crashed workers
@@ -43,9 +43,10 @@ class GitHubEcosystemCrawler:
         if recovered:
             print(f"[Queue] Recovered {recovered} stale 'processing' row(s) back to 'pending'.")
 
-        print(f"Starting distributed crawl execution (up to {limit} repositories)...")
+        limit_desc = "unlimited" if limit < 0 else f"up to {limit}"
+        print(f"Starting distributed crawl execution ({limit_desc} repositories)...")
         crawled_count = 0
-        for _ in range(limit):
+        while limit < 0 or crawled_count < limit:
             claimed = claim_next_pending(self.db_path)
             if not claimed:
                 break

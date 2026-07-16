@@ -372,5 +372,58 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
             slept_duration = mock_sleep.call_args[0][0]
             self.assertEqual(slept_duration, 6)
 
+    def test_crawl_unlimited(self):
+        """Verify that passing a limit of -1 results in processing all pending queue items."""
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        # Insert 3 pending repositories
+        for i in range(3):
+            cursor.execute(
+                "INSERT INTO queue (owner, repo, stars) VALUES (?, ?, ?)",
+                (f"owner_unlim_{i}", f"repo_unlim_{i}", 100 + i)
+            )
+        conn.commit()
+        conn.close()
+
+        # Mock the process_repo function to avoid calling actual downloader/parsing
+        with patch.object(self.crawler, 'process_repo') as mock_process:
+            self.crawler.crawl(limit=-1)
+            # Should have processed all 3 repositories
+            self.assertEqual(mock_process.call_count, 3)
+
+    def test_export_completed(self):
+        """Verify that the export script correctly writes completed items to CSV."""
+        import csv
+        conn = sqlite3.connect(TEST_DB_PATH)
+        cursor = conn.cursor()
+        # Seed the DB: 1 completed, 1 pending, 1 failed
+        cursor.execute("INSERT INTO queue (owner, repo, stars, status) VALUES ('owner_c', 'repo_c', 100, 'crawled')")
+        cursor.execute("INSERT INTO queue (owner, repo, stars, status) VALUES ('owner_p', 'repo_p', 200, 'pending')")
+        cursor.execute("INSERT INTO queue (owner, repo, stars, status) VALUES ('owner_f', 'repo_f', 300, 'failed')")
+        conn.commit()
+        conn.close()
+
+        import core.export_crawled as ec_export
+        temp_csv = tempfile.mktemp(suffix=".csv")
+
+        try:
+            with patch("sys.argv", ["export", "-o", temp_csv]):
+                ec_export.main()
+
+            self.assertTrue(os.path.exists(temp_csv))
+            with open(temp_csv, "r", encoding="utf-8") as f:
+                reader = csv.reader(f)
+                rows = list(reader)
+
+            # Check header and only 1 completed row is exported
+            self.assertEqual(len(rows), 2)  # Header + 1 row
+            self.assertEqual(rows[1][1], "owner_c")
+            self.assertEqual(rows[1][2], "repo_c")
+            self.assertEqual(rows[1][6], "crawled")
+
+        finally:
+            if os.path.exists(temp_csv):
+                os.remove(temp_csv)
+
 if __name__ == "__main__":
     unittest.main()

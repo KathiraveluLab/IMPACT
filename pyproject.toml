@@ -91,6 +91,7 @@ impact-crawl     = "core.ecosystem_crawler:main"
 impact-extract   = "adapters.java.extractor:main"
 impact-demo      = "core.run_demo:main"
 impact-dashboard = "core.run_dashboard:main"
+impact-export    = "core.export_crawled:main"
 
 # ---------------------------------------------------------------------------
 # URLs shown on PyPI

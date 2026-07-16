@@ -26,7 +26,7 @@ def main():
     discover_parser.add_argument("--no-partition", action="store_false", dest="partition", help="Disable star range partitioning (query all stars at once)")
 
     run_parser = subparsers.add_parser("run", aliases=["crawl"], help="Run evolution analysis crawler execution loop")
-    run_parser.add_argument("--limit", type=int, default=5, help="Maximum number of repositories to crawl in this run")
+    run_parser.add_argument("--limit", type=int, default=-1, help="Maximum number of repositories to crawl in this run (default: unlimited)")
 
     subparsers.add_parser("status", help="Print crawler database queue stats")
 
