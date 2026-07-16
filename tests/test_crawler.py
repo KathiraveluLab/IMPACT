@@ -397,7 +397,10 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
         conn = sqlite3.connect(TEST_DB_PATH)
         cursor = conn.cursor()
         # Seed the DB: 1 completed, 1 pending, 1 failed
-        cursor.execute("INSERT INTO queue (owner, repo, stars, status) VALUES ('owner_c', 'repo_c', 100, 'crawled')")
+        cursor.execute(
+            "INSERT INTO queue (owner, repo, stars, status, extraction_start_at, extraction_end_at) "
+            "VALUES ('owner_c', 'repo_c', 100, 'crawled', '2026-07-16T11:00:00Z', '2026-07-16T11:01:00Z')"
+        )
         cursor.execute("INSERT INTO queue (owner, repo, stars, status) VALUES ('owner_p', 'repo_p', 200, 'pending')")
         cursor.execute("INSERT INTO queue (owner, repo, stars, status) VALUES ('owner_f', 'repo_f', 300, 'failed')")
         conn.commit()
@@ -420,6 +423,8 @@ class TestGitHubEcosystemCrawler(unittest.TestCase):
             self.assertEqual(rows[1][1], "owner_c")
             self.assertEqual(rows[1][2], "repo_c")
             self.assertEqual(rows[1][6], "crawled")
+            self.assertEqual(rows[1][9], "2026-07-16T11:00:00Z")
+            self.assertEqual(rows[1][10], "2026-07-16T11:01:00Z")
 
         finally:
             if os.path.exists(temp_csv):
